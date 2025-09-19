@@ -118,6 +118,11 @@ class Product(BaseModel):
         return self.stock_quantity > 0
     
     @property
+    def in_stock(self):
+        """Alias for is_in_stock for template compatibility"""
+        return self.is_in_stock
+    
+    @property
     def is_low_stock(self):
         if not self.manage_stock:
             return False

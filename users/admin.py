@@ -1,3 +1,39 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import User, Address, UserPreference, UserActivity
 
-# Register your models here.
+@admin.register(User)
+class UserAdmin(BaseUserAdmin):
+    list_display = ['email', 'username', 'first_name', 'last_name', 'is_staff', 'created_at']
+    list_filter = ['is_staff', 'is_superuser', 'is_active', 'created_at', 'marketing_emails']
+    search_fields = ['email', 'username', 'first_name', 'last_name']
+    ordering = ['-created_at']
+    
+    fieldsets = list(BaseUserAdmin.fieldsets) + [
+        ('Personal Info', {
+            'fields': ('phone', 'date_of_birth', 'avatar')
+        }),
+        ('Preferences', {
+            'fields': ('is_newsletter_subscribed', 'dietary_preferences', 'flavor_preferences', 
+                      'marketing_emails', 'sms_notifications')
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    ]
+    
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ['user', 'address_type', 'first_name', 'last_name', 'city', 'postcode', 'is_default']
+    list_filter = ['address_type', 'is_default', 'country']
+    search_fields = ['user__email', 'first_name', 'last_name', 'city', 'postcode']
+
+@admin.register(UserActivity)
+class UserActivityAdmin(admin.ModelAdmin):
+    list_display = ['user', 'activity_type', 'object_id', 'timestamp']
+    list_filter = ['activity_type', 'timestamp']
+    search_fields = ['user__email', 'session_key']
+    readonly_fields = ['timestamp']

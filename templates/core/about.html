@@ -1,0 +1,446 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - {{ site_settings.site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .mountain-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.2);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .mountain-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(30, 64, 175, 0.2);
+    }
+    
+    .timeline-dot {
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(135deg, #1e40af, #059669);
+        border-radius: 50%;
+        position: absolute;
+        left: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+    
+    .timeline-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(to bottom, #1e40af, #059669);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero py-24 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6" data-aos="fade-up">
+                Our <span class="welsh-text-shimmer">Welsh Heritage</span>
+            </h1>
+            <p class="text-xl text-blue-100 max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+                From the ancient mountains of Wales to your glass, discover the story behind Trederwen Springs and our commitment to pure Welsh water.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Our Story Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div data-aos="fade-right">
+                <div class="relative rounded-3xl overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Welsh Mountains" class="w-full h-auto">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <div class="text-white text-lg font-medium">The majestic Welsh mountains</div>
+                        <div class="text-blue-200 text-sm">Home to our natural springs</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-8" data-aos="fade-left">
+                <h2 class="text-4xl font-bold text-gray-900">
+                    Our <span class="welsh-text-shimmer">Mountain Story</span>
+                </h2>
+                
+                <p class="text-lg text-gray-700">
+                    Trederwen Springs was born from a deep appreciation for the pristine waters that flow through the ancient Welsh mountains. For generations, locals have known about the exceptional purity of these springs, naturally filtered through layers of rock formed over millennia.
+                </p>
+                
+                <p class="text-lg text-gray-700">
+                    Founded in 1998 by the Davies family, our company began with a simple mission: to share the gift of Welsh mountain water with the world while preserving the natural heritage of our valleys. What started as a small local operation has grown into a beloved brand that stays true to its Welsh roots.
+                </p>
+                
+                <p class="text-lg text-gray-700">
+                    Today, we continue to source our water from protected springs nestled in the heart of Wales, ensuring each drop carries the essence of our mountains while maintaining our commitment to sustainability and environmental stewardship.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Values Section -->
+<section class="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6" data-aos="fade-up">
+                Our <span class="welsh-text-shimmer">Mountain Values</span>
+            </h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                The principles that guide us are as steadfast as the mountains from which our water flows.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Value 1 -->
+            <div class="mountain-card rounded-3xl p-8 bg-white shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Natural Purity</h3>
+                <p class="text-gray-700">
+                    We believe in preserving the natural purity of our water. Our springs are carefully selected for their exceptional quality, and we maintain minimal processing to deliver water just as nature intended.
+                </p>
+            </div>
+            
+            <!-- Value 2 -->
+            <div class="mountain-card rounded-3xl p-8 bg-white shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-600 to-blue-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Welsh Heritage</h3>
+                <p class="text-gray-700">
+                    Our Welsh roots run deep. We honor the traditions and culture of Wales in everything we do, from our sustainable practices to supporting local communities in the valleys we call home.
+                </p>
+            </div>
+            
+            <!-- Value 3 -->
+            <div class="mountain-card rounded-3xl p-8 bg-white shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-green-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Sustainability</h3>
+                <p class="text-gray-700">
+                    We are committed to protecting the environment that gives us our precious water. From responsible sourcing to eco-friendly packaging, sustainability guides every decision we make.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Journey Timeline -->
+<section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6" data-aos="fade-up">
+                Our <span class="welsh-text-shimmer">Mountain Journey</span>
+            </h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                The path from Welsh springs to becoming Wales' premium water brand.
+            </p>
+        </div>
+        
+        <div class="relative pl-10 space-y-12">
+            <!-- Timeline Line -->
+            <div class="timeline-line"></div>
+            
+            <!-- 1998 -->
+            <div class="relative" data-aos="fade-up">
+                <div class="timeline-dot"></div>
+                <div class="mountain-card rounded-2xl p-6 bg-white shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">1998</h3>
+                    <h4 class="text-xl text-blue-700 mb-4">The First Drop</h4>
+                    <p class="text-gray-700">
+                        Trederwen Springs was founded by the Davies family, who discovered an exceptional spring on their ancestral land in North Wales. The first bottles were sold at local farmers' markets.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 2005 -->
+            <div class="relative" data-aos="fade-up" data-aos-delay="100">
+                <div class="timeline-dot"></div>
+                <div class="mountain-card rounded-2xl p-6 bg-white shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">2005</h3>
+                    <h4 class="text-xl text-blue-700 mb-4">Growing Streams</h4>
+                    <p class="text-gray-700">
+                        After winning several taste awards, Trederwen expanded distribution across Wales and into major UK retailers, while maintaining our commitment to sustainable practices.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 2012 -->
+            <div class="relative" data-aos="fade-up" data-aos-delay="200">
+                <div class="timeline-dot"></div>
+                <div class="mountain-card rounded-2xl p-6 bg-white shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">2012</h3>
+                    <h4 class="text-xl text-blue-700 mb-4">Valley Innovation</h4>
+                    <p class="text-gray-700">
+                        We introduced our innovative eco-friendly packaging and launched our first flavored water varieties, infused with Welsh-grown botanicals.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 2018 -->
+            <div class="relative" data-aos="fade-up" data-aos-delay="300">
+                <div class="timeline-dot"></div>
+                <div class="mountain-card rounded-2xl p-6 bg-white shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">2018</h3>
+                    <h4 class="text-xl text-blue-700 mb-4">Mountain Heritage</h4>
+                    <p class="text-gray-700">
+                        Celebrating our 20th anniversary, we established the Trederwen Mountain Conservation Trust to protect Welsh watersheds and launched our subscription service.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Today -->
+            <div class="relative" data-aos="fade-up" data-aos-delay="400">
+                <div class="timeline-dot"></div>
+                <div class="mountain-card rounded-2xl p-6 bg-white shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Today</h3>
+                    <h4 class="text-xl text-blue-700 mb-4">Flowing Forward</h4>
+                    <p class="text-gray-700">
+                        Trederwen Springs continues to grow while staying true to our Welsh roots. We're proud to bring the purity of Welsh mountain water to customers worldwide while maintaining our commitment to sustainability and community.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-green-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-6" data-aos="fade-up">
+                Our <span class="welsh-text-shimmer">Mountain Team</span>
+            </h2>
+            <p class="text-xl text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Meet the dedicated people behind Trederwen Springs who bring Welsh water to your doorstep.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Team Member 1 -->
+            <div class="mountain-card rounded-3xl p-6 text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="relative mb-6 mx-auto w-40 h-40 rounded-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="Rhys Davies" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold mb-1">Rhys Davies</h3>
+                <p class="text-blue-300 mb-4">Founder & CEO</p>
+                <p class="text-blue-100 text-sm">
+                    Third-generation Welsh water steward who founded Trederwen Springs with a vision to share Wales' natural treasures.
+                </p>
+            </div>
+            
+            <!-- Team Member 2 -->
+            <div class="mountain-card rounded-3xl p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="relative mb-6 mx-auto w-40 h-40 rounded-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="Megan Lloyd" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold mb-1">Megan Lloyd</h3>
+                <p class="text-blue-300 mb-4">Head of Sustainability</p>
+                <p class="text-blue-100 text-sm">
+                    Environmental scientist dedicated to preserving Welsh watersheds and implementing eco-friendly practices.
+                </p>
+            </div>
+            
+            <!-- Team Member 3 -->
+            <div class="mountain-card rounded-3xl p-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="relative mb-6 mx-auto w-40 h-40 rounded-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="Gareth Williams" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold mb-1">Gareth Williams</h3>
+                <p class="text-blue-300 mb-4">Master Water Sommelier</p>
+                <p class="text-blue-100 text-sm">
+                    Expert in water quality with an exceptional palate for identifying the unique mineral profiles of Welsh springs.
+                </p>
+            </div>
+            
+            <!-- Team Member 4 -->
+            <div class="mountain-card rounded-3xl p-6 text-center" data-aos="fade-up" data-aos-delay="400">
+                <div class="relative mb-6 mx-auto w-40 h-40 rounded-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=461&q=80" alt="Carys Evans" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold mb-1">Carys Evans</h3>
+                <p class="text-blue-300 mb-4">Community Relations</p>
+                <p class="text-blue-100 text-sm">
+                    Native Welsh speaker who manages our community initiatives and ensures we remain connected to our Welsh heritage.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sustainability Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8" data-aos="fade-right">
+                <h2 class="text-4xl font-bold text-gray-900">
+                    Our <span class="welsh-text-shimmer">Sustainability Pledge</span>
+                </h2>
+                
+                <p class="text-lg text-gray-700">
+                    At Trederwen Springs, we believe that the purity of our water is directly linked to the health of our environment. That's why sustainability isn't just a buzzword for us—it's at the core of everything we do.
+                </p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">100% Recyclable Packaging</h3>
+                            <p class="text-gray-700">All our bottles and packaging materials are fully recyclable, and we're working toward using 100% recycled materials by 2026.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-600 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Carbon Neutral Operations</h3>
+                            <p class="text-gray-700">We offset 100% of our carbon emissions and are investing in renewable energy to power our facilities.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Watershed Protection</h3>
+                            <p class="text-gray-700">5% of our profits go to the Trederwen Mountain Conservation Trust, protecting Welsh watersheds for future generations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div data-aos="fade-left">
+                <div class="relative rounded-3xl overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1313&q=80" alt="Welsh Landscape" class="w-full h-auto">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                        <div class="text-white text-lg font-medium">Protecting Welsh watersheds</div>
+                        <div class="text-blue-200 text-sm">For generations to come</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-blue-900 via-slate-900 to-green-900 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute bottom-0 left-0 right-0 h-48" style="background: linear-gradient(to right, transparent, rgba(30,64,175,0.3), transparent); clip-path: polygon(0 100%, 15% 70%, 30% 80%, 45% 60%, 60% 75%, 75% 55%, 90% 70%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" data-aos="fade-up">
+            Experience the <span class="welsh-text-shimmer">Welsh Mountain Difference</span>
+        </h2>
+        <p class="text-xl text-blue-100 mb-8" data-aos="fade-up" data-aos-delay="100">
+            Discover why Trederwen Springs is Wales' premium water choice and taste the difference that comes from ancient mountains.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+            <a href="/products/" class="bg-white text-blue-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-blue-50 transition-all">
+                Explore Our Springs
+            </a>
+            <a href="/subscriptions/" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all">
+                Join Valley Delivery
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-out-cubic',
+        once: true
+    });
+    
+    // Mountain Card Interactions with GSAP
+    if (typeof gsap !== 'undefined') {
+        document.querySelectorAll('.mountain-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                gsap.to(this, {
+                    y: -10,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                gsap.to(this, {
+                    y: 0,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            });
+        });
+    }
+</script>
+{% endblock %}

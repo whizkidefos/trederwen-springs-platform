@@ -53,7 +53,7 @@ A modern, AI-powered e-commerce platform for premium Welsh spring water with sub
 ## Technology Stack
 
 ### Backend
-- **Django 4.2**: Python web framework
+- **Django 5.2.6**: Python web framework
 - **PostgreSQL**: Production database (SQLite for development)
 - **Redis**: Caching and session storage
 - **Celery**: Background task processing

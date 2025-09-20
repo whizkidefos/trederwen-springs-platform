@@ -1,0 +1,569 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Where Nature Meets Innovation{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Custom CSS for advanced animations */
+    .hero-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .floating-element {
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    .morphing-blob {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        animation: morph 8s ease-in-out infinite;
+    }
+    
+    @keyframes morph {
+        0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+    }
+    
+    .glow {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        animation: pulse 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes pulse {
+        from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
+        to { box-shadow: 0 0 40px rgba(102, 126, 234, 0.8); }
+    }
+    
+    .parallax-layer {
+        will-change: transform;
+    }
+    
+    .water-ripple {
+        background: radial-gradient(circle at center, transparent 0%, rgba(102, 126, 234, 0.1) 50%, transparent 100%);
+        animation: ripple 4s ease-out infinite;
+    }
+    
+    @keyframes ripple {
+        0% { transform: scale(0); opacity: 1; }
+        100% { transform: scale(4); opacity: 0; }
+    }
+    
+    .text-shimmer {
+        background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes shimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .card-hover {
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .card-hover:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .glass-morphism {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    #threejs-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+    
+    .content-overlay {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .magnetic-button {
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .scroll-indicator {
+        animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section with 3D Background -->
+<section class="relative min-h-screen overflow-hidden hero-gradient">
+    <!-- Three.js 3D Background -->
+    <div id="threejs-container"></div>
+    
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 content-overlay">
+        <div class="absolute top-20 left-10 w-32 h-32 bg-blue-400 opacity-20 morphing-blob floating-element"></div>
+        <div class="absolute top-40 right-20 w-24 h-24 bg-purple-400 opacity-30 morphing-blob floating-element" style="animation-delay: -2s;"></div>
+        <div class="absolute bottom-32 left-1/4 w-16 h-16 bg-pink-400 opacity-25 morphing-blob floating-element" style="animation-delay: -4s;"></div>
+        
+        <!-- Water Ripple Effects -->
+        <div class="absolute top-1/2 left-1/2 w-4 h-4 water-ripple" style="animation-delay: 0s;"></div>
+        <div class="absolute top-1/3 left-1/3 w-4 h-4 water-ripple" style="animation-delay: 2s;"></div>
+        <div class="absolute top-2/3 right-1/3 w-4 h-4 water-ripple" style="animation-delay: 4s;"></div>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-10 flex items-center justify-center min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="space-y-8">
+                <!-- Main Headline -->
+                <h1 class="text-6xl lg:text-8xl font-bold text-white leading-tight">
+                    <span class="block text-shimmer" data-aos="fade-up" data-aos-delay="100">Pure</span>
+                    <span class="block" data-aos="fade-up" data-aos-delay="200">Welsh</span>
+                    <span class="block text-shimmer" data-aos="fade-up" data-aos-delay="300">Excellence</span>
+                </h1>
+                
+                <!-- Subtitle -->
+                <p class="text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="400">
+                    Experience the future of hydration with our quantum-filtered spring water, 
+                    sourced from the mystical depths of ancient Welsh mountains.
+                </p>
+                
+                <!-- Interactive CTAs -->
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mt-12" data-aos="fade-up" data-aos-delay="500">
+                    <button class="magnetic-button bg-white text-purple-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 glow">
+                        Discover the Magic
+                    </button>
+                    <button class="magnetic-button glass-morphism text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white hover:bg-opacity-20 transition-all duration-300">
+                        Watch Our Story
+                    </button>
+                </div>
+                
+                <!-- Scroll Indicator -->
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+                    <div class="scroll-indicator w-6 h-10 border-2 border-white rounded-full flex justify-center">
+                        <div class="w-1 h-3 bg-white rounded-full mt-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Immersive Product Showcase -->
+<section class="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+    <!-- Animated Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, #667eea 0%, transparent 50%), radial-gradient(circle at 75% 75%, #764ba2 0%, transparent 50%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Section Header -->
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-5xl lg:text-6xl font-bold text-white mb-6">
+                Liquid <span class="text-shimmer">Innovation</span>
+            </h2>
+            <p class="text-xl text-blue-200 max-w-3xl mx-auto">
+                Each drop is a masterpiece of nature and technology, delivering unparalleled purity and taste.
+            </p>
+        </div>
+        
+        <!-- 3D Product Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for product in featured_products %}
+            <div class="card-hover glass-morphism rounded-3xl p-8 text-center group" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <!-- Product Image Placeholder with Animation -->
+                <div class="relative mb-6">
+                    <div class="w-32 h-48 mx-auto bg-gradient-to-b from-blue-400 to-purple-600 rounded-3xl glow group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="absolute inset-0 bg-white opacity-20 rounded-3xl transform rotate-12 group-hover:rotate-0 transition-transform duration-500"></div>
+                </div>
+                
+                <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors">
+                    {{ product.name }}
+                </h3>
+                <p class="text-blue-200 mb-6">{{ product.short_description|truncatechars:80 }}</p>
+                
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-3xl font-bold text-white">£{{ product.price }}</span>
+                    <div class="flex text-yellow-400">
+                        {% for i in "12345" %}
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <button onclick="addToCart('{{ product.id }}')" class="w-full magnetic-button bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-bold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
+                    Add to Collection
+                </button>
+            </div>
+            {% empty %}
+            <!-- Demo Product Cards if no products exist -->
+            {% for i in "123" %}
+            <div class="card-hover glass-morphism rounded-3xl p-8 text-center group" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <div class="relative mb-6">
+                    <div class="w-32 h-48 mx-auto bg-gradient-to-b from-blue-400 to-purple-600 rounded-3xl glow group-hover:scale-110 transition-transform duration-500"></div>
+                    <div class="absolute inset-0 bg-white opacity-20 rounded-3xl transform rotate-12 group-hover:rotate-0 transition-transform duration-500"></div>
+                </div>
+                
+                <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors">
+                    Mystique Series {{ i }}
+                </h3>
+                <p class="text-blue-200 mb-6">Premium Welsh spring water with quantum enhancement technology.</p>
+                
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-3xl font-bold text-white">£{{ i }}9.99</span>
+                    <div class="flex text-yellow-400">
+                        {% for j in "12345" %}
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <button class="w-full magnetic-button bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-full font-bold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
+                    Add to Collection
+                </button>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Features Section -->
+<section class="py-20 bg-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <!-- Interactive 3D Element -->
+            <div class="relative" data-aos="fade-right">
+                <div id="features-3d-container" class="h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-3xl relative overflow-hidden">
+                    <!-- Placeholder for 3D animation -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-64 h-64 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full morphing-blob glow"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Content -->
+            <div class="space-y-8" data-aos="fade-left">
+                <h2 class="text-5xl lg:text-6xl font-bold text-gray-900">
+                    Beyond <span class="text-shimmer">Ordinary</span>
+                </h2>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4 p-6 rounded-2xl hover:bg-blue-50 transition-colors duration-300 card-hover">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center glow">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Quantum Filtration</h3>
+                            <p class="text-gray-600">Our patented quantum filtration process removes impurities at the molecular level.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4 p-6 rounded-2xl hover:bg-blue-50 transition-colors duration-300 card-hover">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center glow">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Eco-Fusion Technology</h3>
+                            <p class="text-gray-600">Sustainable packaging that dissolves safely in nature within 90 days.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4 p-6 rounded-2xl hover:bg-blue-50 transition-colors duration-300 card-hover">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center glow">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">AI-Powered Personalization</h3>
+                            <p class="text-gray-600">Machine learning algorithms customize each bottle to your unique taste profile.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Immersive Newsletter Section -->
+<section class="py-20 bg-gradient-to-r from-purple-900 via-blue-900 to-purple-900 relative overflow-hidden">
+    <!-- Animated Particles Background -->
+    <div id="particles-container" class="absolute inset-0"></div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div class="glass-morphism rounded-3xl p-12" data-aos="zoom-in">
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">
+                Join the <span class="text-shimmer">Revolution</span>
+            </h2>
+            <p class="text-xl text-blue-200 mb-8">
+                Be the first to experience the future of hydration. Get exclusive access to new products and innovations.
+            </p>
+            
+            <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" id="newsletter-form">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Enter your quantum email..." required
+                       class="flex-1 px-6 py-4 rounded-full bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 backdrop-blur-sm">
+                <button type="submit" class="magnetic-button bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 glow">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Loading Screen -->
+<div id="loading-screen" class="fixed inset-0 bg-gradient-to-br from-purple-900 to-blue-900 z-50 flex items-center justify-center">
+    <div class="text-center">
+        <div class="w-32 h-32 mx-auto mb-8 relative">
+            <div class="absolute inset-0 border-4 border-blue-400 rounded-full animate-spin"></div>
+            <div class="absolute inset-2 border-4 border-purple-400 rounded-full animate-spin" style="animation-direction: reverse;"></div>
+            <div class="absolute inset-4 border-4 border-pink-400 rounded-full animate-spin"></div>
+        </div>
+        <h2 class="text-2xl font-bold text-white text-shimmer">Materializing Excellence...</h2>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- GSAP and Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<script>
+// Initialize AOS (Animate On Scroll)
+AOS.init({
+    duration: 1000,
+    easing: 'ease-out-cubic',
+    once: true
+});
+
+// Loading Screen Animation
+window.addEventListener('load', function() {
+    gsap.to('#loading-screen', {
+        opacity: 0,
+        duration: 1,
+        delay: 2,
+        onComplete: function() {
+            document.getElementById('loading-screen').style.display = 'none';
+        }
+    });
+});
+
+// Three.js Scene Setup
+let scene, camera, renderer, particles;
+
+function initThreeJS() {
+    const container = document.getElementById('threejs-container');
+    if (!container) return;
+    
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+    
+    // Create floating particles
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    const colors = [];
+    
+    for (let i = 0; i < 2000; i++) {
+        vertices.push(
+            Math.random() * 2000 - 1000,
+            Math.random() * 2000 - 1000,
+            Math.random() * 2000 - 1000
+        );
+        
+        colors.push(
+            Math.random() * 0.5 + 0.5,
+            Math.random() * 0.5 + 0.5,
+            1
+        );
+    }
+    
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    
+    const material = new THREE.PointsMaterial({
+        size: 3,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8
+    });
+    
+    particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+    
+    camera.position.z = 1000;
+    
+    animate();
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    
+    if (particles) {
+        particles.rotation.x += 0.0005;
+        particles.rotation.y += 0.001;
+    }
+    
+    renderer.render(scene, camera);
+}
+
+// Magnetic Button Effect
+document.querySelectorAll('.magnetic-button').forEach(button => {
+    button.addEventListener('mousemove', function(e) {
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        gsap.to(button, {
+            x: x * 0.1,
+            y: y * 0.1,
+            duration: 0.3,
+            ease: "power2.out"
+        });
+    });
+    
+    button.addEventListener('mouseleave', function() {
+        gsap.to(button, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+    });
+});
+
+// Parallax Effect
+window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelectorAll('.parallax-layer');
+    
+    parallaxElements.forEach((element, index) => {
+        const speed = (index + 1) * 0.5;
+        gsap.to(element, {
+            y: scrolled * speed,
+            duration: 0.1
+        });
+    });
+});
+
+// Enhanced Newsletter Form
+document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const button = this.querySelector('button');
+    const originalText = button.textContent;
+    
+    // Animate button
+    gsap.to(button, {
+        scale: 0.95,
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1
+    });
+    
+    button.textContent = 'Quantum Linking...';
+    
+    // Simulate API call
+    setTimeout(() => {
+        button.textContent = 'Welcome to the Future!';
+        gsap.fromTo(button, 
+            { backgroundColor: '#10B981' },
+            { backgroundColor: '#6366F1', duration: 2 }
+        );
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+        }, 2000);
+    }, 1500);
+});
+
+// Initialize Three.js when page loads
+window.addEventListener('load', function() {
+    setTimeout(initThreeJS, 100);
+});
+
+// Handle window resize
+window.addEventListener('resize', function() {
+    if (camera && renderer) {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+});
+
+// Advanced GSAP Animations
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero text animation
+gsap.from(".text-shimmer", {
+    y: 100,
+    opacity: 0,
+    duration: 1.5,
+    stagger: 0.2,
+    ease: "back.out(1.7)"
+});
+
+// Card hover effects with GSAP
+document.querySelectorAll('.card-hover').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        gsap.to(this, {
+            rotationY: 10,
+            rotationX: 5,
+            duration: 0.3,
+            ease: "power2.out"
+        });
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        gsap.to(this, {
+            rotationY: 0,
+            rotationX: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)"
+        });
+    });
+});
+</script>
+{% endblock %}

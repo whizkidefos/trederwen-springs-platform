@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ site_settings.site_name }}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ site_settings.site_description }}{% endblock %}">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <!-- Welsh Spring Water Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🏔️</text></svg>">
     
-    <!-- Tailwind CSS -->
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" as="style">
+    
+    <!-- TailwindCSS with Welsh-inspired config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -17,53 +20,68 @@
                 extend: {
                     colors: {
                         primary: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
+                            50: '#eff6ff',
+                            100: '#dbeafe', 
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
                         },
-                        secondary: {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            200: '#e2e8f0',
-                            300: '#cbd5e1',
-                            400: '#94a3b8',
-                            500: '#64748b',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1e293b',
-                            900: '#0f172a',
-                        },
-                        success: {
-                            50: '#f0fdf4',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                        },
-                        warning: {
-                            50: '#fffbeb',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                        },
-                        error: {
-                            50: '#fef2f2',
-                            500: '#ef4444',
-                            600: '#dc2626',
+                        welsh: {
+                            green: {
+                                50: '#f0fdf4',
+                                100: '#dcfce7',
+                                200: '#bbf7d0', 
+                                300: '#86efac',
+                                400: '#4ade80',
+                                500: '#22c55e',
+                                600: '#16a34a',
+                                700: '#15803d',
+                                800: '#166534',
+                                900: '#14532d',
+                            },
+                            blue: {
+                                50: '#eff6ff',
+                                100: '#dbeafe',
+                                200: '#bfdbfe', 
+                                300: '#93c5fd',
+                                400: '#60a5fa',
+                                500: '#3b82f6',
+                                600: '#2563eb',
+                                700: '#1d4ed8',
+                                800: '#1e40af',
+                                900: '#1e3a8a',
+                            },
+                            slate: {
+                                50: '#f8fafc',
+                                100: '#f1f5f9',
+                                200: '#e2e8f0',
+                                300: '#cbd5e1', 
+                                400: '#94a3b8',
+                                500: '#64748b',
+                                600: '#475569',
+                                700: '#334155',
+                                800: '#1e293b',
+                                900: '#0f172a',
+                            }
                         }
                     },
                     fontFamily: {
-                        'sans': ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
                         'serif': ['Playfair Display', 'ui-serif', 'serif'],
+                        'display': ['Playfair Display', 'ui-serif', 'serif'],
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.5s ease-in-out',
-                        'slide-up': 'slideUp 0.3s ease-out',
-                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'welsh-flow': 'welshFlow 12s ease infinite',
+                        'mountain-float': 'mountainFloat 8s ease-in-out infinite',
+                        'spring-ripple': 'springRipple 4s ease-out infinite',
+                        'welsh-shimmer': 'welshShimmer 3s ease-in-out infinite',
+                        'heritage-glow': 'heritageGlow 3s ease-in-out infinite alternate',
+                        'valley-mist': 'valleyMist 8s ease-in-out infinite',
                     }
                 }
             }
@@ -71,442 +89,660 @@
     </script>
     
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Alpine.js for interactivity -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
-    <!-- Custom styles -->
+    <!-- Welsh Heritage CSS -->
     <style>
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        :root {
+            --welsh-blue: #1e40af;
+            --welsh-green: #059669;
+            --welsh-slate: #334155;
+            --mountain-gradient: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+            --spring-gradient: linear-gradient(45deg, #3b82f6, #059669, #1e40af);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
         }
         
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.05); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
+        body {
+            background: var(--mountain-gradient);
+            background-attachment: fixed;
         }
         
-        .glass-effect {
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            background-color: rgba(255, 255, 255, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.125);
+        /* Welsh Heritage Keyframes */
+        @keyframes welshFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        .text-gradient {
-            background: linear-gradient(45deg, #0ea5e9, #3b82f6, #8b5cf6);
+        @keyframes mountainFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% { 
+                transform: translateY(-20px) rotate(1deg);
+            }
+        }
+        
+        @keyframes springRipple {
+            0% { 
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes welshShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes heritageGlow {
+            0% { box-shadow: 0 0 20px rgba(30, 64, 175, 0.4); }
+            100% { box-shadow: 0 0 40px rgba(5, 150, 105, 0.6); }
+        }
+        
+        @keyframes valleyMist {
+            0%, 100% { 
+                background-position: 0% 50%;
+                opacity: 0.1;
+            }
+            50% { 
+                background-position: 100% 50%;
+                opacity: 0.2;
+            }
+        }
+        
+        /* Welsh Glass Morphism */
+        .welsh-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .welsh-glass-strong {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Welsh Heritage Text */
+        .welsh-text {
+            background: var(--spring-gradient);
+            background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: welshShimmer 3s ease-in-out infinite;
+        }
+        
+        /* Mountain Navigation */
+        .mountain-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Welsh Interactive Elements */
+        .welsh-magnetic {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        
+        .welsh-magnetic:hover {
+            transform: scale(1.05);
+        }
+        
+        .heritage-button {
+            background: var(--spring-gradient);
+            background-size: 400% 400%;
+            animation: welshShimmer 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .heritage-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .heritage-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Welsh Menu Items */
+        .welsh-menu-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .welsh-menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--spring-gradient);
+            transition: width 0.3s ease;
+        }
+        
+        .welsh-menu-item:hover::after {
+            width: 100%;
+        }
+        
+        /* Mountain Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--spring-gradient);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #3b82f6, #059669, #1e40af);
+        }
+        
+        /* Heritage Progress Bar */
+        .heritage-progress {
+            height: 3px;
+            background: var(--spring-gradient);
+            background-size: 200% 200%;
+            animation: welshShimmer 2s ease-in-out infinite;
+        }
+        
+        /* Welsh Notification */
+        .welsh-notification {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(30, 64, 175, 0.2);
         }
     </style>
     
     {% block extra_css %}{% endblock %}
 </head>
 
-<body class="h-full bg-gray-50 flex flex-col">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50" x-data="{ mobileMenuOpen: false, cartOpen: false }">
+<body class="h-full bg-gradient-to-br from-welsh-slate-900 via-welsh-blue-900 to-welsh-green-900 text-white overflow-x-hidden">
+    <!-- Welsh Heritage Progress Bar -->
+    <div id="heritage-progress" class="fixed top-0 left-0 z-50 heritage-progress" style="width: 0%;"></div>
+    
+    <!-- Floating Welsh Mountain Elements -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-20 left-10 w-32 h-24 bg-welsh-blue-600 opacity-10 animate-mountain-float" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
+        <div class="absolute top-40 right-20 w-24 h-18 bg-welsh-green-600 opacity-15 animate-mountain-float" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%); animation-delay: -3s;"></div>
+        <div class="absolute bottom-32 left-1/4 w-20 h-15 bg-welsh-slate-600 opacity-20 animate-mountain-float" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%); animation-delay: -6s;"></div>
+        <div class="absolute bottom-20 right-1/3 w-28 h-21 bg-welsh-blue-500 opacity-10 animate-mountain-float" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%); animation-delay: -9s;"></div>
+    </div>
+    
+    <!-- Welsh Heritage Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 mountain-nav transition-all duration-300" id="main-nav" 
+         x-data="{ 
+             mobileMenuOpen: false, 
+             cartOpen: false, 
+             searchOpen: false,
+             userMenuOpen: false 
+         }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
+            <div class="flex justify-between items-center h-20">
+                <!-- Welsh Heritage Logo -->
                 <div class="flex items-center">
-                    <a href="/" class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">TS</span>
+                    <a href="/" class="flex items-center space-x-3 group">
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-gradient-to-br from-welsh-blue-600 to-welsh-green-600 rounded-xl flex items-center justify-center animate-heritage-glow">
+                                <span class="text-white font-bold text-lg">TS</span>
+                            </div>
+                            <!-- Mountain peak overlay -->
+                            <div class="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full opacity-80"></div>
                         </div>
-                        <span class="text-xl font-serif font-semibold text-gray-900">{{ site_settings.site_name }}</span>
+                        <div>
+                            <span class="text-2xl font-serif font-bold welsh-text">{{ site_settings.site_name }}</span>
+                            <div class="text-xs text-blue-300 font-medium">Welsh Mountain Heritage</div>
+                        </div>
                     </a>
                 </div>
                 
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-700 hover:text-primary-600 transition-colors">Home</a>
+                <!-- Welsh Heritage Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="/" class="welsh-menu-item text-white hover:text-blue-300 transition-colors font-medium">
+                        Home
+                    </a>
                     <div class="relative group">
-                        <a href="/products/" class="text-gray-700 hover:text-primary-600 transition-colors">Products</a>
-                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                            {% for category in nav_categories %}
-                            <a href="/products/category/{{ category.slug }}/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{ category.name }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <a href="/subscriptions/" class="text-gray-700 hover:text-primary-600 transition-colors">Subscribe & Save</a>
-                    <a href="/blog/" class="text-gray-700 hover:text-primary-600 transition-colors">Blog</a>
-                    <a href="/about/" class="text-gray-700 hover:text-primary-600 transition-colors">About</a>
-                    <a href="/contact/" class="text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
-                </div>
-                
-                <!-- Search Bar -->
-                <div class="hidden lg:block flex-1 max-w-xs mx-8">
-                    <form action="/search/" method="GET" class="relative">
-                        <input type="text" name="q" placeholder="Search products..." 
-                               class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                        <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        <button class="welsh-menu-item text-white hover:text-blue-300 transition-colors font-medium flex items-center space-x-1">
+                            <span>Our Springs</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
-                    </form>
+                        <!-- Welsh Mountain Dropdown -->
+                        <div class="absolute top-full left-0 mt-2 w-72 welsh-glass-strong rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translateY-2">
+                            <div class="p-6 space-y-3">
+                                <div class="text-sm text-blue-200 font-medium mb-3">Explore Our Welsh Springs</div>
+                                {% for category in nav_categories %}
+                                <a href="/products/category/{{ category.slug }}/" 
+                                   class="block p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-colors group">
+                                    <div class="font-medium text-white group-hover:text-blue-300 transition-colors">{{ category.name }}</div>
+                                    <div class="text-sm text-blue-300">From the {{ category.name|lower }} valleys</div>
+                                </a>
+                                {% empty %}
+                                <div class="text-blue-300 text-sm italic">New springs coming from the Welsh valleys...</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/subscriptions/" class="welsh-menu-item text-white hover:text-green-300 transition-colors font-medium">
+                        Valley Delivery
+                    </a>
+                    <a href="/blog/" class="welsh-menu-item text-white hover:text-blue-300 transition-colors font-medium">
+                        Heritage Stories
+                    </a>
+                    <a href="/about/" class="welsh-menu-item text-white hover:text-green-300 transition-colors font-medium">
+                        Our Valley
+                    </a>
                 </div>
                 
-                <!-- Right side icons -->
+                <!-- Welsh Mountain Search -->
+                <div class="hidden md:block flex-1 max-w-md mx-8">
+                    <div class="relative">
+                        <input type="text" 
+                               placeholder="Search Welsh springs..." 
+                               class="w-full pl-12 pr-4 py-3 welsh-glass rounded-full text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white focus:bg-opacity-10 transition-all duration-300">
+                        <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
+                            <svg class="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Welsh Heritage Actions -->
                 <div class="flex items-center space-x-4">
+                    <!-- Welsh User Menu -->
                     {% if user.is_authenticated %}
-                        <div class="relative group">
-                            <button class="flex items-center space-x-1 text-gray-700 hover:text-primary-600">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                <span class="hidden sm:inline">{{ user.get_full_name }}</span>
+                        <div class="relative">
+                            <button @click="userMenuOpen = !userMenuOpen" 
+                                    class="flex items-center space-x-2 p-2 welsh-glass rounded-full hover:bg-white hover:bg-opacity-10 transition-all duration-300 welsh-magnetic">
+                                <div class="w-8 h-8 bg-gradient-to-br from-welsh-blue-500 to-welsh-green-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white font-bold text-sm">{{ user.first_name.0|default:"W" }}</span>
+                                </div>
+                                <span class="hidden md:inline text-white font-medium">{{ user.get_full_name|truncatechars:15 }}</span>
                             </button>
-                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <a href="/accounts/profile/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                                <a href="/orders/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Orders</a>
-                                <a href="/subscriptions/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Subscriptions</a>
-                                <hr class="my-1">
-                                <a href="/accounts/logout/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                            
+                            <!-- Welsh User Dropdown -->
+                            <div x-show="userMenuOpen" 
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 transform scale-95"
+                                 x-transition:enter-end="opacity-100 transform scale-100"
+                                 @click.away="userMenuOpen = false"
+                                 class="absolute right-0 mt-2 w-64 welsh-glass-strong rounded-2xl overflow-hidden">
+                                <div class="p-4 border-b border-white border-opacity-10">
+                                    <div class="font-medium text-white">{{ user.get_full_name }}</div>
+                                    <div class="text-sm text-blue-300">Welsh Valley Member</div>
+                                </div>
+                                <div class="p-2 space-y-1">
+                                    <a href="/accounts/profile/" class="block p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-colors text-white">
+                                        <div class="flex items-center space-x-3">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            </svg>
+                                            <span>My Profile</span>
+                                        </div>
+                                    </a>
+                                    <a href="/orders/" class="block p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-colors text-white">
+                                        <div class="flex items-center space-x-3">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                            </svg>
+                                            <span>Spring Deliveries</span>
+                                        </div>
+                                    </a>
+                                    <a href="/subscriptions/" class="block p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-colors text-white">
+                                        <div class="flex items-center space-x-3">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                            </svg>
+                                            <span>Valley Subscriptions</span>
+                                        </div>
+                                    </a>
+                                    <hr class="border-white border-opacity-10">
+                                    <a href="/accounts/logout/" class="block p-3 rounded-xl hover:bg-red-500 hover:bg-opacity-20 transition-colors text-white">
+                                        <div class="flex items-center space-x-3">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                            </svg>
+                                            <span>Leave Valley</span>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     {% else %}
-                        <a href="/accounts/login/" class="text-gray-700 hover:text-primary-600">Login</a>
-                        <a href="/accounts/register/" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">Sign Up</a>
+                        <a href="/accounts/login/" class="text-white hover:text-blue-300 transition-colors font-medium">Enter Valley</a>
+                        <a href="/accounts/register/" class="heritage-button text-white px-6 py-2 rounded-full font-bold welsh-magnetic">
+                            Join Heritage
+                        </a>
                     {% endif %}
                     
-                    <!-- Cart -->
+                    <!-- Welsh Spring Cart -->
                     <div class="relative">
-                        <button @click="cartOpen = !cartOpen" class="relative p-2 text-gray-700 hover:text-primary-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button @click="cartOpen = !cartOpen" 
+                                class="relative p-3 welsh-glass rounded-full hover:bg-white hover:bg-opacity-10 transition-all duration-300 welsh-magnetic">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 8.5M7 13v4a2 2 0 002 2h8a2 2 0 002-2v-4"></path>
                             </svg>
                             {% if cart_data.total_items > 0 %}
-                            <span class="absolute -top-1 -right-1 bg-primary-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                            <span class="absolute -top-1 -right-1 bg-gradient-to-r from-welsh-green-500 to-welsh-blue-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse cart-count-badge">
                                 {{ cart_data.total_items }}
                             </span>
                             {% endif %}
                         </button>
                         
-                        <!-- Cart Dropdown -->
-                        <div x-show="cartOpen" x-transition:enter="transition ease-out duration-200" 
-                             x-transition:enter-start="opacity-0 transform scale-95" 
-                             x-transition:enter-end="opacity-100 transform scale-100"
-                             @click.away="cartOpen = false" 
-                             class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50">
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Shopping Cart</h3>
-                                
-                                {% if cart_data.is_empty %}
-                                <p class="text-gray-500 text-center py-4">Your cart is empty</p>
-                                <a href="/products/" class="block w-full bg-primary-600 text-white text-center py-2 rounded-lg hover:bg-primary-700 transition-colors">
-                                    Start Shopping
-                                </a>
-                                {% else %}
-                                <div class="space-y-3 mb-4 max-h-60 overflow-y-auto">
-                                    {% for item in cart_data.items %}
-                                    <div class="flex items-center space-x-3">
-                                        {% if item.image_url %}
-                                        <img src="{{ item.image_url }}" alt="{{ item.name }}" class="w-12 h-12 object-cover rounded">
-                                        {% else %}
-                                        <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
-                                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
-                                        </div>
-                                        {% endif %}
-                                        <div class="flex-1 min-w-0">
-                                            <p class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</p>
-                                            <p class="text-sm text-gray-500">{{ item.quantity }} × £{{ item.price }}</p>
-                                        </div>
-                                        <p class="text-sm font-medium text-gray-900">£{{ item.total_price }}</p>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                                
-                                <div class="border-t pt-4">
-                                    <div class="flex justify-between items-center mb-4">
-                                        <span class="text-lg font-semibold text-gray-900">Total:</span>
-                                        <span class="text-lg font-semibold text-primary-600">£{{ cart_data.total_price }}</span>
-                                    </div>
-                                    
-                                    <div class="space-y-2">
-                                <a href="/cart/" class="block w-full bg-gray-100 text-gray-900 text-center py-2 rounded-lg hover:bg-gray-200 transition-colors">
-                                            View Cart
-                                        </a>
-                                        <a href="/checkout/" class="block w-full bg-primary-600 text-white text-center py-2 rounded-lg hover:bg-primary-700 transition-colors">
-                                            Checkout
-                                        </a>
-                                    </div>
-                                </div>
-                                {% endif %}
+                        <!-- Welsh Spring Cart Dropdown -->
+                        <div x-show="cartOpen" 
+                             x-transition:enter="transition ease-out duration-300"
+                             x-transition:enter-start="opacity-0 transform scale-95 translate-y-4"
+                             x-transition:enter-end="opacity-100 transform scale-100 translate-y-0"
+                             @click.away="cartOpen = false"
+                             class="absolute right-0 mt-4 w-96 welsh-glass-strong rounded-3xl overflow-hidden max-h-96">
+                            
+                            <div class="p-6 border-b border-white border-opacity-10">
+                                <h3 class="text-xl font-serif font-bold text-white welsh-text">Spring Cart</h3>
+                                <div class="text-sm text-blue-200">Fresh from Welsh valleys</div>
                             </div>
+                            
+                            {% if cart_data.is_empty %}
+                            <div class="p-8 text-center">
+                                <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-welsh-blue-500 to-welsh-green-500 rounded-full flex items-center justify-center opacity-50">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-blue-300 mb-4">Your spring cart is empty</p>
+                                <a href="/products/" class="heritage-button inline-block text-white px-6 py-2 rounded-full font-bold">
+                                    Explore Springs
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="max-h-64 overflow-y-auto p-4 space-y-4">
+                                {% for item in cart_data.items %}
+                                <div class="flex items-center space-x-4 p-3 welsh-glass rounded-xl hover:bg-white hover:bg-opacity-5 transition-colors">
+                                    {% if item.image_url %}
+                                    <img src="{{ item.image_url }}" alt="{{ item.name }}" class="w-12 h-12 object-cover rounded-lg">
+                                    {% else %}
+                                    <div class="w-12 h-12 bg-gradient-to-br from-welsh-blue-500 to-welsh-green-500 rounded-lg flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                        </svg>
+                                    </div>
+                                    {% endif %}
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-white font-medium truncate">{{ item.name }}</p>
+                                        <p class="text-blue-300 text-sm">{{ item.quantity }} × £{{ item.price }}</p>
+                                    </div>
+                                    <p class="text-welsh-blue-300 font-bold">£{{ item.total_price }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="p-6 border-t border-white border-opacity-10">
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-lg font-bold text-white">Valley Total:</span>
+                                    <span class="text-2xl font-bold welsh-text">£{{ cart_data.total_price }}</span>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <a href="/cart/" class="block w-full text-center py-3 welsh-glass rounded-xl text-white hover:bg-white hover:bg-opacity-10 transition-colors font-medium">
+                                        View Spring Cart
+                                    </a>
+                                    <a href="/checkout/" class="block w-full text-center py-3 heritage-button rounded-xl text-white font-bold">
+                                        Valley Checkout
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden p-2 welsh-glass rounded-xl welsh-magnetic">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
                 </div>
-                
-                <!-- Mobile menu button -->
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
             </div>
         </div>
         
-        <!-- Mobile menu -->
-        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t">
-            <div class="px-4 py-2 space-y-2">
-                <a href="/" class="block py-2 text-gray-700">Home</a>
-                <a href="/products/" class="block py-2 text-gray-700">Products</a>
-                <a href="/subscriptions/" class="block py-2 text-gray-700">Subscribe & Save</a>
-                <a href="/blog/" class="block py-2 text-gray-700">Blog</a>
-                <a href="/about/" class="block py-2 text-gray-700">About</a>
-                <a href="/contact/" class="block py-2 text-gray-700">Contact</a>
+        <!-- Welsh Mobile Menu -->
+        <div x-show="mobileMenuOpen" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform -translate-y-full"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             class="lg:hidden welsh-glass-strong border-t border-white border-opacity-10">
+            <div class="px-4 py-6 space-y-4">
+                <a href="/" class="block py-3 text-white hover:text-blue-300 transition-colors font-medium">Home</a>
+                <a href="/products/" class="block py-3 text-white hover:text-blue-300 transition-colors font-medium">Our Springs</a>
+                <a href="/subscriptions/" class="block py-3 text-white hover:text-green-300 transition-colors font-medium">Valley Delivery</a>
+                <a href="/blog/" class="block py-3 text-white hover:text-blue-300 transition-colors font-medium">Heritage Stories</a>
+                <a href="/about/" class="block py-3 text-white hover:text-green-300 transition-colors font-medium">Our Valley</a>
+                <a href="/contact/" class="block py-3 text-white hover:text-blue-300 transition-colors font-medium">Visit Us</a>
+                
+                <!-- Mobile Search -->
+                <div class="pt-4 border-t border-white border-opacity-10">
+                    <input type="text" placeholder="Search Welsh springs..." class="w-full p-3 welsh-glass rounded-xl text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Messages -->
+    <!-- Welsh Heritage Messages -->
     {% if messages %}
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <div class="fixed top-24 right-4 z-50 space-y-4" id="messages-container">
         {% for message in messages %}
-        <div class="mb-4 p-4 rounded-lg {% if message.tags == 'error' %}bg-red-50 border border-red-200 text-red-700{% elif message.tags == 'success' %}bg-green-50 border border-green-200 text-green-700{% elif message.tags == 'warning' %}bg-yellow-50 border border-yellow-200 text-yellow-700{% else %}bg-blue-50 border border-blue-200 text-blue-700{% endif %}">
-            {{ message }}
+        <div class="welsh-notification p-4 rounded-2xl max-w-sm animate-fade-in-up" data-message-type="{{ message.tags }}">
+            <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0">
+                    {% if message.tags == 'success' %}
+                    <div class="w-8 h-8 bg-welsh-green-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    {% elif message.tags == 'error' %}
+                    <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    {% elif message.tags == 'warning' %}
+                    <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+                    {% else %}
+                    <div class="w-8 h-8 bg-welsh-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="flex-1">
+                    <p class="text-white font-medium">{{ message }}</p>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" class="text-blue-300 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
         {% endfor %}
     </div>
     {% endif %}
 
     <!-- Main Content -->
-    <main class="flex-1">
+    <main class="relative z-10 pt-20">
         {% block content %}
         {% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Company Info -->
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">TS</span>
+    <!-- Welsh Heritage Footer -->
+    <footer class="relative mt-20 overflow-hidden">
+        <!-- Welsh Mountain Footer Background -->
+        <div class="absolute inset-0 bg-gradient-to-t from-welsh-slate-900 via-welsh-blue-900 to-transparent opacity-90"></div>
+        <div class="absolute inset-0">
+            <!-- Mountain silhouettes -->
+            <div class="absolute bottom-0 left-0 right-0 h-64" style="background: linear-gradient(to right, rgba(30,64,175,0.1), rgba(5,150,105,0.1), rgba(30,64,175,0.1)); clip-path: polygon(0 100%, 8% 75%, 20% 80%, 35% 65%, 50% 70%, 65% 55%, 80% 65%, 92% 50%, 100% 60%, 100% 100%);"></div>
+            <div class="absolute bottom-0 left-0 right-0 h-32" style="background: linear-gradient(to right, rgba(5,150,105,0.15), rgba(30,64,175,0.15), rgba(5,150,105,0.15)); clip-path: polygon(0 100%, 15% 85%, 30% 90%, 45% 75%, 60% 80%, 75% 70%, 90% 75%, 100% 65%, 100% 100%);"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <!-- Welsh Heritage Footer Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-serif font-bold welsh-text mb-4">
+                    The Welsh Valley Awaits
+                </h2>
+                <p class="text-xl text-blue-300 max-w-2xl mx-auto">
+                    Join thousands who have discovered the pure taste of ancient Welsh mountains
+                </p>
+            </div>
+            
+            <!-- Welsh Newsletter -->
+            <div class="max-w-2xl mx-auto mb-16">
+                <form class="welsh-glass-strong rounded-3xl p-8 relative overflow-hidden" id="footer-heritage-newsletter">
+                    <div class="absolute inset-0 bg-gradient-to-r from-welsh-blue-600 to-welsh-green-600 opacity-10 animate-valley-mist"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-serif font-bold text-white mb-4 text-center">Valley Updates</h3>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="email" 
+                                   placeholder="Enter your email for valley news..." 
+                                   required
+                                   class="flex-1 px-6 py-4 welsh-glass rounded-full text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300">
+                            <button type="submit" class="heritage-button px-8 py-4 rounded-full font-bold text-white welsh-magnetic">
+                                Join Valley
+                            </button>
                         </div>
-                        <span class="text-xl font-serif font-semibold">{{ site_settings.site_name }}</span>
                     </div>
-                    <p class="text-gray-300 mb-4">{{ site_settings.site_description }}</p>
+                </form>
+            </div>
+            
+            <!-- Welsh Footer Links -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <!-- Our Heritage -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-serif font-bold text-white mb-4">Our Heritage</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-blue-300 hover:text-white transition-colors hover:translate-x-2 transform duration-300 block">Welsh Story</a></li>
+                        <li><a href="/springs/" class="text-blue-300 hover:text-white transition-colors hover:translate-x-2 transform duration-300 block">Our Springs</a></li>
+                        <li><a href="/heritage/" class="text-blue-300 hover:text-white transition-colors hover:translate-x-2 transform duration-300 block">Mountain Heritage</a></li>
+                        <li><a href="/sustainability/" class="text-blue-300 hover:text-white transition-colors hover:translate-x-2 transform duration-300 block">Valley Protection</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Welsh Springs -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-serif font-bold text-white mb-4">Welsh Springs</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/products/" class="text-blue-300 hover:text-green-300 transition-colors hover:translate-x-2 transform duration-300 block">All Springs</a></li>
+                        <li><a href="/products/premium/" class="text-blue-300 hover:text-green-300 transition-colors hover:translate-x-2 transform duration-300 block">Premium Collection</a></li>
+                        <li><a href="/subscriptions/" class="text-blue-300 hover:text-green-300 transition-colors hover:translate-x-2 transform duration-300 block">Valley Delivery</a></li>
+                        <li><a href="/gifts/" class="text-blue-300 hover:text-green-300 transition-colors hover:translate-x-2 transform duration-300 block">Welsh Gifts</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Valley Support -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-serif font-bold text-white mb-4">Valley Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/help/" class="text-blue-300 hover:text-blue-200 transition-colors hover:translate-x-2 transform duration-300 block">Help Centre</a></li>
+                        <li><a href="/contact/" class="text-blue-300 hover:text-blue-200 transition-colors hover:translate-x-2 transform duration-300 block">Visit Our Valley</a></li>
+                        <li><a href="/delivery/" class="text-blue-300 hover:text-blue-200 transition-colors hover:translate-x-2 transform duration-300 block">Spring Delivery</a></li>
+                        <li><a href="/returns/" class="text-blue-300 hover:text-blue-200 transition-colors hover:translate-x-2 transform duration-300 block">Returns</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Welsh Connection -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-serif font-bold text-white mb-4">Welsh Connection</h3>
+                    <div class="flex flex-wrap gap-4">
+                        {% if site_settings.facebook_url %}
+                        <a href="{{ site_settings.facebook_url }}" target="_blank" class="w-12 h-12 welsh-glass rounded-full flex items-center justify-center hover:bg-welsh-blue-500 hover:bg-opacity-20 transition-all duration-300 welsh-magnetic">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        {% endif %}
+                        
+                        <a href="#" class="w-12 h-12 welsh-glass rounded-full flex items-center justify-center hover:bg-welsh-green-500 hover:bg-opacity-20 transition-all duration-300 welsh-magnetic">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                    </div>
                     
-                    <!-- Newsletter Signup -->
-                    <form action="/ajax/newsletter-signup/" method="POST" class="flex max-w-md" id="newsletter-form">
-                        {% csrf_token %}
-                        <input type="email" name="email" placeholder="Your email address" required
-                               class="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                        <button type="submit" class="px-6 py-2 bg-primary-600 hover:bg-primary-700 rounded-r-lg transition-colors">
-                            Subscribe
-                        </button>
-                    </form>
-                </div>
-                
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="/about/" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="/products/" class="text-gray-300 hover:text-white transition-colors">Products</a></li>
-                        <li><a href="/subscriptions/" class="text-gray-300 hover:text-white transition-colors">Subscribe & Save</a></li>
-                        <li><a href="/blog/" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="/contact/" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Support -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Support</h3>
-                    <ul class="space-y-2">
-                        <li><a href="/shipping-info/" class="text-gray-300 hover:text-white transition-colors">Shipping Info</a></li>
-                        <li><a href="/returns-policy/" class="text-gray-300 hover:text-white transition-colors">Returns Policy</a></li>
-                        <li><a href="/privacy-policy/" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="/terms-of-service/" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
-                    </ul>
+                    <!-- Welsh Heritage Stats -->
+                    <div class="mt-8 space-y-4">
+                        <div class="welsh-glass rounded-xl p-4">
+                            <div class="text-2xl font-bold welsh-text">1000+</div>
+                            <div class="text-sm text-blue-300">Years of Natural Filtration</div>
+                        </div>
+                        <div class="welsh-glass rounded-xl p-4">
+                            <div class="text-2xl font-bold welsh-text">500m</div>
+                            <div class="text-sm text-blue-300">Above Sea Level</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm">© {% now "Y" %} {{ site_settings.site_name }}. All rights reserved.</p>
-                
-                <!-- Social Links -->
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    {% if site_settings.facebook_url %}
-                    <a href="{{ site_settings.facebook_url }}" target="_blank" class="text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                    </a>
-                    {% endif %}
-                    {% if site_settings.twitter_url %}
-                    <a href="{{ site_settings.twitter_url }}" target="_blank" class="text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                        </svg>
-                    </a>
-                    {% endif %}
-                    {% if site_settings.instagram_url %}
-                    <a href="{{ site_settings.instagram_url }}" target="_blank" class="text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
-                    {% endif %}
+            <!-- Welsh Footer Bottom -->
+            <div class="border-t border-white border-opacity-10 pt-8">
+                <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+                    <div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-8">
+                        <p class="text-blue-300 text-sm">© {% now "Y" %} {{ site_settings.site_name }}. All Welsh heritage rights reserved.</p>
+                        <div class="flex space-x-6 text-sm">
+                            <a href="/privacy/" class="text-blue-300 hover:text-white transition-colors">Privacy</a>
+                            <a href="/terms/" class="text-blue-300 hover:text-white transition-colors">Terms</a>
+                            <a href="/cookies/" class="text-blue-300 hover:text-white transition-colors">Cookies</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Welsh Heritage Badge -->
+                    <div class="flex items-center space-x-3">
+                        <div class="welsh-glass rounded-full px-4 py-2">
+                            <span class="text-blue-300 font-medium text-sm">Proudly Welsh</span>
+                        </div>
+                        <div class="w-8 h-8 bg-gradient-to-br from-welsh-blue-500 to-welsh-green-500 rounded-full animate-heritage-glow"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-        // CSRF token for AJAX requests
-        function getCSRFToken() {
-            return document.querySelector('[name=csrfmiddlewaretoken]').value;
-        }
-
-        // Add to cart functionality
-        function addToCart(productId, quantity = 1, variantId = null) {
-            const formData = new FormData();
-            formData.append('product_id', productId);
-            formData.append('quantity', quantity);
-            if (variantId) formData.append('variant_id', variantId);
-            formData.append('csrfmiddlewaretoken', getCSRFToken());
-
-            fetch('/ajax/add-to-cart/', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Update cart count in navigation
-                    updateCartCount(data.cart_count);
-                    showNotification(data.message, 'success');
-                } else {
-                    showNotification(data.message, 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('An error occurred. Please try again.', 'error');
-            });
-        }
-
-        // Update cart count in navigation
-        function updateCartCount(count) {
-            const cartBadge = document.querySelector('.cart-count-badge');
-            if (cartBadge) {
-                if (count > 0) {
-                    cartBadge.textContent = count;
-                    cartBadge.style.display = 'flex';
-                } else {
-                    cartBadge.style.display = 'none';
-                }
-            }
-        }
-
-        // Show notification
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 z-50 max-w-sm p-4 rounded-lg shadow-lg animate-slide-up ${
-                type === 'success' ? 'bg-green-500 text-white' :
-                type === 'error' ? 'bg-red-500 text-white' :
-                type === 'warning' ? 'bg-yellow-500 text-white' :
-                'bg-blue-500 text-white'
-            }`;
-            notification.textContent = message;
-
-            document.body.appendChild(notification);
-
-            // Auto-remove after 5 seconds
-            setTimeout(() => {
-                notification.remove();
-            }, 5000);
-
-            // Remove on click
-            notification.addEventListener('click', () => {
-                notification.remove();
-            });
-        }
-
-        // Newsletter form submission
-        document.getElementById('newsletter-form')?.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showNotification(data.message, 'success');
-                    this.reset();
-                } else {
-                    showNotification(data.message, 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('An error occurred. Please try again.', 'error');
-            });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Image lazy loading fallback
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                        observer.unobserve(img);
-                    }
-                });
-            });
-            observer.observe(img);
-        });
-
-        // Auto-hide messages after 5 seconds
-        setTimeout(() => {
-            document.querySelectorAll('.alert-message').forEach(message => {
-                message.style.opacity = '0';
-                setTimeout(() => message.remove(), 300);
-            });
-        }, 5000);
-    </script>
-
-    {% block extra_js %}{% endblock %}
-</body>
-</html>
+    <!-- Welsh Heritage Scripts -->
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

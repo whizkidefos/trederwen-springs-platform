@@ -59,7 +59,7 @@ def home(request):
         'settings': settings,
     }
     
-    return render(request, 'core/home.html', context)
+    return render(request, 'core/welsh_heritage_home.html', context)
 
 def about(request):
     """About page view"""

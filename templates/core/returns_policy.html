@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Returns Policy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .policy-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .policy-content h2 {
+        color: #1e3a8a;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    
+    .policy-content h3 {
+        color: #1e3a8a;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+    
+    .policy-content p {
+        margin-bottom: 1rem;
+    }
+    
+    .policy-content ul {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        list-style-type: disc;
+    }
+    
+    .policy-content ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        list-style-type: decimal;
+    }
+    
+    .policy-content li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .process-step {
+        transition: all 0.3s ease;
+    }
+    
+    .process-step:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="policy-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                Returns <span class="welsh-text-shimmer">Policy</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Our commitment to your satisfaction with our Welsh spring water products
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Breadcrumbs -->
+<div class="bg-gray-100 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-gray-700">Home</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <span class="text-gray-900 font-medium">Returns Policy</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Returns Process Section -->
+<section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                Simple Returns <span class="welsh-text-shimmer">Process</span>
+            </h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                We want you to be completely satisfied with your purchase. If you're not, here's how to return it.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Step 1 -->
+            <div class="process-step bg-white rounded-2xl shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
+                    1
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Contact Us</h3>
+                <p class="text-gray-600">
+                    Email or call our customer service team within 30 days of receiving your order.
+                </p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="process-step bg-white rounded-2xl shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
+                    2
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Get Return Code</h3>
+                <p class="text-gray-600">
+                    We'll provide you with a return authorization code and instructions.
+                </p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="process-step bg-white rounded-2xl shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
+                    3
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Ship It Back</h3>
+                <p class="text-gray-600">
+                    Package your items securely and send them back using our return label.
+                </p>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="process-step bg-white rounded-2xl shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
+                    4
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Get Refund</h3>
+                <p class="text-gray-600">
+                    Once received and inspected, we'll process your refund within 5-7 business days.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Returns Policy Content -->
+<section class="py-12 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Returns Policy</h2>
+            
+            <div class="policy-content prose prose-blue max-w-none">
+                <p>
+                    At {{ site_settings.site_name }}, we take pride in the quality of our Welsh spring water products. We want you to be completely satisfied with your purchase. This Returns Policy outlines our procedures for returns, exchanges, and refunds.
+                </p>
+                
+                <h2>Return Eligibility</h2>
+                <p>
+                    {{ settings.returns_policy }}
+                </p>
+                <p>
+                    To be eligible for a return, your item must be:
+                </p>
+                <ul>
+                    <li>Unused and in the same condition that you received it</li>
+                    <li>In the original packaging</li>
+                    <li>Accompanied by the receipt or proof of purchase</li>
+                </ul>
+                
+                <h2>Return Timeframe</h2>
+                <p>
+                    You have 30 days from the date of delivery to initiate a return. After 30 days, we cannot offer you a refund or exchange.
+                </p>
+                
+                <h2>Non-Returnable Items</h2>
+                <p>
+                    The following items cannot be returned:
+                </p>
+                <ul>
+                    <li>Products that have been opened or unsealed</li>
+                    <li>Products that show signs of use or tampering</li>
+                    <li>Gift cards</li>
+                    <li>Downloadable products</li>
+                    <li>Personalized or custom-made items</li>
+                </ul>
+                
+                <h2>Return Process</h2>
+                <p>
+                    To return a product:
+                </p>
+                <ol>
+                    <li>Contact our customer service team at {{ site_settings.contact_email }} or {{ site_settings.contact_phone }} to obtain a Return Authorization (RA) number</li>
+                    <li>Include your RA number, order number, and reason for return in your package</li>
+                    <li>Ship your return to the address provided by our customer service team</li>
+                </ol>
+                
+                <h2>Return Shipping</h2>
+                <p>
+                    You are responsible for the cost of returning the product unless:
+                </p>
+                <ul>
+                    <li>The product was damaged during shipping</li>
+                    <li>You received an incorrect product</li>
+                    <li>The product is defective</li>
+                </ul>
+                <p>
+                    In these cases, we will provide a prepaid return shipping label and reimburse your original shipping costs.
+                </p>
+                
+                <h2>Refunds</h2>
+                <p>
+                    Once we receive and inspect your return, we will notify you of the approval or rejection of your refund.
+                </p>
+                <p>
+                    If approved, your refund will be processed, and a credit will automatically be applied to your original method of payment within 5-7 business days. Please note that it may take an additional 2-5 business days for the refund to appear in your account, depending on your payment provider.
+                </p>
+                
+                <h2>Partial Refunds</h2>
+                <p>
+                    Partial refunds may be granted in the following circumstances:
+                </p>
+                <ul>
+                    <li>Products with obvious signs of use</li>
+                    <li>Products that are returned more than 14 days after delivery</li>
+                    <li>Products that are not in their original condition or packaging</li>
+                </ul>
+                
+                <h2>Exchanges</h2>
+                <p>
+                    If you need to exchange a product for a different size, variant, or product altogether, please follow the same process as for returns. Once we receive the original product, we will process your new order.
+                </p>
+                
+                <h2>Damaged or Defective Products</h2>
+                <p>
+                    If you receive a damaged or defective product:
+                </p>
+                <ul>
+                    <li>Contact us within 48 hours of delivery</li>
+                    <li>Provide photos of the damaged product and packaging</li>
+                    <li>We will arrange for a replacement or refund at no additional cost to you</li>
+                </ul>
+                
+                <h2>Subscription Products</h2>
+                <p>
+                    For subscription products:
+                </p>
+                <ul>
+                    <li>You may return any individual delivery within 30 days</li>
+                    <li>You may cancel your subscription at any time through your account settings</li>
+                    <li>Refunds for subscription payments will be processed according to our standard refund policy</li>
+                </ul>
+                
+                <h2>Contact Us</h2>
+                <p>
+                    If you have any questions about our Returns Policy, please contact us at:
+                </p>
+                <ul>
+                    <li>Email: {{ site_settings.contact_email }}</li>
+                    <li>Phone: {{ site_settings.contact_phone }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-blue-900 via-slate-900 to-green-900 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute bottom-0 left-0 right-0 h-48" style="background: linear-gradient(to right, transparent, rgba(30,64,175,0.3), transparent); clip-path: polygon(0 100%, 15% 70%, 30% 80%, 45% 60%, 60% 75%, 75% 55%, 90% 70%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" data-aos="fade-up">
+            Need Help With Your <span class="welsh-text-shimmer">Order</span>?
+        </h2>
+        <p class="text-xl text-blue-100 mb-8" data-aos="fade-up" data-aos-delay="100">
+            Our customer service team is here to assist you with any questions or concerns.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+            <a href="{% url 'core:contact' %}" class="bg-white text-blue-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-blue-50 transition-all">
+                Contact Us
+            </a>
+            <a href="tel:{{ site_settings.contact_phone }}" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all">
+                Call Us
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-out-cubic',
+        once: true
+    });
+</script>
+{% endblock %}

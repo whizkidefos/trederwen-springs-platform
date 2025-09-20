@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Contact Us{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .contact-card {
+        transition: all 0.3s ease;
+    }
+    
+    .contact-card:hover {
+        transform: translateY(-10px);
+    }
+    
+    .faq-toggle {
+        transition: all 0.3s ease;
+    }
+    
+    .faq-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="contact-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                Contact <span class="welsh-text-shimmer">Us</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                We'd love to hear from you. Reach out with any questions about our Welsh spring water products or services.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Contact Card: Email -->
+            <div class="contact-card bg-white rounded-2xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Email Us</h3>
+                <p class="text-gray-600 mb-4">For general inquiries and support</p>
+                <a href="mailto:{{ settings.contact_email }}" class="text-blue-600 font-medium hover:text-blue-800 transition-colors">
+                    {{ settings.contact_email }}
+                </a>
+            </div>
+            
+            <!-- Contact Card: Phone -->
+            <div class="contact-card bg-white rounded-2xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Call Us</h3>
+                <p class="text-gray-600 mb-4">Mon-Fri, 9am-5pm GMT</p>
+                <a href="tel:{{ settings.contact_phone }}" class="text-blue-600 font-medium hover:text-blue-800 transition-colors">
+                    {{ settings.contact_phone }}
+                </a>
+            </div>
+            
+            <!-- Contact Card: Address -->
+            <div class="contact-card bg-white rounded-2xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Visit Us</h3>
+                <p class="text-gray-600 mb-4">Our Welsh headquarters</p>
+                <address class="text-blue-600 font-medium not-italic">
+                    {{ settings.address|linebreaksbr }}
+                </address>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Form -->
+            <div class="bg-white rounded-2xl shadow-lg p-8" data-aos="fade-right">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
+                
+                {% if messages %}
+                <div class="mb-6">
+                    {% for message in messages %}
+                    <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <form method="post" action="{% url 'core:contact' %}" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="name" name="name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                        <input type="text" id="subject" name="subject" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                        <textarea id="message" name="message" rows="5" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required></textarea>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white py-3 rounded-lg font-medium transition-colors">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Map -->
+            <div class="rounded-2xl overflow-hidden shadow-lg h-96" data-aos="fade-left">
+                <!-- Replace with your actual Google Maps embed code -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2422.5384637654917!2d-3.1883319233905437!3d52.60437997721832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486f77c8c5f7f4f9%3A0x7c3b7f8f7b9a7f0c!2sWales%2C%20UK!5e0!3m2!1sen!2sus!4v1632145678901!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+{% if faqs %}
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                Frequently Asked <span class="welsh-text-shimmer">Questions</span>
+            </h2>
+            <p class="text-lg text-gray-700" data-aos="fade-up" data-aos-delay="100">
+                Find answers to common questions about our Welsh spring water products and services.
+            </p>
+        </div>
+        
+        <div class="space-y-6" data-aos="fade-up" data-aos-delay="200">
+            {% for faq in faqs %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                    <span class="text-lg font-medium text-gray-900">{{ faq.question }}</span>
+                    <svg class="faq-arrow w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="faq-content hidden px-6 pb-6">
+                    <p class="text-gray-600">
+                        {{ faq.answer|linebreaksbr }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Social Media Section -->
+<section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                Connect With <span class="welsh-text-shimmer">Us</span>
+            </h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Follow us on social media for the latest news, promotions, and behind-the-scenes content.
+            </p>
+        </div>
+        
+        <div class="flex justify-center space-x-8" data-aos="fade-up" data-aos-delay="200">
+            {% if settings.facebook_url %}
+            <a href="{{ settings.facebook_url }}" target="_blank" rel="noopener noreferrer" class="bg-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2">
+                <svg class="w-10 h-10 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+                </svg>
+            </a>
+            {% endif %}
+            
+            {% if settings.twitter_url %}
+            <a href="{{ settings.twitter_url }}" target="_blank" rel="noopener noreferrer" class="bg-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2">
+                <svg class="w-10 h-10 text-[#1DA1F2]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path>
+                </svg>
+            </a>
+            {% endif %}
+            
+            {% if settings.instagram_url %}
+            <a href="{{ settings.instagram_url }}" target="_blank" rel="noopener noreferrer" class="bg-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2">
+                <svg class="w-10 h-10 text-[#E4405F]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"></path>
+                </svg>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-16 bg-gradient-to-r from-blue-900 via-slate-900 to-green-900 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute bottom-0 left-0 right-0 h-48" style="background: linear-gradient(to right, transparent, rgba(30,64,175,0.3), transparent); clip-path: polygon(0 100%, 15% 70%, 30% 80%, 45% 60%, 60% 75%, 75% 55%, 90% 70%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" data-aos="fade-up">
+            Subscribe to Our <span class="welsh-text-shimmer">Newsletter</span>
+        </h2>
+        <p class="text-xl text-blue-100 mb-8" data-aos="fade-up" data-aos-delay="100">
+            Stay updated with our latest products, promotions, and Welsh heritage stories.
+        </p>
+        
+        <form action="{% url 'core:newsletter_signup' %}" method="post" class="max-w-md mx-auto" data-aos="fade-up" data-aos-delay="200">
+            {% csrf_token %}
+            <div class="flex flex-col sm:flex-row gap-4">
+                <input type="email" name="email" placeholder="Your email address" required class="flex-1 rounded-lg border-white bg-white/20 placeholder-white/70 text-white px-4 py-3 focus:ring-white focus:border-white">
+                <button type="submit" class="bg-white text-blue-900 px-6 py-3 rounded-lg font-bold hover:bg-blue-50 transition-colors">
+                    Subscribe
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-out-cubic',
+        once: true
+    });
+    
+    // FAQ Toggles
+    document.addEventListener('DOMContentLoaded', function() {
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const arrow = this.querySelector('.faq-arrow');
+                
+                // Toggle content visibility
+                content.classList.toggle('hidden');
+                
+                // Rotate arrow
+                if (content.classList.contains('hidden')) {
+                    arrow.style.transform = 'rotate(0deg)';
+                } else {
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

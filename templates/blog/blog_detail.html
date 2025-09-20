@@ -1,0 +1,398 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - {{ post.title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .blog-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .blog-content {
+        font-size: 1.125rem;
+        line-height: 1.75;
+    }
+    
+    .blog-content p {
+        margin-bottom: 1.5rem;
+    }
+    
+    .blog-content h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        color: #1e3a8a;
+    }
+    
+    .blog-content h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1e3a8a;
+    }
+    
+    .blog-content ul, .blog-content ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
+    
+    .blog-content ul li {
+        list-style-type: disc;
+        margin-bottom: 0.5rem;
+    }
+    
+    .blog-content ol li {
+        list-style-type: decimal;
+        margin-bottom: 0.5rem;
+    }
+    
+    .blog-content blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        font-style: italic;
+        color: #4b5563;
+        margin: 1.5rem 0;
+    }
+    
+    .blog-content img {
+        border-radius: 0.5rem;
+        margin: 1.5rem 0;
+    }
+    
+    .blog-content a {
+        color: #2563eb;
+        text-decoration: underline;
+    }
+    
+    .blog-content a:hover {
+        color: #1d4ed8;
+    }
+    
+    .related-post {
+        transition: all 0.3s ease;
+    }
+    
+    .related-post:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="blog-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <div class="mb-4">
+                <a href="{% url 'blog:blog_category' post.category.slug %}" class="inline-block px-4 py-1 bg-blue-600 text-white text-sm font-medium rounded-full">
+                    {{ post.category.name }}
+                </a>
+            </div>
+            
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                {{ post.title }}
+            </h1>
+            
+            <div class="flex items-center justify-center text-blue-100 text-sm" data-aos="fade-up" data-aos-delay="100">
+                <span>{{ post.published_at|date:"F j, Y" }}</span>
+                <span class="mx-2">•</span>
+                <span>{{ post.reading_time }} min read</span>
+                <span class="mx-2">•</span>
+                <span>{{ post.view_count }} views</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Breadcrumbs -->
+<div class="bg-gray-100 py-4">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-gray-700">Home</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <a href="{% url 'blog:blog_list' %}" class="text-gray-500 hover:text-gray-700">Heritage Stories</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <a href="{% url 'blog:blog_category' post.category.slug %}" class="text-gray-500 hover:text-gray-700">{{ post.category.name }}</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <span class="text-gray-900 font-medium">{{ post.title }}</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Main Content -->
+<section class="py-12 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row gap-12">
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <!-- Featured Image -->
+                {% if post.featured_image %}
+                <div class="mb-8 rounded-2xl overflow-hidden shadow-lg" data-aos="fade-up">
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-auto">
+                </div>
+                {% endif %}
+                
+                <!-- Author Info -->
+                <div class="flex items-center mb-8 p-6 bg-blue-50 rounded-xl" data-aos="fade-up">
+                    {% if post.author.profile_image %}
+                    <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.get_full_name }}" class="w-16 h-16 rounded-full mr-4">
+                    {% else %}
+                    <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl font-bold mr-4">
+                        {{ post.author.first_name|first }}{{ post.author.last_name|first }}
+                    </div>
+                    {% endif %}
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">{{ post.author.get_full_name }}</h3>
+                        <p class="text-gray-600">{{ post.author.bio|truncatechars:100 }}</p>
+                    </div>
+                </div>
+                
+                <!-- Post Content -->
+                <div class="blog-content prose prose-blue max-w-none" data-aos="fade-up">
+                    {{ post.content|safe }}
+                </div>
+                
+                <!-- Tags -->
+                {% if post.tags.exists %}
+                <div class="mt-8 pt-8 border-t border-gray-200" data-aos="fade-up">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Tags</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tag in post.tags.all %}
+                        <a href="{% url 'blog:blog_tag' tag.slug %}" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm hover:bg-blue-200 transition-colors">
+                            {{ tag.name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Share Links -->
+                <div class="mt-8 pt-8 border-t border-gray-200" data-aos="fade-up">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Share This Story</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" rel="noopener noreferrer" class="bg-[#1DA1F2] text-white p-2 rounded-full hover:bg-opacity-90 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener noreferrer" class="bg-[#4267B2] text-white p-2 rounded-full hover:bg-opacity-90 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title }}" target="_blank" rel="noopener noreferrer" class="bg-[#0A66C2] text-white p-2 rounded-full hover:bg-opacity-90 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
+                            </svg>
+                        </a>
+                        <a href="mailto:?subject={{ post.title }}&body=Check out this article: {{ request.build_absolute_uri }}" class="bg-gray-600 text-white p-2 rounded-full hover:bg-opacity-90 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="lg:w-1/4 space-y-8">
+                <!-- Newsletter -->
+                <div class="bg-gradient-to-br from-blue-600 to-green-600 rounded-2xl shadow-lg p-6 text-white" data-aos="fade-left">
+                    <h3 class="text-xl font-bold mb-4">Subscribe to Our Newsletter</h3>
+                    <p class="mb-4">Get the latest Welsh heritage stories delivered straight to your inbox.</p>
+                    <form action="{% url 'core:newsletter_signup' %}" method="post" class="space-y-4">
+                        {% csrf_token %}
+                        <div>
+                            <input type="email" name="email" placeholder="Your email address" required class="w-full rounded-lg border-white bg-white/20 placeholder-white/70 text-white px-4 py-2 focus:ring-white focus:border-white">
+                        </div>
+                        <button type="submit" class="w-full bg-white text-blue-600 font-medium py-2 rounded-lg hover:bg-blue-50 transition-colors">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Related Posts -->
+                {% if related_posts %}
+                <div class="bg-white rounded-2xl shadow-lg p-6" data-aos="fade-left" data-aos-delay="100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Related Stories</h3>
+                    <div class="space-y-4">
+                        {% for related_post in related_posts %}
+                        <a href="{% url 'blog:blog_detail' related_post.slug %}" class="related-post block">
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
+                                    {% if related_post.featured_image %}
+                                    <img src="{{ related_post.featured_image.url }}" alt="{{ related_post.title }}" class="w-full h-full object-cover">
+                                    {% else %}
+                                    <div class="w-full h-full bg-gradient-to-br from-blue-400 to-green-400"></div>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h4 class="text-gray-900 font-medium hover:text-blue-600 transition-colors">{{ related_post.title }}</h4>
+                                    <p class="text-xs text-gray-500">{{ related_post.published_at|date:"F j, Y" }}</p>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Categories -->
+                <div class="bg-white rounded-2xl shadow-lg p-6" data-aos="fade-left" data-aos-delay="200">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Categories</h3>
+                    <div class="space-y-2">
+                        {% for category in post.category.blogcategory_set.all %}
+                        <a href="{% url 'blog:blog_category' category.slug %}" class="flex justify-between items-center px-4 py-2 rounded-lg {% if post.category.id == category.id %}bg-blue-100 text-blue-800{% else %}bg-gray-100 text-gray-800 hover:bg-gray-200{% endif %} transition-colors">
+                            <span>{{ category.name }}</span>
+                            <span class="bg-white text-gray-600 text-xs px-2 py-1 rounded-full">{{ category.blogpost_set.count }}</span>
+                        </a>
+                        {% empty %}
+                        <p class="text-gray-500">No categories available</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- More Stories Section -->
+{% if related_posts %}
+<section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-up">More Heritage Stories</h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Explore more articles about Welsh culture and heritage.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for related_post in related_posts %}
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <a href="{% url 'blog:blog_detail' related_post.slug %}" class="block">
+                    <div class="relative h-48 overflow-hidden">
+                        {% if related_post.featured_image %}
+                        <img src="{{ related_post.featured_image.url }}" alt="{{ related_post.title }}" class="w-full h-full object-cover">
+                        {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-blue-600 to-green-600"></div>
+                        {% endif %}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <div class="mb-2">
+                                <span class="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">{{ related_post.category.name }}</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white">{{ related_post.title }}</h3>
+                        </div>
+                    </div>
+                </a>
+                
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4 line-clamp-3">{{ related_post.excerpt }}</p>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">{{ related_post.published_at|date:"F j, Y" }}</div>
+                        <a href="{% url 'blog:blog_detail' related_post.slug %}" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                            Read More
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{% url 'blog:blog_list' %}" class="inline-block bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 rounded-lg font-medium transition-colors" data-aos="fade-up">
+                View All Stories
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-blue-900 via-slate-900 to-green-900 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute bottom-0 left-0 right-0 h-48" style="background: linear-gradient(to right, transparent, rgba(30,64,175,0.3), transparent); clip-path: polygon(0 100%, 15% 70%, 30% 80%, 45% 60%, 60% 75%, 75% 55%, 90% 70%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" data-aos="fade-up">
+            Experience Welsh <span class="welsh-text-shimmer">Heritage</span> Water
+        </h2>
+        <p class="text-xl text-blue-100 mb-8" data-aos="fade-up" data-aos-delay="100">
+            Discover our premium Welsh spring water, sourced from the pristine mountains of Wales.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+            <a href="{% url 'products:product_list' %}" class="bg-white text-blue-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-blue-50 transition-all">
+                Explore Our Springs
+            </a>
+            <a href="{% url 'subscriptions:subscription_plans' %}" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all">
+                Join Valley Delivery
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-out-cubic',
+        once: true
+    });
+</script>
+{% endblock %}

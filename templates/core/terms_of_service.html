@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Terms of Service{% endblock %}
+
+{% block extra_css %}
+<style>
+    .policy-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .policy-content h2 {
+        color: #1e3a8a;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    
+    .policy-content h3 {
+        color: #1e3a8a;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+    
+    .policy-content p {
+        margin-bottom: 1rem;
+    }
+    
+    .policy-content ul {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        list-style-type: disc;
+    }
+    
+    .policy-content ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        list-style-type: decimal;
+    }
+    
+    .policy-content li {
+        margin-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="policy-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                Terms of <span class="welsh-text-shimmer">Service</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                The legal agreement between you and {{ site_settings.site_name }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Breadcrumbs -->
+<div class="bg-gray-100 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-gray-700">Home</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <span class="text-gray-900 font-medium">Terms of Service</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Policy Content -->
+<section class="py-12 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <div class="mb-8">
+                <p class="text-gray-600 italic">Last Updated: September 20, 2025</p>
+            </div>
+            
+            <div class="policy-content prose prose-blue max-w-none">
+                <p>
+                    Welcome to {{ site_settings.site_name }}. Please read these Terms of Service ("Terms") carefully as they contain important information about your legal rights, remedies, and obligations. By accessing or using our website, you agree to comply with and be bound by these Terms.
+                </p>
+                
+                <h2>1. Acceptance of Terms</h2>
+                <p>
+                    By accessing or using our website, creating an account, or making a purchase, you agree to be bound by these Terms and our Privacy Policy. If you do not agree to these Terms, please do not use our website or services.
+                </p>
+                
+                <h2>2. Changes to Terms</h2>
+                <p>
+                    We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting on our website. Your continued use of our website following the posting of revised Terms means that you accept and agree to the changes.
+                </p>
+                
+                <h2>3. Account Registration</h2>
+                <p>
+                    To access certain features of our website, you may need to create an account. You are responsible for:
+                </p>
+                <ul>
+                    <li>Providing accurate and complete information</li>
+                    <li>Maintaining the confidentiality of your account credentials</li>
+                    <li>All activities that occur under your account</li>
+                </ul>
+                <p>
+                    We reserve the right to suspend or terminate your account if any information provided is inaccurate, false, or violates these Terms.
+                </p>
+                
+                <h2>4. Products and Ordering</h2>
+                <p>
+                    All product descriptions, pricing, and availability are subject to change without notice. We reserve the right to limit quantities of any product and to refuse service to anyone at any time.
+                </p>
+                <p>
+                    When you place an order, you are making an offer to purchase the products. We reserve the right to accept or decline your order for any reason.
+                </p>
+                
+                <h2>5. Pricing and Payment</h2>
+                <p>
+                    All prices are shown in British Pounds (£) and exclude applicable taxes and delivery charges, which will be added at checkout. We strive to ensure all pricing information is accurate, but errors may occur. If we discover an error in the price of products you have ordered, we will inform you and give you the option to reconfirm your order at the correct price or cancel it.
+                </p>
+                <p>
+                    Payment must be made in full before the delivery of products. We accept various payment methods as indicated on our website.
+                </p>
+                
+                <h2>6. Delivery</h2>
+                <p>
+                    We will make every effort to deliver products within the estimated timeframes. However, delivery times are approximate and not guaranteed. We are not liable for any delays in delivery.
+                </p>
+                <p>
+                    Risk of loss and title for products pass to you upon delivery to the carrier.
+                </p>
+                
+                <h2>7. Subscriptions</h2>
+                <p>
+                    For subscription services:
+                </p>
+                <ul>
+                    <li>You authorize us to charge your payment method on a recurring basis</li>
+                    <li>Subscriptions automatically renew until canceled</li>
+                    <li>You may cancel your subscription at any time through your account settings or by contacting customer service</li>
+                    <li>Cancellations will take effect at the end of the current billing period</li>
+                </ul>
+                
+                <h2>8. Returns and Refunds</h2>
+                <p>
+                    Please refer to our <a href="{% url 'core:returns_policy' %}" class="text-blue-600 hover:text-blue-800">Returns Policy</a> for information on returns, exchanges, and refunds.
+                </p>
+                
+                <h2>9. Intellectual Property</h2>
+                <p>
+                    All content on our website, including text, graphics, logos, images, and software, is the property of {{ site_settings.site_name }} or our content suppliers and is protected by copyright, trademark, and other intellectual property laws.
+                </p>
+                <p>
+                    You may not reproduce, distribute, modify, create derivative works of, publicly display, publicly perform, republish, download, store, or transmit any of the material on our website without our prior written consent.
+                </p>
+                
+                <h2>10. User Content</h2>
+                <p>
+                    By posting, uploading, or submitting any content to our website (such as reviews or comments), you grant us a non-exclusive, royalty-free, perpetual, irrevocable, and fully sublicensable right to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, and display such content throughout the world in any media.
+                </p>
+                <p>
+                    You represent and warrant that you own or control all rights to the content you submit and that the content does not violate these Terms.
+                </p>
+                
+                <h2>11. Prohibited Activities</h2>
+                <p>
+                    You agree not to:
+                </p>
+                <ul>
+                    <li>Use our website in any way that violates any applicable law or regulation</li>
+                    <li>Use our website to transmit any harmful code or material</li>
+                    <li>Attempt to gain unauthorized access to our website, systems, or networks</li>
+                    <li>Engage in any activity that interferes with or disrupts our website</li>
+                    <li>Use our website to collect or harvest personal information</li>
+                </ul>
+                
+                <h2>12. Disclaimer of Warranties</h2>
+                <p>
+                    Our website and products are provided "as is" without any warranties, express or implied. We do not warrant that our website will be uninterrupted or error-free, that defects will be corrected, or that our website or the servers that make it available are free of viruses or other harmful components.
+                </p>
+                
+                <h2>13. Limitation of Liability</h2>
+                <p>
+                    To the fullest extent permitted by law, {{ site_settings.site_name }} shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use our website or products.
+                </p>
+                
+                <h2>14. Indemnification</h2>
+                <p>
+                    You agree to indemnify, defend, and hold harmless {{ site_settings.site_name }}, its officers, directors, employees, agents, and suppliers from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms or your use of our website.
+                </p>
+                
+                <h2>15. Governing Law</h2>
+                <p>
+                    These Terms shall be governed by and construed in accordance with the laws of the United Kingdom, without giving effect to any principles of conflicts of law.
+                </p>
+                
+                <h2>16. Dispute Resolution</h2>
+                <p>
+                    Any dispute arising from or relating to these Terms or our website shall be resolved through binding arbitration in accordance with the rules of the London Court of International Arbitration.
+                </p>
+                
+                <h2>17. Severability</h2>
+                <p>
+                    If any provision of these Terms is held to be invalid or unenforceable, such provision shall be struck and the remaining provisions shall be enforced.
+                </p>
+                
+                <h2>18. Entire Agreement</h2>
+                <p>
+                    These Terms, together with our Privacy Policy and any other legal notices published by us on our website, constitute the entire agreement between you and {{ site_settings.site_name }} concerning our website and products.
+                </p>
+                
+                <h2>19. Contact Information</h2>
+                <p>
+                    If you have any questions about these Terms, please contact us at:
+                </p>
+                <ul>
+                    <li>Email: {{ site_settings.contact_email }}</li>
+                    <li>Phone: {{ site_settings.contact_phone }}</li>
+                    <li>Address: {{ site_settings.address }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

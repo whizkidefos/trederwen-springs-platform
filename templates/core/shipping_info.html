@@ -1,0 +1,369 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Shipping Information{% endblock %}
+
+{% block extra_css %}
+<style>
+    .policy-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .policy-content h2 {
+        color: #1e3a8a;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    
+    .policy-content h3 {
+        color: #1e3a8a;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+    
+    .policy-content p {
+        margin-bottom: 1rem;
+    }
+    
+    .policy-content ul {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        list-style-type: disc;
+    }
+    
+    .policy-content ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        list-style-type: decimal;
+    }
+    
+    .policy-content li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .shipping-card {
+        transition: all 0.3s ease;
+    }
+    
+    .shipping-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="policy-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                Shipping <span class="welsh-text-shimmer">Information</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Everything you need to know about our delivery services
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Breadcrumbs -->
+<div class="bg-gray-100 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-gray-700">Home</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <span class="text-gray-900 font-medium">Shipping Information</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Shipping Options Section -->
+<section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                Our Delivery <span class="welsh-text-shimmer">Options</span>
+            </h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                We offer several shipping options to meet your needs
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Standard Delivery -->
+            <div class="shipping-card bg-white rounded-2xl shadow-lg p-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">Standard Delivery</h3>
+                <div class="text-center mb-4">
+                    <span class="text-2xl font-bold text-blue-600">£3.99</span>
+                </div>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>3-5 business days</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Tracked delivery</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Delivery confirmation</span>
+                    </li>
+                </ul>
+                <p class="text-sm text-gray-600 text-center">
+                    Free for orders over £25
+                </p>
+            </div>
+            
+            <!-- Express Delivery -->
+            <div class="shipping-card bg-white rounded-2xl shadow-lg p-8 border-2 border-blue-600" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+                    Most Popular
+                </div>
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">Express Delivery</h3>
+                <div class="text-center mb-4">
+                    <span class="text-2xl font-bold text-blue-600">£5.99</span>
+                </div>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>1-2 business days</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Priority handling</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Real-time tracking</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>SMS notifications</span>
+                    </li>
+                </ul>
+                <p class="text-sm text-gray-600 text-center">
+                    Free for orders over £50
+                </p>
+            </div>
+            
+            <!-- Next Day Delivery -->
+            <div class="shipping-card bg-white rounded-2xl shadow-lg p-8" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">Next Day Delivery</h3>
+                <div class="text-center mb-4">
+                    <span class="text-2xl font-bold text-blue-600">£7.99</span>
+                </div>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Next business day</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Order by 2pm for same day dispatch</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Premium courier service</span>
+                    </li>
+                </ul>
+                <p class="text-sm text-gray-600 text-center">
+                    Free for orders over £75
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Shipping Policy Content -->
+<section class="py-12 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Shipping Policy</h2>
+            
+            <div class="policy-content prose prose-blue max-w-none">
+                <p>
+                    At {{ site_settings.site_name }}, we strive to provide reliable and efficient delivery services for our premium Welsh spring water products. This shipping policy outlines our delivery process, timeframes, and other important information.
+                </p>
+                
+                <h2>Delivery Areas</h2>
+                <p>
+                    We currently deliver to all addresses within the United Kingdom, including England, Wales, Scotland, and Northern Ireland. For international shipping inquiries, please contact our customer service team.
+                </p>
+                
+                <h2>Order Processing</h2>
+                <p>
+                    Orders are typically processed within 1-2 business days after payment confirmation. During peak seasons or promotional periods, processing may take up to 3 business days.
+                </p>
+                <p>
+                    Once your order is processed, you will receive a shipping confirmation email with tracking information where applicable.
+                </p>
+                
+                <h2>Delivery Timeframes</h2>
+                <p>
+                    Estimated delivery timeframes are as follows:
+                </p>
+                <ul>
+                    <li><strong>Standard Delivery:</strong> 3-5 business days</li>
+                    <li><strong>Express Delivery:</strong> 1-2 business days</li>
+                    <li><strong>Next Day Delivery:</strong> Next business day (for orders placed before 2pm Monday-Friday)</li>
+                </ul>
+                <p>
+                    Please note that these timeframes are estimates and not guarantees. Delivery times may be affected by factors outside our control, such as weather conditions, public holidays, or carrier delays.
+                </p>
+                
+                <h2>Shipping Costs</h2>
+                <p>
+                    Shipping costs are calculated based on your selected delivery method and order value:
+                </p>
+                <ul>
+                    <li><strong>Standard Delivery:</strong> £3.99 (Free for orders over £25)</li>
+                    <li><strong>Express Delivery:</strong> £5.99 (Free for orders over £50)</li>
+                    <li><strong>Next Day Delivery:</strong> £7.99 (Free for orders over £75)</li>
+                </ul>
+                <p>
+                    Shipping costs will be displayed at checkout before payment is required.
+                </p>
+                
+                <h2>Free Shipping</h2>
+                <p>
+                    {{ settings.delivery_info }}
+                </p>
+                
+                <h2>Tracking Your Order</h2>
+                <p>
+                    Once your order has been dispatched, you will receive a shipping confirmation email with tracking information where applicable. You can also track your order by:
+                </p>
+                <ul>
+                    <li>Logging into your account and viewing your order history</li>
+                    <li>Clicking the tracking link in your shipping confirmation email</li>
+                    <li>Contacting our customer service team with your order number</li>
+                </ul>
+                
+                <h2>Delivery Instructions</h2>
+                <p>
+                    You can provide specific delivery instructions during checkout. If you have special requirements for your delivery, please include them in the "Delivery Instructions" field.
+                </p>
+                
+                <h2>Failed Deliveries</h2>
+                <p>
+                    If a delivery attempt is unsuccessful:
+                </p>
+                <ul>
+                    <li>The carrier will leave a card with instructions on how to arrange redelivery or collection</li>
+                    <li>The package will typically be held at the local depot for up to 7 days</li>
+                    <li>After this period, undelivered packages will be returned to us</li>
+                </ul>
+                <p>
+                    If your package is returned to us due to a failed delivery, we will contact you to arrange redelivery. Additional shipping charges may apply.
+                </p>
+                
+                <h2>Damaged or Missing Items</h2>
+                <p>
+                    If your package arrives damaged or items are missing:
+                </p>
+                <ul>
+                    <li>Inspect all packages upon delivery and note any damage on the delivery receipt</li>
+                    <li>Take photos of any damaged packaging or products</li>
+                    <li>Contact our customer service team within 48 hours of delivery</li>
+                </ul>
+                <p>
+                    We will investigate all claims and arrange for replacement products or refunds as appropriate.
+                </p>
+                
+                <h2>Subscription Deliveries</h2>
+                <p>
+                    For our Valley Delivery subscription service:
+                </p>
+                <ul>
+                    <li>Deliveries are made according to your selected frequency (weekly, bi-weekly, or monthly)</li>
+                    <li>You can pause, skip, or modify your delivery schedule through your account</li>
+                    <li>Changes to upcoming deliveries must be made at least 48 hours before the scheduled processing date</li>
+                </ul>
+                
+                <h2>Contact Us</h2>
+                <p>
+                    If you have any questions about our shipping policy or need assistance with your delivery, please contact us at:
+                </p>
+                <ul>
+                    <li>Email: {{ site_settings.contact_email }}</li>
+                    <li>Phone: {{ site_settings.contact_phone }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

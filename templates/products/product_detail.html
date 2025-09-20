@@ -1,0 +1,394 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - {{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="bg-white py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumbs -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-gray-700">Home</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <a href="{% url 'products:product_list' %}" class="text-gray-500 hover:text-gray-700">Products</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <span class="text-gray-900 font-medium">{{ product.name }}</span>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Product Images -->
+            <div>
+                <div class="bg-gray-100 rounded-lg overflow-hidden mb-4">
+                    {% if product.images.exists %}
+                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-auto">
+                    {% else %}
+                    <div class="w-full h-96 bg-gradient-to-br from-blue-400 to-green-600 flex items-center justify-center">
+                        <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Thumbnail Gallery -->
+                {% if product.images.count > 1 %}
+                <div class="grid grid-cols-5 gap-2">
+                    {% for image in product.images.all %}
+                    <div class="bg-gray-100 rounded-lg overflow-hidden cursor-pointer">
+                        <img src="{{ image.image.url }}" alt="{{ product.name }}" class="w-full h-auto">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Product Info -->
+            <div>
+                <div class="mb-2">
+                    <span class="text-sm text-blue-600 font-medium">{{ product.category.name }}</span>
+                </div>
+                
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ product.name }}</h1>
+                
+                <!-- Ratings -->
+                {% if product.average_rating > 0 %}
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400">
+                        {% for i in "12345" %}
+                        <svg class="w-5 h-5 {% if forloop.counter <= product.average_rating %}text-yellow-400{% else %}text-gray-300{% endif %}" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                        {% endfor %}
+                    </div>
+                    <span class="ml-2 text-gray-600">{{ product.average_rating|floatformat:1 }} ({{ product.reviews.count }} reviews)</span>
+                </div>
+                {% endif %}
+                
+                <!-- Price -->
+                <div class="mb-6">
+                    {% if product.compare_at_price and product.compare_at_price > product.price %}
+                    <div class="flex items-end">
+                        <span class="text-3xl font-bold text-gray-900">£{{ product.price }}</span>
+                        <span class="text-xl text-gray-500 line-through ml-2">£{{ product.compare_at_price }}</span>
+                        <span class="ml-2 bg-red-100 text-red-800 text-sm font-medium px-2 py-0.5 rounded">
+                            Save {{ product.discount_percentage }}%
+                        </span>
+                    </div>
+                    {% else %}
+                    <span class="text-3xl font-bold text-gray-900">£{{ product.price }}</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Description -->
+                <div class="prose prose-blue max-w-none mb-8">
+                    <p>{{ product.short_description }}</p>
+                </div>
+                
+                <!-- Variants -->
+                {% if variants %}
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-3">Options</h3>
+                    <div class="grid grid-cols-3 gap-3">
+                        {% for variant in variants %}
+                        <button type="button" class="border rounded-md py-2 px-3 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            {{ variant.name }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Add to Cart -->
+                <form class="mb-8" id="add-to-cart-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    
+                    <div class="flex items-center mb-4">
+                        <label for="quantity" class="block text-sm font-medium text-gray-700 mr-4">Quantity</label>
+                        <div class="flex items-center border border-gray-300 rounded-md">
+                            <button type="button" class="px-3 py-1 text-gray-600 hover:bg-gray-100" id="decrease-quantity">-</button>
+                            <input type="number" name="quantity" id="quantity" min="1" value="1" class="w-12 text-center border-0 focus:ring-0">
+                            <button type="button" class="px-3 py-1 text-gray-600 hover:bg-gray-100" id="increase-quantity">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white py-3 px-6 rounded-lg font-medium">
+                            Add to Cart
+                        </button>
+                        <button type="button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-6 rounded-lg font-medium">
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Product Meta -->
+                <div class="border-t border-gray-200 pt-4">
+                    <dl class="space-y-2">
+                        <div class="flex">
+                            <dt class="text-sm font-medium text-gray-500 w-24">SKU:</dt>
+                            <dd class="text-sm text-gray-900">{{ product.sku }}</dd>
+                        </div>
+                        <div class="flex">
+                            <dt class="text-sm font-medium text-gray-500 w-24">Category:</dt>
+                            <dd class="text-sm text-gray-900">
+                                <a href="{% url 'products:category_detail' product.category.slug %}" class="text-blue-600 hover:text-blue-800">
+                                    {{ product.category.name }}
+                                </a>
+                            </dd>
+                        </div>
+                        {% if product.tags.exists %}
+                        <div class="flex">
+                            <dt class="text-sm font-medium text-gray-500 w-24">Tags:</dt>
+                            <dd class="text-sm text-gray-900">
+                                {% for tag in product.tags.all %}
+                                <a href="{% url 'products:product_list' %}?tag={{ tag.slug }}" class="text-blue-600 hover:text-blue-800 mr-2">
+                                    {{ tag.name }}
+                                </a>
+                                {% endfor %}
+                            </dd>
+                        </div>
+                        {% endif %}
+                    </dl>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Tabs -->
+        <div class="mt-16">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8">
+                    <button class="tab-button active border-blue-600 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="description">
+                        Description
+                    </button>
+                    <button class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="specifications">
+                        Specifications
+                    </button>
+                    <button class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="reviews">
+                        Reviews ({{ reviews.count }})
+                    </button>
+                </nav>
+            </div>
+            
+            <!-- Tab Content -->
+            <div class="py-8">
+                <div id="description-tab" class="tab-content active">
+                    <div class="prose prose-blue max-w-none">
+                        {{ product.description|safe }}
+                    </div>
+                </div>
+                
+                <div id="specifications-tab" class="tab-content hidden">
+                    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                            <dl class="sm:divide-y sm:divide-gray-200">
+                                {% for attribute in product.attribute_values.all %}
+                                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">{{ attribute.attribute.name }}</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ attribute.value }}</dd>
+                                </div>
+                                {% empty %}
+                                <div class="py-4 sm:py-5 sm:px-6 text-center text-gray-500">
+                                    No specifications available for this product.
+                                </div>
+                                {% endfor %}
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="reviews-tab" class="tab-content hidden">
+                    <div class="space-y-8">
+                        {% for review in reviews %}
+                        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                            <div class="px-4 py-5 sm:px-6">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900">{{ review.title }}</h3>
+                                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                                            By {{ review.user.get_full_name|default:review.user.username }} on {{ review.created_at|date:"F j, Y" }}
+                                        </p>
+                                    </div>
+                                    <div class="flex text-yellow-400">
+                                        {% for i in "12345" %}
+                                        <svg class="w-5 h-5 {% if forloop.counter <= review.rating %}text-yellow-400{% else %}text-gray-300{% endif %}" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                        </svg>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                                <p class="text-gray-700">{{ review.content }}</p>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center py-12">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 20a8 8 0 100-16 8 8 0 000 16z"></path>
+                            </svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">No reviews yet</h3>
+                            <p class="mt-1 text-sm text-gray-500">Be the first to review this product.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Similar Products -->
+        {% if similar_products %}
+        <div class="mt-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">You May Also Like</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for product in similar_products %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <a href="{% url 'products:product_detail' product.slug %}">
+                        <div class="h-48 overflow-hidden">
+                            {% if product.images.exists %}
+                            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                            {% else %}
+                            <div class="w-full h-full bg-gradient-to-br from-blue-400 to-green-600 flex items-center justify-center">
+                                <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                </svg>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </a>
+                    
+                    <div class="p-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">
+                            <a href="{% url 'products:product_detail' product.slug %}" class="hover:text-blue-600">{{ product.name }}</a>
+                        </h3>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-gray-900">£{{ product.price }}</span>
+                            
+                            {% if product.average_rating > 0 %}
+                            <div class="flex text-yellow-400">
+                                {% for i in "12345" %}
+                                <svg class="w-4 h-4 {% if forloop.counter <= product.average_rating %}text-yellow-400{% else %}text-gray-300{% endif %}" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Tab functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Hide all tab contents
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+                
+                // Show selected tab content
+                const selectedTab = document.getElementById(`${tabId}-tab`);
+                selectedTab.classList.remove('hidden');
+                selectedTab.classList.add('active');
+                
+                // Update active state of tab buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('border-blue-600', 'text-blue-600');
+                    btn.classList.add('border-transparent', 'text-gray-500');
+                });
+                
+                this.classList.remove('border-transparent', 'text-gray-500');
+                this.classList.add('border-blue-600', 'text-blue-600');
+            });
+        });
+        
+        // Quantity controls
+        const quantityInput = document.getElementById('quantity');
+        const decreaseBtn = document.getElementById('decrease-quantity');
+        const increaseBtn = document.getElementById('increase-quantity');
+        
+        if (decreaseBtn && increaseBtn && quantityInput) {
+            decreaseBtn.addEventListener('click', function() {
+                const currentValue = parseInt(quantityInput.value);
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+            
+            increaseBtn.addEventListener('click', function() {
+                const currentValue = parseInt(quantityInput.value);
+                quantityInput.value = currentValue + 1;
+            });
+        }
+        
+        // Add to cart form
+        const addToCartForm = document.getElementById('add-to-cart-form');
+        if (addToCartForm) {
+            addToCartForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                
+                fetch('{% url "core:add_to_cart" %}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update cart count in navbar
+                        const cartCountBadge = document.querySelector('.cart-count-badge');
+                        if (cartCountBadge) {
+                            cartCountBadge.textContent = data.cart_count;
+                            cartCountBadge.classList.remove('hidden');
+                        }
+                        
+                        // Show success message
+                        alert(data.message);
+                    } else {
+                        // Show error message
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

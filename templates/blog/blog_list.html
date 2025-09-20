@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Welsh Heritage Stories{% endblock %}
+
+{% block extra_css %}
+<style>
+    .blog-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .blog-card {
+        transition: all 0.3s ease;
+    }
+    
+    .blog-card:hover {
+        transform: translateY(-10px);
+    }
+    
+    .blog-card img {
+        transition: all 0.5s ease;
+    }
+    
+    .blog-card:hover img {
+        transform: scale(1.05);
+    }
+    
+    .category-badge {
+        transition: all 0.3s ease;
+    }
+    
+    .category-badge:hover {
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="blog-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                Welsh <span class="welsh-text-shimmer">Heritage</span> Stories
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Explore the rich history, culture, and natural beauty of Wales through our collection of heritage stories.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Posts Section -->
+{% if featured_posts %}
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8" data-aos="fade-up">Featured Stories</h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {% for post in featured_posts %}
+            <div class="blog-card bg-white rounded-2xl shadow-lg overflow-hidden {% if forloop.first %}lg:col-span-2 lg:row-span-2{% endif %}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <a href="{% url 'blog:blog_detail' post.slug %}" class="block">
+                    <div class="relative h-64 {% if forloop.first %}lg:h-96{% endif %} overflow-hidden">
+                        {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+                        {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-blue-600 to-green-600"></div>
+                        {% endif %}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="mb-2">
+                                <span class="px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded-full">{{ post.category.name }}</span>
+                            </div>
+                            <h3 class="text-xl {% if forloop.first %}lg:text-3xl{% endif %} font-bold text-white">{{ post.title }}</h3>
+                        </div>
+                    </div>
+                </a>
+                
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">{{ post.excerpt|truncatechars:150 }}</p>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            {% if post.author.profile_image %}
+                            <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.get_full_name }}" class="w-10 h-10 rounded-full mr-3">
+                            {% else %}
+                            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold mr-3">
+                                {{ post.author.first_name|first }}{{ post.author.last_name|first }}
+                            </div>
+                            {% endif %}
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">{{ post.author.get_full_name }}</p>
+                                <p class="text-xs text-gray-500">{{ post.published_at|date:"F j, Y" }}</p>
+                            </div>
+                        </div>
+                        
+                        <a href="{% url 'blog:blog_detail' post.slug %}" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                            Read More
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Main Content Section -->
+<section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Blog Posts -->
+            <div class="lg:w-2/3">
+                {% if current_category %}
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">{{ current_category.name }}</h2>
+                    <p class="text-gray-600">{{ current_category.description }}</p>
+                </div>
+                {% elif current_tag %}
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Posts tagged with "{{ current_tag.name }}"</h2>
+                </div>
+                {% elif query %}
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Search results for "{{ query }}"</h2>
+                </div>
+                {% else %}
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Latest Stories</h2>
+                    <p class="text-gray-600">Discover our most recent articles about Welsh heritage and culture.</p>
+                </div>
+                {% endif %}
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {% for post in page_obj %}
+                    <div class="blog-card bg-white rounded-2xl shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                        <a href="{% url 'blog:blog_detail' post.slug %}" class="block">
+                            <div class="relative h-56 overflow-hidden">
+                                {% if post.featured_image %}
+                                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+                                {% else %}
+                                <div class="w-full h-full bg-gradient-to-br from-blue-600 to-green-600"></div>
+                                {% endif %}
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 right-0 p-4">
+                                    <div class="mb-2">
+                                        <span class="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">{{ post.category.name }}</span>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-white">{{ post.title }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <div class="p-6">
+                            <p class="text-gray-600 mb-4 line-clamp-3">{{ post.excerpt }}</p>
+                            
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    {% if post.author.profile_image %}
+                                    <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.get_full_name }}" class="w-8 h-8 rounded-full mr-2">
+                                    {% else %}
+                                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold mr-2">
+                                        {{ post.author.first_name|first }}{{ post.author.last_name|first }}
+                                    </div>
+                                    {% endif %}
+                                    <div>
+                                        <p class="text-xs text-gray-500">{{ post.published_at|date:"F j, Y" }}</p>
+                                    </div>
+                                </div>
+                                
+                                <a href="{% url 'blog:blog_detail' post.slug %}" class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+                                    Read More
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-span-full text-center py-12">
+                        <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 20a8 8 0 100-16 8 8 0 000 16z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">No stories found</h3>
+                        <p class="text-gray-600 mb-6">
+                            {% if query %}
+                            We couldn't find any stories matching "{{ query }}".
+                            {% elif current_category %}
+                            We couldn't find any stories in the "{{ current_category.name }}" category.
+                            {% elif current_tag %}
+                            We couldn't find any stories with the tag "{{ current_tag.name }}".
+                            {% else %}
+                            We don't have any stories published yet. Please check back later.
+                            {% endif %}
+                        </p>
+                        <a href="{% url 'blog:blog_list' %}" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                            View All Stories
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination -->
+                {% if page_obj.paginator.num_pages > 1 %}
+                <div class="mt-12 flex justify-center">
+                    <nav class="inline-flex rounded-md shadow">
+                        {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category.slug }}{% endif %}{% if current_tag %}&tag={{ current_tag.slug }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-l-md">
+                            Previous
+                        </a>
+                        {% endif %}
+                        
+                        {% for i in page_obj.paginator.page_range %}
+                        {% if i == page_obj.number %}
+                        <span class="py-2 px-4 border border-blue-500 bg-blue-600 text-white">{{ i }}</span>
+                        {% elif i > page_obj.number|add:"-3" and i < page_obj.number|add:"3" %}
+                        <a href="?page={{ i }}{% if current_category %}&category={{ current_category.slug }}{% endif %}{% if current_tag %}&tag={{ current_tag.slug }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                            {{ i }}
+                        </a>
+                        {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category.slug }}{% endif %}{% if current_tag %}&tag={{ current_tag.slug }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="py-2 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-r-md">
+                            Next
+                        </a>
+                        {% endif %}
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="lg:w-1/3 space-y-8">
+                <!-- Search Box -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Search Stories</h3>
+                    <form action="{% url 'blog:blog_list' %}" method="get" class="flex">
+                        <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Search stories..." class="flex-1 rounded-l-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Categories -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Categories</h3>
+                    <div class="space-y-2">
+                        {% for category in categories %}
+                        <a href="{% url 'blog:blog_category' category.slug %}" class="category-badge flex justify-between items-center px-4 py-2 rounded-lg {% if current_category.id == category.id %}bg-blue-100 text-blue-800{% else %}bg-gray-100 text-gray-800 hover:bg-gray-200{% endif %} transition-colors">
+                            <span>{{ category.name }}</span>
+                            <span class="bg-white text-gray-600 text-xs px-2 py-1 rounded-full">{{ category.blogpost_set.count }}</span>
+                        </a>
+                        {% empty %}
+                        <p class="text-gray-500">No categories available</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Tags -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Popular Tags</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tag in tags %}
+                        <a href="{% url 'blog:blog_tag' tag.slug %}" class="px-3 py-1 rounded-full text-sm {% if current_tag.id == tag.id %}bg-blue-600 text-white{% else %}bg-blue-100 text-blue-800 hover:bg-blue-200{% endif %} transition-colors">
+                            {{ tag.name }}
+                        </a>
+                        {% empty %}
+                        <p class="text-gray-500">No tags available</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Newsletter -->
+                <div class="bg-gradient-to-br from-blue-600 to-green-600 rounded-2xl shadow-lg p-6 text-white">
+                    <h3 class="text-xl font-bold mb-4">Subscribe to Our Newsletter</h3>
+                    <p class="mb-4">Get the latest Welsh heritage stories delivered straight to your inbox.</p>
+                    <form action="{% url 'core:newsletter_signup' %}" method="post" class="space-y-4">
+                        {% csrf_token %}
+                        <div>
+                            <input type="email" name="email" placeholder="Your email address" required class="w-full rounded-lg border-white bg-white/20 placeholder-white/70 text-white px-4 py-2 focus:ring-white focus:border-white">
+                        </div>
+                        <button type="submit" class="w-full bg-white text-blue-600 font-medium py-2 rounded-lg hover:bg-blue-50 transition-colors">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-out-cubic',
+        once: true
+    });
+</script>
+{% endblock %}

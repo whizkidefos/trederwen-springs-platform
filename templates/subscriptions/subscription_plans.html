@@ -1,0 +1,446 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Valley Delivery Subscriptions{% endblock %}
+
+{% block extra_css %}
+<style>
+    .subscription-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .plan-card {
+        transition: all 0.3s ease;
+    }
+    
+    .plan-card:hover {
+        transform: translateY(-10px);
+    }
+    
+    .feature-check {
+        color: #10B981;
+    }
+    
+    .feature-x {
+        color: #EF4444;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="subscription-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                Valley <span class="welsh-text-shimmer">Delivery</span> Subscriptions
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Experience the convenience of regular Welsh spring water deliveries with our flexible subscription plans.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Subscription Benefits -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6" data-aos="fade-up">
+                Why Choose Valley <span class="welsh-text-shimmer">Delivery</span>?
+            </h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Join thousands of Welsh water enthusiasts who enjoy the convenience and benefits of our subscription service.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Benefit 1 -->
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Regular Deliveries</h3>
+                <p class="text-gray-600">
+                    Never run out of pure Welsh spring water with scheduled deliveries right to your doorstep.
+                </p>
+            </div>
+            
+            <!-- Benefit 2 -->
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Save Money</h3>
+                <p class="text-gray-600">
+                    Enjoy exclusive discounts on all subscription orders compared to one-time purchases.
+                </p>
+            </div>
+            
+            <!-- Benefit 3 -->
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Flexible Options</h3>
+                <p class="text-gray-600">
+                    Easily pause, modify, or cancel your subscription at any time to suit your changing needs.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Subscription Plans -->
+<section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6" data-aos="fade-up">
+                Choose Your <span class="welsh-text-shimmer">Valley Plan</span>
+            </h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Select the subscription plan that best fits your Welsh water needs.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for plan in plans %}
+            <div class="plan-card bg-white rounded-2xl shadow-lg overflow-hidden {% if plan.is_popular %}border-2 border-blue-600{% endif %}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                {% if plan.is_popular %}
+                <div class="bg-blue-600 text-white text-center py-2 font-medium">Most Popular</div>
+                {% endif %}
+                
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ plan.name }}</h3>
+                    <p class="text-gray-600 mb-6">{{ plan.description|truncatechars:100 }}</p>
+                    
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-4xl font-bold text-gray-900">£{{ plan.discounted_price }}</span>
+                        {% if plan.discount_percentage > 0 %}
+                        <span class="text-xl text-gray-500 line-through ml-2">£{{ plan.base_price }}</span>
+                        {% endif %}
+                        <span class="text-gray-500 ml-2">/ {{ plan.get_billing_interval_display }}</span>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 feature-check mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>{{ plan.get_billing_interval_display }} delivery</span>
+                        </li>
+                        
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 {% if plan.free_shipping %}feature-check{% else %}feature-x{% endif %} mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {% if plan.free_shipping %}
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                {% else %}
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                {% endif %}
+                            </svg>
+                            <span>{% if plan.free_shipping %}Free shipping{% else %}Shipping fee applies{% endif %}</span>
+                        </li>
+                        
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 {% if plan.priority_support %}feature-check{% else %}feature-x{% endif %} mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {% if plan.priority_support %}
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                {% else %}
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                {% endif %}
+                            </svg>
+                            <span>{% if plan.priority_support %}Priority support{% else %}Standard support{% endif %}</span>
+                        </li>
+                        
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 {% if plan.exclusive_products %}feature-check{% else %}feature-x{% endif %} mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {% if plan.exclusive_products %}
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                {% else %}
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                {% endif %}
+                            </svg>
+                            <span>{% if plan.exclusive_products %}Access to exclusive products{% else %}Standard product range{% endif %}</span>
+                        </li>
+                        
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 {% if plan.flexible_delivery %}feature-check{% else %}feature-x{% endif %} mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {% if plan.flexible_delivery %}
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                {% else %}
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                {% endif %}
+                            </svg>
+                            <span>{% if plan.flexible_delivery %}Flexible delivery schedule{% else %}Fixed delivery schedule{% endif %}</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="{% url 'subscriptions:subscription_plan_detail' plan.id %}" class="block w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white text-center py-3 rounded-lg font-medium transition-colors">
+                        Choose Plan
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12">
+                <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 20a8 8 0 100-16 8 8 0 000 16z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">No subscription plans available</h3>
+                <p class="text-gray-600 mb-6">Please check back later for our subscription offerings.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6" data-aos="fade-up">
+                How Valley <span class="welsh-text-shimmer">Delivery</span> Works
+            </h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Getting started with your Welsh spring water subscription is simple.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
+                    1
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Choose Your Plan</h3>
+                <p class="text-gray-600">
+                    Select the subscription plan that best fits your Welsh water consumption needs.
+                </p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
+                    2
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Customize Products</h3>
+                <p class="text-gray-600">
+                    Select which Welsh spring water products you'd like to receive in your deliveries.
+                </p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
+                    3
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Set Delivery Schedule</h3>
+                <p class="text-gray-600">
+                    Choose your preferred delivery frequency and day of the week for maximum convenience.
+                </p>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
+                    4
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Enjoy Welsh Water</h3>
+                <p class="text-gray-600">
+                    Receive regular deliveries of premium Welsh spring water right to your doorstep.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6" data-aos="fade-up">
+                Frequently Asked <span class="welsh-text-shimmer">Questions</span>
+            </h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Everything you need to know about our Valley Delivery subscription service.
+            </p>
+        </div>
+        
+        <div class="space-y-6" data-aos="fade-up" data-aos-delay="200">
+            <!-- FAQ Item 1 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                    <span class="text-lg font-medium text-gray-900">How do I change my delivery schedule?</span>
+                    <svg class="faq-arrow w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="faq-content hidden px-6 pb-6">
+                    <p class="text-gray-600">
+                        You can easily change your delivery schedule by logging into your account, navigating to "My Subscriptions," selecting the subscription you want to modify, and updating your delivery preferences. Changes will take effect from your next scheduled delivery.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                    <span class="text-lg font-medium text-gray-900">Can I pause my subscription?</span>
+                    <svg class="faq-arrow w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="faq-content hidden px-6 pb-6">
+                    <p class="text-gray-600">
+                        Yes, you can pause your subscription at any time. Simply log into your account, go to "My Subscriptions," select the subscription you want to pause, and click the "Pause Subscription" button. You can choose to pause indefinitely or set a specific date to automatically resume your deliveries.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 3 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                    <span class="text-lg font-medium text-gray-900">How do I cancel my subscription?</span>
+                    <svg class="faq-arrow w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="faq-content hidden px-6 pb-6">
+                    <p class="text-gray-600">
+                        You can cancel your subscription at any time without penalties. Log into your account, navigate to "My Subscriptions," select the subscription you want to cancel, and click the "Cancel Subscription" button. You'll have the option to cancel immediately or at the end of your current billing period.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 4 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                    <span class="text-lg font-medium text-gray-900">Can I change the products in my subscription?</span>
+                    <svg class="faq-arrow w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="faq-content hidden px-6 pb-6">
+                    <p class="text-gray-600">
+                        Absolutely! You can modify the products in your subscription at any time. Simply log into your account, go to "My Subscriptions," select the subscription you want to modify, and update your product selection. Changes will be applied to your next delivery.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 5 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                    <span class="text-lg font-medium text-gray-900">What if I'm not home for delivery?</span>
+                    <svg class="faq-arrow w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="faq-content hidden px-6 pb-6">
+                    <p class="text-gray-600">
+                        You can provide delivery instructions when setting up your subscription, such as a safe place to leave your order. If you know you won't be home for a specific delivery, you can also reschedule it or skip that delivery through your account dashboard.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-blue-900 via-slate-900 to-green-900 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute bottom-0 left-0 right-0 h-48" style="background: linear-gradient(to right, transparent, rgba(30,64,175,0.3), transparent); clip-path: polygon(0 100%, 15% 70%, 30% 80%, 45% 60%, 60% 75%, 75% 55%, 90% 70%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" data-aos="fade-up">
+            Ready to Join the <span class="welsh-text-shimmer">Valley</span>?
+        </h2>
+        <p class="text-xl text-blue-100 mb-8" data-aos="fade-up" data-aos-delay="100">
+            Start your Welsh spring water subscription today and experience the convenience of regular deliveries.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+            <a href="#subscription-plans" class="bg-white text-blue-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-blue-50 transition-all">
+                View Plans
+            </a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'subscriptions:my_subscriptions' %}" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all">
+                Manage Subscriptions
+            </a>
+            {% else %}
+            <a href="{% url 'users:login' %}?next={% url 'subscriptions:subscription_plans' %}" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-all">
+                Sign In to Subscribe
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-out-cubic',
+        once: true
+    });
+    
+    // FAQ Toggles
+    document.addEventListener('DOMContentLoaded', function() {
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const arrow = this.querySelector('.faq-arrow');
+                
+                // Toggle content visibility
+                content.classList.toggle('hidden');
+                
+                // Rotate arrow
+                if (content.classList.contains('hidden')) {
+                    arrow.style.transform = 'rotate(0deg)';
+                } else {
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

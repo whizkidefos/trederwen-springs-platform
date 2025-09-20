@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Privacy Policy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .policy-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .policy-content h2 {
+        color: #1e3a8a;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    
+    .policy-content h3 {
+        color: #1e3a8a;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+    
+    .policy-content p {
+        margin-bottom: 1rem;
+    }
+    
+    .policy-content ul {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        list-style-type: disc;
+    }
+    
+    .policy-content ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        list-style-type: decimal;
+    }
+    
+    .policy-content li {
+        margin-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="policy-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                Privacy <span class="welsh-text-shimmer">Policy</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                How we collect, use, and protect your personal information
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Breadcrumbs -->
+<div class="bg-gray-100 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="{% url 'core:home' %}" class="text-gray-500 hover:text-gray-700">Home</a>
+                </li>
+                <li>
+                    <span class="text-gray-400 mx-2">/</span>
+                </li>
+                <li>
+                    <span class="text-gray-900 font-medium">Privacy Policy</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Policy Content -->
+<section class="py-12 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <div class="mb-8">
+                <p class="text-gray-600 italic">Last Updated: September 20, 2025</p>
+            </div>
+            
+            <div class="policy-content prose prose-blue max-w-none">
+                <p>
+                    At {{ site_settings.site_name }}, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or make a purchase.
+                </p>
+                
+                <h2>Information We Collect</h2>
+                <p>We collect information that you provide directly to us when you:</p>
+                <ul>
+                    <li>Create an account</li>
+                    <li>Place an order</li>
+                    <li>Subscribe to our newsletter</li>
+                    <li>Contact our customer service</li>
+                    <li>Participate in surveys or promotions</li>
+                </ul>
+                
+                <p>The types of information we may collect include:</p>
+                <ul>
+                    <li>Personal information (name, email address, postal address, phone number)</li>
+                    <li>Payment information (credit card details, billing address)</li>
+                    <li>Order history and preferences</li>
+                    <li>Communications with our customer service team</li>
+                </ul>
+                
+                <p>We also automatically collect certain information when you visit our website, including:</p>
+                <ul>
+                    <li>IP address and device information</li>
+                    <li>Browser type and operating system</li>
+                    <li>Pages viewed and time spent on our website</li>
+                    <li>Referral source and search terms</li>
+                </ul>
+                
+                <h2>How We Use Your Information</h2>
+                <p>We use the information we collect for various purposes, including to:</p>
+                <ul>
+                    <li>Process and fulfill your orders</li>
+                    <li>Manage your account and provide customer support</li>
+                    <li>Send transactional emails and order updates</li>
+                    <li>Communicate with you about products, services, and promotions</li>
+                    <li>Improve our website, products, and services</li>
+                    <li>Detect and prevent fraud or unauthorized access</li>
+                    <li>Comply with legal obligations</li>
+                </ul>
+                
+                <h2>Cookies and Tracking Technologies</h2>
+                <p>
+                    We use cookies and similar tracking technologies to track activity on our website and hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.
+                </p>
+                
+                <h2>Sharing Your Information</h2>
+                <p>We may share your information with:</p>
+                <ul>
+                    <li>Service providers who perform services on our behalf (payment processing, delivery, marketing)</li>
+                    <li>Business partners with your consent</li>
+                    <li>Legal authorities when required by law or to protect our rights</li>
+                </ul>
+                
+                <p>We do not sell your personal information to third parties.</p>
+                
+                <h2>Data Security</h2>
+                <p>
+                    We implement appropriate security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+                </p>
+                
+                <h2>Your Rights</h2>
+                <p>Depending on your location, you may have certain rights regarding your personal information, including:</p>
+                <ul>
+                    <li>Access to your personal information</li>
+                    <li>Correction of inaccurate or incomplete information</li>
+                    <li>Deletion of your personal information</li>
+                    <li>Restriction or objection to processing</li>
+                    <li>Data portability</li>
+                    <li>Withdrawal of consent</li>
+                </ul>
+                
+                <p>
+                    To exercise these rights, please contact us at {{ site_settings.contact_email }}.
+                </p>
+                
+                <h2>Children's Privacy</h2>
+                <p>
+                    Our website is not intended for children under 16 years of age. We do not knowingly collect personal information from children under 16. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
+                </p>
+                
+                <h2>Changes to This Privacy Policy</h2>
+                <p>
+                    We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. You are advised to review this Privacy Policy periodically for any changes.
+                </p>
+                
+                <h2>Contact Us</h2>
+                <p>
+                    If you have any questions about this Privacy Policy, please contact us at:
+                </p>
+                <ul>
+                    <li>Email: {{ site_settings.contact_email }}</li>
+                    <li>Phone: {{ site_settings.contact_phone }}</li>
+                    <li>Address: {{ site_settings.address }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

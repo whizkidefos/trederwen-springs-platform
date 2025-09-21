@@ -1,0 +1,102 @@
+<!-- Billing Address -->
+<div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <h2 class="text-xl font-bold text-gray-900">Billing Address</h2>
+    </div>
+    
+    <div class="p-6">
+        <div class="mb-6">
+            <div class="flex items-center">
+                <input type="checkbox" id="same-as-shipping" name="same_as_shipping" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" checked>
+                <label for="same-as-shipping" class="ml-2 block text-sm text-gray-900">Same as shipping address</label>
+            </div>
+        </div>
+        
+        <div id="billing-address-section" class="hidden">
+            {% if user.is_authenticated and billing_addresses %}
+            <div class="mb-6">
+                <label for="billing-address-select" class="block text-sm font-medium text-gray-700 mb-1">Select a Billing Address</label>
+                <select id="billing-address-select" name="billing_address" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    {% for address in billing_addresses %}
+                    <option value="{{ address.pk }}" {% if address.is_default %}selected{% endif %}>
+                        {{ address.get_full_name }} - {{ address.address_line_1 }}, {{ address.city }}, {{ address.postcode }}
+                    </option>
+                    {% endfor %}
+                    <option value="new">Use a new address</option>
+                </select>
+            </div>
+            
+            <div id="new-billing-address" class="hidden space-y-4">
+            {% else %}
+            <div class="space-y-4">
+            {% endif %}
+                <!-- Name -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="billing-first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name*</label>
+                        <input type="text" id="billing-first-name" name="billing_first_name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" {% if user.is_authenticated %}value="{{ user.first_name }}"{% endif %}>
+                    </div>
+                    <div>
+                        <label for="billing-last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name*</label>
+                        <input type="text" id="billing-last-name" name="billing_last_name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" {% if user.is_authenticated %}value="{{ user.last_name }}"{% endif %}>
+                    </div>
+                </div>
+                
+                <!-- Company -->
+                <div>
+                    <label for="billing-company" class="block text-sm font-medium text-gray-700 mb-1">Company (Optional)</label>
+                    <input type="text" id="billing-company" name="billing_company" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- Address Line 1 -->
+                <div>
+                    <label for="billing-address-line-1" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1*</label>
+                    <input type="text" id="billing-address-line-1" name="billing_address_line_1" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- Address Line 2 -->
+                <div>
+                    <label for="billing-address-line-2" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
+                    <input type="text" id="billing-address-line-2" name="billing_address_line_2" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- City, County, Postcode -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="billing-city" class="block text-sm font-medium text-gray-700 mb-1">City/Town*</label>
+                        <input type="text" id="billing-city" name="billing_city" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div>
+                        <label for="billing-county" class="block text-sm font-medium text-gray-700 mb-1">County (Optional)</label>
+                        <input type="text" id="billing-county" name="billing_county" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div>
+                        <label for="billing-postcode" class="block text-sm font-medium text-gray-700 mb-1">Postcode*</label>
+                        <input type="text" id="billing-postcode" name="billing_postcode" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                </div>
+                
+                <!-- Country -->
+                <div>
+                    <label for="billing-country" class="block text-sm font-medium text-gray-700 mb-1">Country*</label>
+                    <select id="billing-country" name="billing_country" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                        <option value="United Kingdom" selected>United Kingdom</option>
+                    </select>
+                </div>
+                
+                <!-- Phone -->
+                <div>
+                    <label for="billing-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+                    <input type="tel" id="billing-phone" name="billing_phone" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" {% if user.is_authenticated %}value="{{ user.phone }}"{% endif %}>
+                </div>
+                
+                {% if user.is_authenticated %}
+                <div class="flex items-center">
+                    <input type="checkbox" id="save-billing-address" name="save_billing_address" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <label for="save-billing-address" class="ml-2 block text-sm text-gray-900">Save this address to my account</label>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

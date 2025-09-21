@@ -1,0 +1,321 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Order Confirmation{% endblock %}
+
+{% block extra_css %}
+<style>
+    .confirmation-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .order-item {
+        transition: all 0.3s ease;
+    }
+    
+    .order-item:hover {
+        background-color: rgba(59, 130, 246, 0.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="confirmation-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <div class="inline-block bg-white rounded-full p-4 mb-6">
+                <svg class="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                Order <span class="welsh-text-shimmer">Confirmed</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Thank you for your order! Your confirmation number is <span class="font-bold">{{ order.order_number }}</span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Order Details -->
+<section class="py-12 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Order Summary -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900">Order Summary</h2>
+            </div>
+            
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-sm text-gray-500 mb-1">Order Number</p>
+                        <p class="font-medium text-gray-900 mb-4">{{ order.order_number }}</p>
+                        
+                        <p class="text-sm text-gray-500 mb-1">Order Date</p>
+                        <p class="font-medium text-gray-900 mb-4">{{ order.created_at|date:"F j, Y, g:i a" }}</p>
+                        
+                        <p class="text-sm text-gray-500 mb-1">Order Status</p>
+                        <div class="mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium 
+                                {% if order.status == 'completed' %}bg-green-100 text-green-800
+                                {% elif order.status == 'processing' %}bg-blue-100 text-blue-800
+                                {% elif order.status == 'cancelled' %}bg-red-100 text-red-800
+                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </div>
+                        
+                        <p class="text-sm text-gray-500 mb-1">Payment Status</p>
+                        <div>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium 
+                                {% if order.payment_status == 'paid' %}bg-green-100 text-green-800
+                                {% elif order.payment_status == 'pending' %}bg-yellow-100 text-yellow-800
+                                {% elif order.payment_status == 'failed' %}bg-red-100 text-red-800
+                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {{ order.get_payment_status_display }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm text-gray-500 mb-1">Shipping Method</p>
+                        <p class="font-medium text-gray-900 mb-4">{{ order.shipping_method }}</p>
+                        
+                        <p class="text-sm text-gray-500 mb-1">Payment Method</p>
+                        <p class="font-medium text-gray-900 mb-4">{{ order.payment_method }}</p>
+                        
+                        {% if order.coupon_code %}
+                        <p class="text-sm text-gray-500 mb-1">Coupon Applied</p>
+                        <p class="font-medium text-gray-900 mb-4">{{ order.coupon_code }}</p>
+                        {% endif %}
+                        
+                        {% if order.notes %}
+                        <p class="text-sm text-gray-500 mb-1">Order Notes</p>
+                        <p class="font-medium text-gray-900">{{ order.notes }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Order Items -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900">Order Items</h2>
+            </div>
+            
+            <div class="divide-y divide-gray-200">
+                {% for item in order_items %}
+                <div class="order-item p-6 flex flex-col md:flex-row md:items-center">
+                    <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
+                        {% if item.product_data.image_url %}
+                        <img src="{{ item.product_data.image_url }}" alt="{{ item.product_name }}" class="w-20 h-20 object-cover rounded-md">
+                        {% else %}
+                        <div class="w-20 h-20 bg-gray-200 rounded-md flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex-grow">
+                        <h3 class="text-lg font-medium text-gray-900">{{ item.product_name }}</h3>
+                        <p class="text-gray-500">SKU: {{ item.product_sku }}</p>
+                        {% if item.variant %}
+                        <p class="text-gray-500">Variant: {{ item.variant }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex items-center justify-between mt-4 md:mt-0">
+                        <div class="text-gray-700 mr-6">
+                            <span class="font-medium">{{ item.quantity }}</span> × <span class="font-medium">£{{ item.unit_price }}</span>
+                        </div>
+                        <div class="font-bold text-gray-900">
+                            £{{ item.total_price }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Order Totals -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900">Order Total</h2>
+            </div>
+            
+            <div class="p-6">
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-700">Subtotal</span>
+                        <span class="font-medium text-gray-900">£{{ order.subtotal }}</span>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <span class="text-gray-700">Shipping</span>
+                        <span class="font-medium text-gray-900">£{{ order.shipping_amount }}</span>
+                    </div>
+                    
+                    {% if order.discount_amount > 0 %}
+                    <div class="flex justify-between">
+                        <span class="text-gray-700">Discount</span>
+                        <span class="font-medium text-green-600">-£{{ order.discount_amount }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if order.tax_amount > 0 %}
+                    <div class="flex justify-between">
+                        <span class="text-gray-700">Tax</span>
+                        <span class="font-medium text-gray-900">£{{ order.tax_amount }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="border-t border-gray-200 pt-3 flex justify-between">
+                        <span class="text-lg font-bold text-gray-900">Total</span>
+                        <span class="text-lg font-bold text-gray-900">£{{ order.total }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Addresses -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <!-- Shipping Address -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-900">Shipping Address</h2>
+                </div>
+                
+                <div class="p-6">
+                    <p class="font-medium text-gray-900">{{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}</p>
+                    {% if order.shipping_address.company %}
+                    <p class="text-gray-700">{{ order.shipping_address.company }}</p>
+                    {% endif %}
+                    <p class="text-gray-700">{{ order.shipping_address.address_line_1 }}</p>
+                    {% if order.shipping_address.address_line_2 %}
+                    <p class="text-gray-700">{{ order.shipping_address.address_line_2 }}</p>
+                    {% endif %}
+                    <p class="text-gray-700">{{ order.shipping_address.city }}, {{ order.shipping_address.county }}</p>
+                    <p class="text-gray-700">{{ order.shipping_address.postcode }}</p>
+                    <p class="text-gray-700">{{ order.shipping_address.country }}</p>
+                    {% if order.shipping_address.phone %}
+                    <p class="text-gray-700">{{ order.shipping_address.phone }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Billing Address -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-900">Billing Address</h2>
+                </div>
+                
+                <div class="p-6">
+                    <p class="font-medium text-gray-900">{{ order.billing_address.first_name }} {{ order.billing_address.last_name }}</p>
+                    {% if order.billing_address.company %}
+                    <p class="text-gray-700">{{ order.billing_address.company }}</p>
+                    {% endif %}
+                    <p class="text-gray-700">{{ order.billing_address.address_line_1 }}</p>
+                    {% if order.billing_address.address_line_2 %}
+                    <p class="text-gray-700">{{ order.billing_address.address_line_2 }}</p>
+                    {% endif %}
+                    <p class="text-gray-700">{{ order.billing_address.city }}, {{ order.billing_address.county }}</p>
+                    <p class="text-gray-700">{{ order.billing_address.postcode }}</p>
+                    <p class="text-gray-700">{{ order.billing_address.country }}</p>
+                    {% if order.billing_address.phone %}
+                    <p class="text-gray-700">{{ order.billing_address.phone }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Next Steps -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900">What's Next?</h2>
+            </div>
+            
+            <div class="p-6">
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium text-gray-900">Order Confirmation Email</h3>
+                            <p class="text-gray-700">We've sent a confirmation email to {{ order.email }} with all your order details.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium text-gray-900">Processing & Shipping</h3>
+                            <p class="text-gray-700">Your order is now being processed. We'll notify you when it ships with tracking information.</p>
+                        </div>
+                    </div>
+                    
+                    {% if user.is_authenticated %}
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium text-gray-900">Track Your Order</h3>
+                            <p class="text-gray-700">You can track your order and view your order history in your account dashboard.</p>
+                            <a href="{% url 'users:profile_orders' %}" class="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium">View Order History</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Continue Shopping -->
+        <div class="mt-8 text-center">
+            <a href="{% url 'products:product_list' %}" class="inline-block bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white py-3 px-8 rounded-lg font-medium transition-colors">
+                Continue Shopping
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

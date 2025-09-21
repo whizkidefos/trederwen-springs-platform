@@ -1,0 +1,30 @@
+<!-- Shipping Method -->
+<div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <h2 class="text-xl font-bold text-gray-900">Shipping Method</h2>
+    </div>
+    
+    <div class="p-6">
+        <div class="space-y-4">
+            {% if shipping_methods %}
+                {% for method in shipping_methods %}
+                <div class="relative flex items-start">
+                    <div class="flex items-center h-5">
+                        <input id="shipping-method-{{ method.id }}" name="shipping_method" type="radio" value="{{ method.id }}" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300" {% if forloop.first %}checked{% endif %}>
+                    </div>
+                    <div class="ml-3 flex-grow">
+                        <label for="shipping-method-{{ method.id }}" class="font-medium text-gray-900">{{ method.name }}</label>
+                        <p class="text-gray-500">{{ method.description }}</p>
+                        <p class="text-gray-500">Estimated delivery: {{ method.estimated_days_min }}-{{ method.estimated_days_max }} business days</p>
+                    </div>
+                    <div class="ml-4 flex-shrink-0">
+                        <span class="font-medium text-gray-900">£{{ method.price }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-gray-700">No shipping methods available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

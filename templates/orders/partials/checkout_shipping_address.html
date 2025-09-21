@@ -1,0 +1,93 @@
+<!-- Shipping Address -->
+<div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <h2 class="text-xl font-bold text-gray-900">Shipping Address</h2>
+    </div>
+    
+    <div class="p-6">
+        {% if user.is_authenticated and shipping_addresses %}
+        <div class="mb-6">
+            <label for="shipping-address-select" class="block text-sm font-medium text-gray-700 mb-1">Select a Shipping Address</label>
+            <select id="shipping-address-select" name="shipping_address" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                {% for address in shipping_addresses %}
+                <option value="{{ address.pk }}" {% if address.is_default %}selected{% endif %}>
+                    {{ address.get_full_name }} - {{ address.address_line_1 }}, {{ address.city }}, {{ address.postcode }}
+                </option>
+                {% endfor %}
+                <option value="new">Use a new address</option>
+            </select>
+        </div>
+        
+        <div id="new-shipping-address" class="{% if shipping_addresses %}hidden{% endif %} space-y-4">
+        {% else %}
+        <div class="space-y-4">
+        {% endif %}
+            <!-- Name -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="shipping-first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name*</label>
+                    <input type="text" id="shipping-first-name" name="shipping_first_name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" {% if user.is_authenticated %}value="{{ user.first_name }}"{% endif %} required>
+                </div>
+                <div>
+                    <label for="shipping-last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name*</label>
+                    <input type="text" id="shipping-last-name" name="shipping_last_name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" {% if user.is_authenticated %}value="{{ user.last_name }}"{% endif %} required>
+                </div>
+            </div>
+            
+            <!-- Company -->
+            <div>
+                <label for="shipping-company" class="block text-sm font-medium text-gray-700 mb-1">Company (Optional)</label>
+                <input type="text" id="shipping-company" name="shipping_company" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+            </div>
+            
+            <!-- Address Line 1 -->
+            <div>
+                <label for="shipping-address-line-1" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1*</label>
+                <input type="text" id="shipping-address-line-1" name="shipping_address_line_1" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+            </div>
+            
+            <!-- Address Line 2 -->
+            <div>
+                <label for="shipping-address-line-2" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
+                <input type="text" id="shipping-address-line-2" name="shipping_address_line_2" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+            </div>
+            
+            <!-- City, County, Postcode -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="shipping-city" class="block text-sm font-medium text-gray-700 mb-1">City/Town*</label>
+                    <input type="text" id="shipping-city" name="shipping_city" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                </div>
+                <div>
+                    <label for="shipping-county" class="block text-sm font-medium text-gray-700 mb-1">County (Optional)</label>
+                    <input type="text" id="shipping-county" name="shipping_county" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                <div>
+                    <label for="shipping-postcode" class="block text-sm font-medium text-gray-700 mb-1">Postcode*</label>
+                    <input type="text" id="shipping-postcode" name="shipping_postcode" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                </div>
+            </div>
+            
+            <!-- Country -->
+            <div>
+                <label for="shipping-country" class="block text-sm font-medium text-gray-700 mb-1">Country*</label>
+                <select id="shipping-country" name="shipping_country" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    <option value="United Kingdom" selected>United Kingdom</option>
+                </select>
+            </div>
+            
+            <!-- Phone -->
+            <div>
+                <label for="shipping-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+                <input type="tel" id="shipping-phone" name="shipping_phone" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" {% if user.is_authenticated %}value="{{ user.phone }}"{% endif %} required>
+            </div>
+            
+            {% if user.is_authenticated %}
+            <div class="flex items-center">
+                <input type="checkbox" id="save-shipping-address" name="save_shipping_address" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                <label for="save-shipping-address" class="ml-2 block text-sm text-gray-900">Save this address to my account</label>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

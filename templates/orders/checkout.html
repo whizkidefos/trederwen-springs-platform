@@ -1,0 +1,545 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_settings.site_name }} - Checkout{% endblock %}
+
+{% block extra_css %}
+<style>
+    .checkout-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .checkout-step {
+        transition: all 0.3s ease;
+    }
+    
+    .checkout-step.active {
+        border-color: #3b82f6;
+    }
+    
+    .checkout-step.completed {
+        border-color: #10b981;
+    }
+    
+    .checkout-step-number {
+        transition: all 0.3s ease;
+    }
+    
+    .checkout-step.active .checkout-step-number {
+        background-color: #3b82f6;
+    }
+    
+    .checkout-step.completed .checkout-step-number {
+        background-color: #10b981;
+    }
+</style>
+{% endblock %}
+
+{% block extra_head %}
+<!-- Stripe JS -->
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="checkout-hero py-12 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4" data-aos="fade-up">
+                <span class="welsh-text-shimmer">Checkout</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Complete your order to enjoy premium Welsh spring water
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Checkout Steps -->
+<section class="py-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+            <div class="flex items-center space-x-2">
+                <a href="{% url 'core:cart' %}" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Cart
+                </a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="checkout-step completed border-2 rounded-full w-8 h-8 flex items-center justify-center">
+                    <div class="checkout-step-number text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">
+                        1
+                    </div>
+                </div>
+                <div class="text-sm font-medium text-gray-700">Cart</div>
+                
+                <div class="h-px w-8 bg-gray-300"></div>
+                
+                <div class="checkout-step active border-2 rounded-full w-8 h-8 flex items-center justify-center">
+                    <div class="checkout-step-number text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">
+                        2
+                    </div>
+                </div>
+                <div class="text-sm font-medium text-gray-900">Checkout</div>
+                
+                <div class="h-px w-8 bg-gray-300"></div>
+                
+                <div class="checkout-step border-2 border-gray-300 rounded-full w-8 h-8 flex items-center justify-center">
+                    <div class="checkout-step-number bg-gray-300 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">
+                        3
+                    </div>
+                </div>
+                <div class="text-sm font-medium text-gray-500">Confirmation</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Checkout Section -->
+<section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Checkout Form -->
+            <div class="lg:w-2/3">
+                <form id="checkout-form" class="space-y-8">
+                    {% csrf_token %}
+                    
+                    <!-- Customer Information -->
+                    {% include 'orders/partials/checkout_customer_info.html' %}
+                    
+                    <!-- Shipping Address -->
+                    {% include 'orders/partials/checkout_shipping_address.html' %}
+                    
+                    <!-- Billing Address -->
+                    {% include 'orders/partials/checkout_billing_address.html' %}
+                    
+                    <!-- Shipping Method -->
+                    {% include 'orders/partials/checkout_shipping_method.html' %}
+                    
+                    <!-- Payment Method -->
+                    {% include 'orders/partials/checkout_payment.html' %}
+                    
+                    <!-- Order Notes -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                            <h2 class="text-xl font-bold text-gray-900">Order Notes (Optional)</h2>
+                        </div>
+                        
+                        <div class="p-6">
+                            <textarea id="order-notes" name="order_notes" rows="3" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Add any special instructions or notes about your order..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="lg:w-1/3">
+                {% include 'orders/partials/checkout_summary.html' %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize Stripe
+    const stripe = Stripe('{{ stripe_public_key }}');
+    let paymentIntentClientSecret = null;
+    let paymentElement = null;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize checkout form
+        initCheckoutForm();
+        
+        // Initialize coupon form
+        initCouponForm();
+        
+        // Initialize shipping method selection
+        initShippingMethodSelection();
+        
+        // Initialize address selection
+        initAddressSelection();
+        
+        // Initialize same as shipping checkbox
+        initSameAsShippingCheckbox();
+    });
+    
+    function initCheckoutForm() {
+        const checkoutForm = document.getElementById('checkout-form');
+        const placeOrderBtn = document.getElementById('place-order-btn');
+        
+        if (checkoutForm && placeOrderBtn) {
+            placeOrderBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                
+                // Disable the button to prevent multiple submissions
+                placeOrderBtn.disabled = true;
+                placeOrderBtn.classList.add('opacity-75', 'cursor-not-allowed');
+                placeOrderBtn.textContent = 'Processing...';
+                
+                // Validate form
+                if (!validateCheckoutForm()) {
+                    placeOrderBtn.disabled = false;
+                    placeOrderBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                    placeOrderBtn.textContent = 'Place Order';
+                    return;
+                }
+                
+                try {
+                    // Create payment intent if not already created
+                    if (!paymentIntentClientSecret) {
+                        await createPaymentIntent();
+                    }
+                    
+                    // Confirm payment
+                    const { error, paymentIntent } = await stripe.confirmPayment({
+                        elements: paymentElement,
+                        confirmParams: {
+                            return_url: window.location.origin + '/orders/confirmation/',
+                        },
+                        redirect: 'if_required'
+                    });
+                    
+                    if (error) {
+                        // Show error message
+                        showErrorMessage(error.message);
+                        placeOrderBtn.disabled = false;
+                        placeOrderBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                        placeOrderBtn.textContent = 'Place Order';
+                    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                        // Payment succeeded, complete the order
+                        completeOrder(paymentIntent.id);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showErrorMessage('An unexpected error occurred. Please try again.');
+                    placeOrderBtn.disabled = false;
+                    placeOrderBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                    placeOrderBtn.textContent = 'Place Order';
+                }
+            });
+        }
+    }
+    
+    function validateCheckoutForm() {
+        // Add form validation logic here
+        return true;
+    }
+    
+    async function createPaymentIntent() {
+        const formData = new FormData(document.getElementById('checkout-form'));
+        
+        try {
+            const response = await fetch('{% url "orders:create_payment_intent" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                paymentIntentClientSecret = data.clientSecret;
+                
+                // Update order total
+                const orderTotalElement = document.getElementById('order-total');
+                if (orderTotalElement) {
+                    orderTotalElement.textContent = `£${data.total.toFixed(2)}`;
+                }
+                
+                return true;
+            } else {
+                showErrorMessage(data.error || 'Failed to create payment intent');
+                return false;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showErrorMessage('An unexpected error occurred. Please try again.');
+            return false;
+        }
+    }
+    
+    async function completeOrder(paymentIntentId) {
+        const formData = new FormData(document.getElementById('checkout-form'));
+        formData.append('payment_intent_id', paymentIntentId);
+        
+        try {
+            const response = await fetch('{% url "orders:complete_order" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok && data.success) {
+                // Redirect to order confirmation page
+                window.location.href = data.redirect_url;
+            } else {
+                showErrorMessage(data.message || 'Failed to complete order');
+                const placeOrderBtn = document.getElementById('place-order-btn');
+                if (placeOrderBtn) {
+                    placeOrderBtn.disabled = false;
+                    placeOrderBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                    placeOrderBtn.textContent = 'Place Order';
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showErrorMessage('An unexpected error occurred. Please try again.');
+            const placeOrderBtn = document.getElementById('place-order-btn');
+            if (placeOrderBtn) {
+                placeOrderBtn.disabled = false;
+                placeOrderBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                placeOrderBtn.textContent = 'Place Order';
+            }
+        }
+    }
+    
+    function initCouponForm() {
+        const couponForm = document.getElementById('coupon-form');
+        const couponInput = document.getElementById('coupon-code');
+        const applyCouponBtn = document.getElementById('apply-coupon-btn');
+        const removeCouponBtn = document.getElementById('remove-coupon-btn');
+        
+        if (couponForm && applyCouponBtn) {
+            couponForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                if (!couponInput.value.trim()) {
+                    showErrorMessage('Please enter a coupon code');
+                    return;
+                }
+                
+                applyCouponBtn.disabled = true;
+                applyCouponBtn.textContent = 'Applying...';
+                
+                const formData = new FormData(couponForm);
+                
+                try {
+                    const response = await fetch('{% url "orders:apply_coupon" %}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                        // Show success message
+                        showSuccessMessage(data.message);
+                        
+                        // Update order summary
+                        const discountElement = document.getElementById('discount-amount');
+                        const orderTotalElement = document.getElementById('order-total');
+                        const discountRow = document.getElementById('discount-row');
+                        
+                        if (discountElement && orderTotalElement && discountRow) {
+                            discountRow.classList.remove('hidden');
+                            discountElement.textContent = `-£${data.discount.toFixed(2)}`;
+                            orderTotalElement.textContent = `£${data.new_total.toFixed(2)}`;
+                        }
+                        
+                        // Show remove coupon button
+                        if (removeCouponBtn) {
+                            removeCouponBtn.classList.remove('hidden');
+                        }
+                        
+                        // Hide coupon form
+                        couponInput.disabled = true;
+                        applyCouponBtn.classList.add('hidden');
+                    } else {
+                        // Show error message
+                        showErrorMessage(data.message || 'Failed to apply coupon');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showErrorMessage('An unexpected error occurred. Please try again.');
+                } finally {
+                    applyCouponBtn.disabled = false;
+                    applyCouponBtn.textContent = 'Apply';
+                }
+            });
+        }
+        
+        if (removeCouponBtn) {
+            removeCouponBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                
+                removeCouponBtn.disabled = true;
+                
+                try {
+                    const response = await fetch('{% url "orders:remove_coupon" %}', {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                        // Show success message
+                        showSuccessMessage(data.message);
+                        
+                        // Update order summary
+                        const discountRow = document.getElementById('discount-row');
+                        if (discountRow) {
+                            discountRow.classList.add('hidden');
+                        }
+                        
+                        // Reset coupon form
+                        couponInput.value = '';
+                        couponInput.disabled = false;
+                        applyCouponBtn.classList.remove('hidden');
+                        removeCouponBtn.classList.add('hidden');
+                        
+                        // Update payment intent
+                        createPaymentIntent();
+                    } else {
+                        // Show error message
+                        showErrorMessage(data.message || 'Failed to remove coupon');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showErrorMessage('An unexpected error occurred. Please try again.');
+                } finally {
+                    removeCouponBtn.disabled = false;
+                }
+            });
+        }
+    }
+    
+    function initShippingMethodSelection() {
+        const shippingMethodInputs = document.querySelectorAll('input[name="shipping_method"]');
+        
+        if (shippingMethodInputs.length > 0) {
+            shippingMethodInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // Update payment intent when shipping method changes
+                    createPaymentIntent();
+                });
+            });
+        }
+    }
+    
+    function initAddressSelection() {
+        const shippingAddressSelect = document.getElementById('shipping-address-select');
+        const billingAddressSelect = document.getElementById('billing-address-select');
+        
+        if (shippingAddressSelect) {
+            shippingAddressSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const addressId = selectedOption.value;
+                
+                if (addressId === 'new') {
+                    // Show new shipping address form
+                    document.getElementById('new-shipping-address').classList.remove('hidden');
+                } else {
+                    // Hide new shipping address form
+                    document.getElementById('new-shipping-address').classList.add('hidden');
+                }
+            });
+        }
+        
+        if (billingAddressSelect) {
+            billingAddressSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const addressId = selectedOption.value;
+                
+                if (addressId === 'new') {
+                    // Show new billing address form
+                    document.getElementById('new-billing-address').classList.remove('hidden');
+                } else {
+                    // Hide new billing address form
+                    document.getElementById('new-billing-address').classList.add('hidden');
+                }
+            });
+        }
+    }
+    
+    function initSameAsShippingCheckbox() {
+        const sameAsShippingCheckbox = document.getElementById('same-as-shipping');
+        const billingAddressSection = document.getElementById('billing-address-section');
+        
+        if (sameAsShippingCheckbox && billingAddressSection) {
+            sameAsShippingCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    billingAddressSection.classList.add('hidden');
+                } else {
+                    billingAddressSection.classList.remove('hidden');
+                }
+            });
+        }
+    }
+    
+    function showSuccessMessage(message) {
+        const alertsContainer = document.getElementById('alerts-container');
+        if (alertsContainer) {
+            const alert = document.createElement('div');
+            alert.className = 'p-4 mb-4 rounded-lg bg-green-100 text-green-800';
+            alert.textContent = message;
+            
+            alertsContainer.appendChild(alert);
+            
+            // Remove alert after 5 seconds
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+    }
+    
+    function showErrorMessage(message) {
+        const alertsContainer = document.getElementById('alerts-container');
+        if (alertsContainer) {
+            const alert = document.createElement('div');
+            alert.className = 'p-4 mb-4 rounded-lg bg-red-100 text-red-800';
+            alert.textContent = message;
+            
+            alertsContainer.appendChild(alert);
+            
+            // Remove alert after 5 seconds
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+    }
+</script>
+{% endblock %}

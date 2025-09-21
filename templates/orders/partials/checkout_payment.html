@@ -1,0 +1,70 @@
+<!-- Payment Method -->
+<div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <h2 class="text-xl font-bold text-gray-900">Payment Method</h2>
+    </div>
+    
+    <div class="p-6">
+        <div class="mb-6">
+            <p class="text-gray-700">All transactions are secure and encrypted. We accept the following payment methods:</p>
+            <div class="flex items-center space-x-4 mt-4">
+                <img src="{% static 'images/payment/visa.svg' %}" alt="Visa" class="h-8">
+                <img src="{% static 'images/payment/mastercard.svg' %}" alt="Mastercard" class="h-8">
+                <img src="{% static 'images/payment/amex.svg' %}" alt="American Express" class="h-8">
+            </div>
+        </div>
+        
+        <div class="space-y-4">
+            <div>
+                <label for="card-element" class="block text-sm font-medium text-gray-700 mb-1">Card Information*</label>
+                <div id="card-element" class="p-4 border border-gray-300 rounded-lg bg-white">
+                    <!-- Stripe Card Element will be inserted here -->
+                </div>
+                <div id="card-errors" class="text-red-600 text-sm mt-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create a Stripe client
+        const stripe = Stripe('{{ stripe_public_key }}');
+        const elements = stripe.elements();
+        
+        // Create an instance of the card Element
+        const cardElement = elements.create('card', {
+            style: {
+                base: {
+                    color: '#32325d',
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: '#aab7c4'
+                    }
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
+                }
+            }
+        });
+        
+        // Add an instance of the card Element into the `card-element` div
+        cardElement.mount('#card-element');
+        
+        // Handle real-time validation errors from the card Element
+        cardElement.addEventListener('change', function(event) {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+        
+        // Store the card element for use in the checkout form
+        window.paymentElement = elements;
+    });
+</script>

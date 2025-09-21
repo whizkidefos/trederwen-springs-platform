@@ -1,0 +1,83 @@
+/* Form Field Styling Fixes */
+
+/* Base form field styling */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="datetime-local"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    color: #1f2937; /* Ensure text is visible (dark gray) */
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Focus state */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #3b82f6; /* Blue border on focus */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Soft blue glow */
+}
+
+/* Placeholder styling */
+::placeholder {
+    color: #9ca3af; /* Light gray for placeholders */
+    opacity: 1;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.25rem;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+/* Form field wrapper styling */
+.form-field-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+/* Error state */
+.form-field-error input,
+.form-field-error textarea,
+.form-field-error select {
+    border-color: #ef4444;
+}
+
+/* Password toggle button */
+.toggle-password,
+.toggle-password-confirm {
+    cursor: pointer;
+    color: #6b7280;
+}
+
+.toggle-password:hover,
+.toggle-password-confirm:hover {
+    color: #3b82f6;
+}

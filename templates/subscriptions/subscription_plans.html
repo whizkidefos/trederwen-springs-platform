@@ -421,45 +421,49 @@
         once: true
     });
     
-    // FAQ Toggles
-    document.addEventListener('DOMContentLoaded', function() {
+    // FAQ Accordion Implementation
+    function initFaqAccordion() {
         const faqToggles = document.querySelectorAll('.faq-toggle');
         
+        // First, remove any existing event listeners by cloning and replacing elements
         faqToggles.forEach(toggle => {
-            toggle.addEventListener('click', function() {
+            const newToggle = toggle.cloneNode(true);
+            toggle.parentNode.replaceChild(newToggle, toggle);
+        });
+        
+        // Then add new event listeners to the fresh elements
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                
                 const content = this.nextElementSibling;
                 const arrow = this.querySelector('.faq-arrow');
                 
-                // Toggle content visibility
-                content.classList.toggle('hidden');
-                
-                // Rotate arrow
-                if (content.classList.contains('hidden')) {
+                // Toggle this content
+                if (content.style.maxHeight) {
+                    // Close this item
+                    content.style.maxHeight = null;
+                    content.classList.add('hidden');
                     arrow.style.transform = 'rotate(0deg)';
                 } else {
+                    // Open this item
+                    content.classList.remove('hidden');
+                    content.style.maxHeight = content.scrollHeight + 'px';
                     arrow.style.transform = 'rotate(180deg)';
                 }
             });
         });
-    });
+    }
     
-    // Initialize FAQ toggles immediately as well (in case DOMContentLoaded already fired)
-    const faqToggles = document.querySelectorAll('.faq-toggle');
-    faqToggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const content = this.nextElementSibling;
-            const arrow = this.querySelector('.faq-arrow');
-            
-            // Toggle content visibility
-            content.classList.toggle('hidden');
-            
-            // Rotate arrow
-            if (content.classList.contains('hidden')) {
-                arrow.style.transform = 'rotate(0deg)';
-            } else {
-                arrow.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
+    // Initialize on DOMContentLoaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFaqAccordion);
+    } else {
+        // DOMContentLoaded has already fired
+        initFaqAccordion();
+    }
+    
+    // Also initialize on window load to ensure all resources are loaded
+    window.addEventListener('load', initFaqAccordion);
 </script>
 {% endblock %}

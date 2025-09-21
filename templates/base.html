@@ -12,6 +12,9 @@
     <!-- Preload critical resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" as="style">
     
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/form-fixes.css">
+    
     <!-- TailwindCSS with Welsh-inspired config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -746,3 +749,10 @@
     <!-- Welsh Heritage Scripts -->
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    {% block extra_js %}{% endblock %}
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/3010d94d2f.js" crossorigin="anonymous"></script>
+    <!-- Form Enhancement Script -->
+    <script src="/static/js/form-enhancements.js"></script>
+</body>
+</html>

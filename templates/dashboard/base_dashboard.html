@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site_settings.site_name }} - Admin Dashboard{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+    <!-- Dashboard CSS -->
+    <style>
+        /* Dashboard specific styles */
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .sidebar-link.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .dashboard-card {
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        /* Welsh-inspired gradient backgrounds */
+        .welsh-gradient-primary {
+            background: linear-gradient(135deg, #1e3a8a 0%, #065f46 100%);
+        }
+        
+        .welsh-gradient-secondary {
+            background: linear-gradient(135deg, #065f46 0%, #1e3a8a 100%);
+        }
+        
+        .welsh-gradient-accent {
+            background: linear-gradient(135deg, #1e3a8a 0%, #7e22ce 50%, #065f46 100%);
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Top Navigation -->
+    <header class="welsh-gradient-primary text-white shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Left: Logo and Toggle -->
+                <div class="flex items-center">
+                    <button id="sidebar-toggle" class="mr-3 lg:hidden">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <a href="{% url 'dashboard:index' %}" class="flex items-center">
+                        <span class="font-bold text-xl">Trederwen Springs</span>
+                        <span class="ml-2 bg-blue-800 text-xs font-semibold px-2 py-1 rounded-md">ADMIN</span>
+                    </a>
+                </div>
+                
+                <!-- Right: User Menu -->
+                <div class="flex items-center">
+                    <a href="{% url 'dashboard:messages' %}" class="mr-4 relative">
+                        <i class="fas fa-envelope text-lg"></i>
+                        {% if unread_messages > 0 %}
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                            {{ unread_messages }}
+                        </span>
+                        {% endif %}
+                    </a>
+                    
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex items-center focus:outline-none">
+                            {% if request.user.avatar %}
+                            <img src="{{ request.user.avatar.url }}" alt="{{ request.user.get_full_name }}" class="w-8 h-8 rounded-full mr-2">
+                            {% else %}
+                            <div class="w-8 h-8 rounded-full bg-blue-800 flex items-center justify-center mr-2">
+                                <span class="text-white font-semibold">{{ request.user.first_name|first }}{{ request.user.last_name|first }}</span>
+                            </div>
+                            {% endif %}
+                            <span class="hidden md:block">{{ request.user.get_full_name }}</span>
+                            <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                        </button>
+                        
+                        <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50" style="display: none;">
+                            <a href="{% url 'core:home' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-home mr-2"></i> Visit Site
+                            </a>
+                            <a href="{% url 'dashboard:settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-cog mr-2"></i> Settings
+                            </a>
+                            <div class="border-t border-gray-100"></div>
+                            <a href="{% url 'users:logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-white shadow-md z-10 h-screen fixed lg:sticky top-0 left-0 overflow-y-auto transform lg:transform-none lg:translate-x-0 -translate-x-full transition-transform duration-300 ease-in-out">
+            <div class="p-4">
+                <div class="mb-8 pt-4">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Main Menu</h2>
+                    <nav>
+                        <a href="{% url 'dashboard:index' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                            <i class="fas fa-tachometer-alt w-5 text-gray-600"></i>
+                            <span class="ml-3">Dashboard</span>
+                        </a>
+                        <a href="{% url 'dashboard:orders' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if 'orders' in request.path %}active{% endif %}">
+                            <i class="fas fa-shopping-cart w-5 text-gray-600"></i>
+                            <span class="ml-3">Orders</span>
+                        </a>
+                        <a href="{% url 'dashboard:products' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if 'products' in request.path %}active{% endif %}">
+                            <i class="fas fa-box w-5 text-gray-600"></i>
+                            <span class="ml-3">Products</span>
+                        </a>
+                        <a href="{% url 'dashboard:customers' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if 'customers' in request.path %}active{% endif %}">
+                            <i class="fas fa-users w-5 text-gray-600"></i>
+                            <span class="ml-3">Customers</span>
+                        </a>
+                        <a href="{% url 'dashboard:messages' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if 'messages' in request.path %}active{% endif %}">
+                            <i class="fas fa-envelope w-5 text-gray-600"></i>
+                            <span class="ml-3">Messages</span>
+                            {% if unread_messages > 0 %}
+                            <span class="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-1">{{ unread_messages }}</span>
+                            {% endif %}
+                        </a>
+                        <a href="{% url 'dashboard:analytics' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if 'analytics' in request.path %}active{% endif %}">
+                            <i class="fas fa-chart-line w-5 text-gray-600"></i>
+                            <span class="ml-3">Analytics</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                {% if request.user.is_superuser %}
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Administration</h2>
+                    <nav>
+                        <a href="{% url 'dashboard:admin_users' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if 'admin-users' in request.path %}active{% endif %}">
+                            <i class="fas fa-user-shield w-5 text-gray-600"></i>
+                            <span class="ml-3">Admin Users</span>
+                        </a>
+                        <a href="{% url 'dashboard:audit_logs' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if 'audit-logs' in request.path %}active{% endif %}">
+                            <i class="fas fa-history w-5 text-gray-600"></i>
+                            <span class="ml-3">Audit Logs</span>
+                        </a>
+                        <a href="{% url 'dashboard:settings' %}" class="sidebar-link flex items-center py-3 px-4 rounded-lg mb-1 {% if 'settings' in request.path %}active{% endif %}">
+                            <i class="fas fa-cog w-5 text-gray-600"></i>
+                            <span class="ml-3">Settings</span>
+                        </a>
+                    </nav>
+                </div>
+                {% endif %}
+                
+                <div class="pt-4 border-t border-gray-200">
+                    <a href="{% url 'core:home' %}" class="flex items-center py-3 px-4 text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        <span>Back to Site</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <!-- Breadcrumbs -->
+            <div class="mb-6">
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                        <li class="inline-flex items-center">
+                            <a href="{% url 'dashboard:index' %}" class="text-gray-700 hover:text-blue-600">
+                                <i class="fas fa-home mr-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        {% block breadcrumbs %}{% endblock %}
+                    </ol>
+                </nav>
+            </div>
+            
+            <!-- Page Title and Actions -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">{% block page_title %}Dashboard{% endblock %}</h1>
+                    <p class="text-gray-600">{% block page_subtitle %}Welcome to the admin dashboard{% endblock %}</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    {% block page_actions %}{% endblock %}
+                </div>
+            </div>
+            
+            <!-- Alerts -->
+            {% if messages %}
+            <div class="mb-6">
+                {% for message in messages %}
+                <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-800{% else %}bg-blue-100 text-blue-800{% endif %} mb-3">
+                    <div class="flex items-center">
+                        {% if message.tags == 'success' %}
+                        <i class="fas fa-check-circle mr-3 text-green-500"></i>
+                        {% elif message.tags == 'error' %}
+                        <i class="fas fa-exclamation-circle mr-3 text-red-500"></i>
+                        {% elif message.tags == 'warning' %}
+                        <i class="fas fa-exclamation-triangle mr-3 text-yellow-500"></i>
+                        {% else %}
+                        <i class="fas fa-info-circle mr-3 text-blue-500"></i>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- Main Content -->
+            <div class="animate-fade-in">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white py-4 border-t border-gray-200">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-sm text-gray-600">
+                    &copy; {% now "Y" %} Trederwen Springs. All rights reserved.
+                </div>
+                <div class="mt-2 md:mt-0 text-sm text-gray-500">
+                    Admin Dashboard v1.0
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    
+    <!-- Dashboard JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sidebar toggle for mobile
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('-translate-x-full');
+                });
+            }
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

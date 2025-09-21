@@ -442,5 +442,24 @@
             });
         });
     });
+    
+    // Initialize FAQ toggles immediately as well (in case DOMContentLoaded already fired)
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    faqToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const arrow = this.querySelector('.faq-arrow');
+            
+            // Toggle content visibility
+            content.classList.toggle('hidden');
+            
+            // Rotate arrow
+            if (content.classList.contains('hidden')) {
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        });
+    });
 </script>
 {% endblock %}

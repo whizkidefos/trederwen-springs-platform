@@ -1,0 +1,194 @@
+<!-- Compose Message Header -->
+<div class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+    <h2 class="text-xl font-bold text-gray-900">Compose Message</h2>
+    <button type="button" class="close-modal text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Close</span>
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+
+<!-- Compose Message Form -->
+<div class="p-6">
+    <div class="form-errors"></div>
+    
+    <form id="compose-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Message Type -->
+        <div class="mb-4">
+            <label for="message_type" class="block text-sm font-medium text-gray-700 mb-1">Message Type</label>
+            <select id="message_type" name="message_type" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                <option value="admin_to_user">Message to Customer</option>
+                <option value="broadcast">Broadcast Message</option>
+            </select>
+        </div>
+        
+        <!-- Recipient (for admin_to_user type) -->
+        <div id="recipient-field" class="mb-4">
+            <label for="recipient" class="block text-sm font-medium text-gray-700 mb-1">Recipient</label>
+            <select id="recipient" name="recipient" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                <option value="">Select a recipient</option>
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.get_full_name }} ({{ user.email }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <!-- Subject -->
+        <div class="mb-4">
+            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+            <input type="text" id="subject" name="subject" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+        </div>
+        
+        <!-- Content -->
+        <div class="mb-4">
+            <label for="content" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+            <textarea id="content" name="content" rows="6" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"></textarea>
+        </div>
+        
+        <!-- Attachments -->
+        <div class="mb-6">
+            <label for="attachments" class="block text-sm font-medium text-gray-700 mb-1">Attachments (Optional)</label>
+            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                <div class="space-y-1 text-center">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <div class="flex text-sm text-gray-600">
+                        <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                            <span>Upload files</span>
+                            <input id="file-upload" name="attachments" type="file" class="sr-only" multiple>
+                        </label>
+                        <p class="pl-1">or drag and drop</p>
+                    </div>
+                    <p class="text-xs text-gray-500">
+                        PNG, JPG, GIF, PDF up to 10MB
+                    </p>
+                </div>
+            </div>
+            <div id="file-list" class="mt-2"></div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium">
+                Send Message
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const messageTypeSelect = document.getElementById('message_type');
+        const recipientField = document.getElementById('recipient-field');
+        const fileUpload = document.getElementById('file-upload');
+        const fileList = document.getElementById('file-list');
+        
+        // Toggle recipient field based on message type
+        if (messageTypeSelect) {
+            messageTypeSelect.addEventListener('change', function() {
+                if (this.value === 'broadcast') {
+                    recipientField.style.display = 'none';
+                } else {
+                    recipientField.style.display = 'block';
+                }
+            });
+        }
+        
+        // Display selected files
+        if (fileUpload) {
+            fileUpload.addEventListener('change', function() {
+                fileList.innerHTML = '';
+                
+                if (this.files.length > 0) {
+                    const fileListHeader = document.createElement('p');
+                    fileListHeader.className = 'text-sm font-medium text-gray-700 mb-2';
+                    fileListHeader.textContent = 'Selected Files:';
+                    fileList.appendChild(fileListHeader);
+                    
+                    const fileListUl = document.createElement('ul');
+                    fileListUl.className = 'text-sm text-gray-600 space-y-1';
+                    
+                    for (let i = 0; i < this.files.length; i++) {
+                        const file = this.files[i];
+                        const fileItem = document.createElement('li');
+                        fileItem.className = 'flex items-center';
+                        
+                        // Icon based on file type
+                        const icon = document.createElement('i');
+                        if (file.type.startsWith('image/')) {
+                            icon.className = 'fas fa-image text-blue-500 mr-2';
+                        } else if (file.type === 'application/pdf') {
+                            icon.className = 'fas fa-file-pdf text-red-500 mr-2';
+                        } else {
+                            icon.className = 'fas fa-file text-gray-500 mr-2';
+                        }
+                        
+                        fileItem.appendChild(icon);
+                        fileItem.appendChild(document.createTextNode(`${file.name} (${formatFileSize(file.size)})`));
+                        fileListUl.appendChild(fileItem);
+                    }
+                    
+                    fileList.appendChild(fileListUl);
+                }
+            });
+        }
+        
+        // Helper function to format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Drag and drop functionality
+        const dropZone = document.querySelector('.border-dashed');
+        
+        if (dropZone) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropZone.classList.add('border-blue-300', 'bg-blue-50');
+            }
+            
+            function unhighlight() {
+                dropZone.classList.remove('border-blue-300', 'bg-blue-50');
+            }
+            
+            dropZone.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (fileUpload) {
+                    fileUpload.files = files;
+                    
+                    // Trigger change event
+                    const event = new Event('change');
+                    fileUpload.dispatchEvent(event);
+                }
+            }
+        }
+    });
+</script>

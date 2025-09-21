@@ -1,0 +1,75 @@
+<div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <h2 class="text-xl font-bold text-gray-900">Filter Products</h2>
+    </div>
+    <div class="p-6">
+        <form id="product-filter-form" method="get" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Category Filter -->
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select id="category" name="category" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <!-- Stock Status Filter -->
+            <div>
+                <label for="stock" class="block text-sm font-medium text-gray-700 mb-1">Stock Status</label>
+                <select id="stock" name="stock" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <option value="">All Stock Statuses</option>
+                    <option value="in_stock" {% if stock_status == 'in_stock' %}selected{% endif %}>In Stock</option>
+                    <option value="low_stock" {% if stock_status == 'low_stock' %}selected{% endif %}>Low Stock</option>
+                    <option value="out_of_stock" {% if stock_status == 'out_of_stock' %}selected{% endif %}>Out of Stock</option>
+                </select>
+            </div>
+            
+            <!-- Price Range Filter -->
+            <div>
+                <label for="price_min" class="block text-sm font-medium text-gray-700 mb-1">Min Price (£)</label>
+                <input type="number" id="price_min" name="price_min" value="{{ price_min }}" min="0" step="0.01" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+            </div>
+            
+            <div>
+                <label for="price_max" class="block text-sm font-medium text-gray-700 mb-1">Max Price (£)</label>
+                <input type="number" id="price_max" name="price_max" value="{{ price_max }}" min="0" step="0.01" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+            </div>
+            
+            <!-- Search Filter -->
+            <div class="md:col-span-2">
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <div class="relative">
+                    <input type="text" id="search" name="search" value="{{ search }}" placeholder="Product name, SKU, description..." class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-10">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sort By -->
+            <div>
+                <label for="sort_by" class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+                <select id="sort_by" name="sort_by" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name (A-Z)</option>
+                    <option value="-name" {% if sort_by == '-name' %}selected{% endif %}>Name (Z-A)</option>
+                    <option value="price" {% if sort_by == 'price' %}selected{% endif %}>Price (Low to High)</option>
+                    <option value="-price" {% if sort_by == '-price' %}selected{% endif %}>Price (High to Low)</option>
+                    <option value="-created_at" {% if sort_by == '-created_at' %}selected{% endif %}>Newest First</option>
+                    <option value="created_at" {% if sort_by == 'created_at' %}selected{% endif %}>Oldest First</option>
+                </select>
+            </div>
+            
+            <!-- Filter Actions -->
+            <div class="lg:col-span-4 flex space-x-3 mt-2">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                    Apply Filters
+                </button>
+                <a href="{% url 'dashboard:products' %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg text-sm font-medium">
+                    Clear Filters
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

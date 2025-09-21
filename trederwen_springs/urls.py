@@ -15,6 +15,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('subscriptions/', include('subscriptions.urls')),
     path('api/recommendations/', include('ai_recommendations.urls')),
+    path('dashboard/', include('dashboard.urls')),
 ]
 
 # Serve media files in development

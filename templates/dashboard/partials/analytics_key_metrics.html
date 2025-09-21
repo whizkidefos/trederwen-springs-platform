@@ -1,0 +1,165 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <!-- Total Revenue -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden dashboard-card">
+        <div class="px-6 py-5 flex items-center">
+            <div class="flex-shrink-0 bg-blue-100 rounded-full p-3">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-5 w-0 flex-1">
+                <dl>
+                    <dt class="text-sm font-medium text-gray-500 truncate">Total Revenue</dt>
+                    <dd class="flex items-baseline">
+                        <div class="text-2xl font-semibold text-gray-900">£{{ total_revenue|floatformat:2 }}</div>
+                        {% if revenue_change > 0 %}
+                        <span class="ml-2 flex items-center text-sm font-medium text-green-600">
+                            <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Increased by</span>
+                            {{ revenue_change }}%
+                        </span>
+                        {% elif revenue_change < 0 %}
+                        <span class="ml-2 flex items-center text-sm font-medium text-red-600">
+                            <svg class="self-center flex-shrink-0 h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Decreased by</span>
+                            {{ revenue_change|abs }}%
+                        </span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="bg-gray-50 px-6 py-2">
+            <div class="text-sm">
+                <span class="font-medium text-gray-500">{{ period_label }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Orders -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden dashboard-card">
+        <div class="px-6 py-5 flex items-center">
+            <div class="flex-shrink-0 bg-green-100 rounded-full p-3">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
+            </div>
+            <div class="ml-5 w-0 flex-1">
+                <dl>
+                    <dt class="text-sm font-medium text-gray-500 truncate">Total Orders</dt>
+                    <dd class="flex items-baseline">
+                        <div class="text-2xl font-semibold text-gray-900">{{ total_orders }}</div>
+                        {% if orders_change > 0 %}
+                        <span class="ml-2 flex items-center text-sm font-medium text-green-600">
+                            <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Increased by</span>
+                            {{ orders_change }}%
+                        </span>
+                        {% elif orders_change < 0 %}
+                        <span class="ml-2 flex items-center text-sm font-medium text-red-600">
+                            <svg class="self-center flex-shrink-0 h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Decreased by</span>
+                            {{ orders_change|abs }}%
+                        </span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="bg-gray-50 px-6 py-2">
+            <div class="text-sm">
+                <span class="font-medium text-gray-500">{{ period_label }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Average Order Value -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden dashboard-card">
+        <div class="px-6 py-5 flex items-center">
+            <div class="flex-shrink-0 bg-purple-100 rounded-full p-3">
+                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+            </div>
+            <div class="ml-5 w-0 flex-1">
+                <dl>
+                    <dt class="text-sm font-medium text-gray-500 truncate">Average Order Value</dt>
+                    <dd class="flex items-baseline">
+                        <div class="text-2xl font-semibold text-gray-900">£{{ avg_order_value|floatformat:2 }}</div>
+                        {% if aov_change > 0 %}
+                        <span class="ml-2 flex items-center text-sm font-medium text-green-600">
+                            <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Increased by</span>
+                            {{ aov_change }}%
+                        </span>
+                        {% elif aov_change < 0 %}
+                        <span class="ml-2 flex items-center text-sm font-medium text-red-600">
+                            <svg class="self-center flex-shrink-0 h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Decreased by</span>
+                            {{ aov_change|abs }}%
+                        </span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="bg-gray-50 px-6 py-2">
+            <div class="text-sm">
+                <span class="font-medium text-gray-500">{{ period_label }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Customers -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden dashboard-card">
+        <div class="px-6 py-5 flex items-center">
+            <div class="flex-shrink-0 bg-yellow-100 rounded-full p-3">
+                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-5 w-0 flex-1">
+                <dl>
+                    <dt class="text-sm font-medium text-gray-500 truncate">New Customers</dt>
+                    <dd class="flex items-baseline">
+                        <div class="text-2xl font-semibold text-gray-900">{{ new_customers }}</div>
+                        {% if customer_change > 0 %}
+                        <span class="ml-2 flex items-center text-sm font-medium text-green-600">
+                            <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Increased by</span>
+                            {{ customer_change }}%
+                        </span>
+                        {% elif customer_change < 0 %}
+                        <span class="ml-2 flex items-center text-sm font-medium text-red-600">
+                            <svg class="self-center flex-shrink-0 h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Decreased by</span>
+                            {{ customer_change|abs }}%
+                        </span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="bg-gray-50 px-6 py-2">
+            <div class="text-sm">
+                <span class="font-medium text-gray-500">{{ period_label }}</span>
+            </div>
+        </div>
+    </div>
+</div>

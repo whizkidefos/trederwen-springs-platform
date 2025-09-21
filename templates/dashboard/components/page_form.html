@@ -1,0 +1,199 @@
+<!-- Page Form Header -->
+<div class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+    <h2 class="text-xl font-bold text-gray-900">{% if page %}Edit Page{% else %}Add New Page{% endif %}</h2>
+    <button type="button" class="close-modal text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Close</span>
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+
+<!-- Page Form Content -->
+<div class="p-6">
+    <div class="form-errors"></div>
+    
+    <form id="page-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Basic Information -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+                
+                <!-- Title -->
+                <div class="mb-4">
+                    <label for="id_title" class="block text-sm font-medium text-gray-700 mb-1">Page Title *</label>
+                    <input type="text" id="id_title" name="title" value="{{ page.title|default:'' }}" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- Slug -->
+                <div class="mb-4">
+                    <label for="id_slug" class="block text-sm font-medium text-gray-700 mb-1">Slug *</label>
+                    <input type="text" id="id_slug" name="slug" value="{{ page.slug|default:'' }}" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <p class="mt-1 text-xs text-gray-500">URL-friendly version of the title</p>
+                </div>
+                
+                <!-- Status -->
+                <div class="mb-4">
+                    <label for="id_is_published" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="id_is_published" name="is_published" {% if page.is_published or page is None %}checked{% endif %} class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 h-5 w-5">
+                        <label for="id_is_published" class="ml-2 text-sm text-gray-700">Published (visible on site)</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation & SEO -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Navigation & SEO</h3>
+                
+                <!-- Navigation -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Show in Navigation</label>
+                    <div class="flex items-center mb-2">
+                        <input type="checkbox" id="id_show_in_header" name="show_in_header" {% if page.show_in_header %}checked{% endif %} class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 h-5 w-5">
+                        <label for="id_show_in_header" class="ml-2 text-sm text-gray-700">Header Menu</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="id_show_in_footer" name="show_in_footer" {% if page.show_in_footer %}checked{% endif %} class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 h-5 w-5">
+                        <label for="id_show_in_footer" class="ml-2 text-sm text-gray-700">Footer Menu</label>
+                    </div>
+                </div>
+                
+                <!-- Menu Order -->
+                <div class="mb-4">
+                    <label for="id_menu_order" class="block text-sm font-medium text-gray-700 mb-1">Menu Order</label>
+                    <input type="number" id="id_menu_order" name="menu_order" value="{{ page.menu_order|default:'0' }}" min="0" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <p class="mt-1 text-xs text-gray-500">Lower numbers appear first in navigation menus</p>
+                </div>
+                
+                <!-- Meta Title -->
+                <div class="mb-4">
+                    <label for="id_meta_title" class="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
+                    <input type="text" id="id_meta_title" name="meta_title" value="{{ page.meta_title|default:'' }}" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <p class="mt-1 text-xs text-gray-500">Leave empty to use page title</p>
+                </div>
+                
+                <!-- Meta Description -->
+                <div class="mb-4">
+                    <label for="id_meta_description" class="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
+                    <textarea id="id_meta_description" name="meta_description" rows="3" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ page.meta_description|default:'' }}</textarea>
+                    <p class="mt-1 text-xs text-gray-500">Brief description for search engines</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Featured Image -->
+        <div class="mb-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Featured Image</h3>
+            <div class="mb-4">
+                <label for="id_featured_image" class="block text-sm font-medium text-gray-700 mb-1">Featured Image</label>
+                <div class="mt-1 flex items-center">
+                    {% if page.featured_image %}
+                    <div class="mr-4">
+                        <img id="image-preview" src="{{ page.featured_image.url }}" alt="{{ page.title }}" class="h-32 w-32 object-cover rounded-lg">
+                    </div>
+                    {% else %}
+                    <img id="image-preview" src="" alt="Preview" class="h-32 w-32 object-cover rounded-lg hidden">
+                    {% endif %}
+                    <div class="flex-1">
+                        <input type="file" id="id_featured_image" name="featured_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <p class="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page Content -->
+        <div class="mb-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Page Content</h3>
+            <div class="mb-4">
+                <label for="id_content" class="block text-sm font-medium text-gray-700 mb-1">Content *</label>
+                <textarea id="id_content" name="content" rows="12" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ page.content|default:'' }}</textarea>
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium">
+                {% if page %}Update Page{% else %}Create Page{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-generate slug from title
+        const titleInput = document.getElementById('id_title');
+        const slugInput = document.getElementById('id_slug');
+        
+        if (titleInput && slugInput) {
+            titleInput.addEventListener('blur', function() {
+                // Only auto-generate slug if it's empty or hasn't been manually edited
+                if (!slugInput.value || slugInput.getAttribute('data-auto-generated') === 'true') {
+                    const slug = titleInput.value
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, '') // Remove special characters
+                        .replace(/\s+/g, '-')    // Replace spaces with hyphens
+                        .replace(/-+/g, '-');    // Replace multiple hyphens with single hyphen
+                    
+                    slugInput.value = slug;
+                    slugInput.setAttribute('data-auto-generated', 'true');
+                }
+            });
+            
+            // If user manually edits the slug, stop auto-generating
+            slugInput.addEventListener('input', function() {
+                slugInput.setAttribute('data-auto-generated', 'false');
+            });
+        }
+        
+        // Featured image preview
+        const imageInput = document.getElementById('id_featured_image');
+        const imagePreview = document.getElementById('image-preview');
+        
+        if (imageInput && imagePreview) {
+            imageInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                    };
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+        
+        // Initialize rich text editor for content if available
+        if (typeof ClassicEditor !== 'undefined') {
+            ClassicEditor
+                .create(document.getElementById('id_content'), {
+                    toolbar: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'mediaEmbed',
+                        'undo',
+                        'redo'
+                    ]
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    });
+</script>

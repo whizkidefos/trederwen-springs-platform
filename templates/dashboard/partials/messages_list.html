@@ -1,0 +1,113 @@
+{% if messages_list %}
+    {% for message in messages_list %}
+    <div class="message-item cursor-pointer hover:bg-gray-50 p-4 {% if message.status == 'unread' %}bg-blue-50{% endif %}" data-message-id="{{ message.id }}">
+        <div class="flex items-start">
+            <!-- Message Icon -->
+            <div class="flex-shrink-0 mr-4">
+                {% if message.message_type == 'system' %}
+                <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                    <i class="fas fa-cog text-gray-500"></i>
+                </div>
+                {% elif message.message_type == 'user_to_admin' %}
+                {% if message.sender.avatar %}
+                <img src="{{ message.sender.avatar.url }}" alt="{{ message.sender.get_full_name }}" class="h-10 w-10 rounded-full">
+                {% else %}
+                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                    <span class="text-blue-800 font-semibold">{{ message.sender.first_name|first }}{{ message.sender.last_name|first }}</span>
+                </div>
+                {% endif %}
+                {% elif message.message_type == 'admin_to_user' %}
+                {% if message.recipient.avatar %}
+                <img src="{{ message.recipient.avatar.url }}" alt="{{ message.recipient.get_full_name }}" class="h-10 w-10 rounded-full">
+                {% else %}
+                <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                    <span class="text-green-800 font-semibold">{{ message.recipient.first_name|first }}{{ message.recipient.last_name|first }}</span>
+                </div>
+                {% endif %}
+                {% elif message.message_type == 'broadcast' %}
+                <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
+                    <i class="fas fa-bullhorn text-purple-500"></i>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Message Content -->
+            <div class="flex-1 min-w-0">
+                <div class="flex justify-between">
+                    <p class="text-sm font-medium text-gray-900 truncate">
+                        {% if message.message_type == 'system' %}
+                        System Message
+                        {% elif message.message_type == 'user_to_admin' %}
+                        {{ message.sender.get_full_name }}
+                        {% elif message.message_type == 'admin_to_user' %}
+                        To: {{ message.recipient.get_full_name }}
+                        {% elif message.message_type == 'broadcast' %}
+                        Broadcast Message
+                        {% endif %}
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        {{ message.created_at|date:"M d, H:i" }}
+                    </p>
+                </div>
+                <p class="text-sm font-medium {% if message.status == 'unread' %}text-gray-900{% else %}text-gray-700{% endif %}">
+                    {{ message.subject }}
+                </p>
+                <p class="text-sm text-gray-500 truncate">
+                    {{ message.content|striptags|truncatechars:100 }}
+                </p>
+                
+                <!-- Message Metadata -->
+                <div class="mt-1 flex items-center">
+                    <!-- Message Type Badge -->
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium 
+                        {% if message.message_type == 'system' %}bg-gray-100 text-gray-800
+                        {% elif message.message_type == 'user_to_admin' %}bg-blue-100 text-blue-800
+                        {% elif message.message_type == 'admin_to_user' %}bg-green-100 text-green-800
+                        {% elif message.message_type == 'broadcast' %}bg-purple-100 text-purple-800
+                        {% endif %}">
+                        {% if message.message_type == 'system' %}
+                        System
+                        {% elif message.message_type == 'user_to_admin' %}
+                        From Customer
+                        {% elif message.message_type == 'admin_to_user' %}
+                        To Customer
+                        {% elif message.message_type == 'broadcast' %}
+                        Broadcast
+                        {% endif %}
+                    </span>
+                    
+                    <!-- Message Status -->
+                    {% if message.status == 'unread' %}
+                    <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                        Unread
+                    </span>
+                    {% endif %}
+                    
+                    <!-- Has Attachments -->
+                    {% if message.attachments.exists %}
+                    <span class="ml-2 text-gray-500">
+                        <i class="fas fa-paperclip"></i>
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="p-8 text-center">
+    <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gray-100 mb-4">
+        <i class="fas fa-inbox text-gray-400 text-xl"></i>
+    </div>
+    <h3 class="text-lg font-medium text-gray-900">No messages found</h3>
+    <p class="mt-1 text-sm text-gray-500">
+        {% if search %}
+        No messages match your search criteria. Try different keywords.
+        {% elif message_type or status %}
+        No messages match your filter criteria. Try different filters.
+        {% else %}
+        Your inbox is empty.
+        {% endif %}
+    </p>
+</div>
+{% endif %}

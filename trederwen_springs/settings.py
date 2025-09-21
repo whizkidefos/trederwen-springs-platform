@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'ai_recommendations',
     'blog',
     'subscriptions',
+    'dashboard',
 ]
 
 if DEBUG:

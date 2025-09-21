@@ -1,0 +1,62 @@
+<div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <h2 class="text-xl font-bold text-gray-900">Filter Pages</h2>
+    </div>
+    <div class="p-6">
+        <form id="page-filter-form" method="get" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Status Filter -->
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select id="status" name="status" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <option value="">All Statuses</option>
+                    <option value="published" {% if status == 'published' %}selected{% endif %}>Published</option>
+                    <option value="draft" {% if status == 'draft' %}selected{% endif %}>Draft</option>
+                </select>
+            </div>
+            
+            <!-- Location Filter -->
+            <div>
+                <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                <select id="location" name="location" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <option value="">All Locations</option>
+                    <option value="header" {% if location == 'header' %}selected{% endif %}>Header</option>
+                    <option value="footer" {% if location == 'footer' %}selected{% endif %}>Footer</option>
+                    <option value="none" {% if location == 'none' %}selected{% endif %}>Not in Navigation</option>
+                </select>
+            </div>
+            
+            <!-- Search Filter -->
+            <div>
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <div class="relative">
+                    <input type="text" id="search" name="search" value="{{ search }}" placeholder="Title, content..." class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 pl-10">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sort By -->
+            <div>
+                <label for="sort_by" class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+                <select id="sort_by" name="sort_by" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <option value="title" {% if sort_by == 'title' %}selected{% endif %}>Title (A-Z)</option>
+                    <option value="-title" {% if sort_by == '-title' %}selected{% endif %}>Title (Z-A)</option>
+                    <option value="-updated_at" {% if sort_by == '-updated_at' %}selected{% endif %}>Last Updated</option>
+                    <option value="-created_at" {% if sort_by == '-created_at' %}selected{% endif %}>Recently Created</option>
+                    <option value="order" {% if sort_by == 'order' %}selected{% endif %}>Menu Order</option>
+                </select>
+            </div>
+            
+            <!-- Filter Actions -->
+            <div class="lg:col-span-3 flex space-x-3 mt-2">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                    Apply Filters
+                </button>
+                <a href="{% url 'dashboard:pages' %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg text-sm font-medium">
+                    Clear Filters
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

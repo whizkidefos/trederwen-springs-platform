@@ -1,0 +1,211 @@
+<!-- Blog Post Form Header -->
+<div class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+    <h2 class="text-xl font-bold text-gray-900">{% if post %}Edit Blog Post{% else %}Add New Blog Post{% endif %}</h2>
+    <button type="button" class="close-modal text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Close</span>
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+
+<!-- Blog Post Form Content -->
+<div class="p-6">
+    <div class="form-errors"></div>
+    
+    <form id="blog-post-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Basic Information -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+                
+                <!-- Title -->
+                <div class="mb-4">
+                    <label for="id_title" class="block text-sm font-medium text-gray-700 mb-1">Post Title *</label>
+                    <input type="text" id="id_title" name="title" value="{{ post.title|default:'' }}" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- Slug -->
+                <div class="mb-4">
+                    <label for="id_slug" class="block text-sm font-medium text-gray-700 mb-1">Slug *</label>
+                    <input type="text" id="id_slug" name="slug" value="{{ post.slug|default:'' }}" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <p class="mt-1 text-xs text-gray-500">URL-friendly version of the title</p>
+                </div>
+                
+                <!-- Category -->
+                <div class="mb-4">
+                    <label for="id_category" class="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+                    <select id="id_category" name="category" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                        <option value="">Select a category</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}" {% if post.category_id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Status -->
+                <div class="mb-4">
+                    <label for="id_status" class="block text-sm font-medium text-gray-700 mb-1">Status *</label>
+                    <select id="id_status" name="status" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                        <option value="draft" {% if post.status == 'draft' or not post %}selected{% endif %}>Draft</option>
+                        <option value="published" {% if post.status == 'published' %}selected{% endif %}>Published</option>
+                        <option value="archived" {% if post.status == 'archived' %}selected{% endif %}>Archived</option>
+                    </select>
+                </div>
+                
+                <!-- Published Date -->
+                <div class="mb-4">
+                    <label for="id_published_date" class="block text-sm font-medium text-gray-700 mb-1">Published Date</label>
+                    <input type="datetime-local" id="id_published_date" name="published_date" value="{{ post.published_date|date:'Y-m-d\TH:i'|default:'' }}" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <p class="mt-1 text-xs text-gray-500">Leave empty to use current date/time</p>
+                </div>
+            </div>
+            
+            <!-- Featured Image & SEO -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Featured Image & SEO</h3>
+                
+                <!-- Featured Image -->
+                <div class="mb-4">
+                    <label for="id_featured_image" class="block text-sm font-medium text-gray-700 mb-1">Featured Image</label>
+                    <div class="mt-1 flex items-center">
+                        {% if post.featured_image %}
+                        <div class="mr-4">
+                            <img id="image-preview" src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="h-32 w-32 object-cover rounded-lg">
+                        </div>
+                        {% else %}
+                        <img id="image-preview" src="" alt="Preview" class="h-32 w-32 object-cover rounded-lg hidden">
+                        {% endif %}
+                        <div class="flex-1">
+                            <input type="file" id="id_featured_image" name="featured_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            <p class="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Meta Title -->
+                <div class="mb-4">
+                    <label for="id_meta_title" class="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
+                    <input type="text" id="id_meta_title" name="meta_title" value="{{ post.meta_title|default:'' }}" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <p class="mt-1 text-xs text-gray-500">Leave empty to use post title</p>
+                </div>
+                
+                <!-- Meta Description -->
+                <div class="mb-4">
+                    <label for="id_meta_description" class="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
+                    <textarea id="id_meta_description" name="meta_description" rows="3" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ post.meta_description|default:'' }}</textarea>
+                    <p class="mt-1 text-xs text-gray-500">Brief description for search engines</p>
+                </div>
+                
+                <!-- Tags -->
+                <div class="mb-4">
+                    <label for="id_tags" class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                    <input type="text" id="id_tags" name="tags" value="{% for tag in post.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}" placeholder="Enter tags separated by commas" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Post Excerpt -->
+        <div class="mb-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Post Excerpt</h3>
+            <div class="mb-4">
+                <label for="id_excerpt" class="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
+                <textarea id="id_excerpt" name="excerpt" rows="3" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ post.excerpt|default:'' }}</textarea>
+                <p class="mt-1 text-xs text-gray-500">A short summary of the post</p>
+            </div>
+        </div>
+        
+        <!-- Post Content -->
+        <div class="mb-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Post Content</h3>
+            <div class="mb-4">
+                <label for="id_content" class="block text-sm font-medium text-gray-700 mb-1">Content *</label>
+                <textarea id="id_content" name="content" rows="12" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ post.content|default:'' }}</textarea>
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium">
+                {% if post %}Update Post{% else %}Create Post{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-generate slug from title
+        const titleInput = document.getElementById('id_title');
+        const slugInput = document.getElementById('id_slug');
+        
+        if (titleInput && slugInput) {
+            titleInput.addEventListener('blur', function() {
+                // Only auto-generate slug if it's empty or hasn't been manually edited
+                if (!slugInput.value || slugInput.getAttribute('data-auto-generated') === 'true') {
+                    const slug = titleInput.value
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, '') // Remove special characters
+                        .replace(/\s+/g, '-')    // Replace spaces with hyphens
+                        .replace(/-+/g, '-');    // Replace multiple hyphens with single hyphen
+                    
+                    slugInput.value = slug;
+                    slugInput.setAttribute('data-auto-generated', 'true');
+                }
+            });
+            
+            // If user manually edits the slug, stop auto-generating
+            slugInput.addEventListener('input', function() {
+                slugInput.setAttribute('data-auto-generated', 'false');
+            });
+        }
+        
+        // Featured image preview
+        const imageInput = document.getElementById('id_featured_image');
+        const imagePreview = document.getElementById('image-preview');
+        
+        if (imageInput && imagePreview) {
+            imageInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                    };
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+        
+        // Initialize rich text editor for content if available
+        if (typeof ClassicEditor !== 'undefined') {
+            ClassicEditor
+                .create(document.getElementById('id_content'), {
+                    toolbar: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'mediaEmbed',
+                        'undo',
+                        'redo'
+                    ]
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    });
+</script>

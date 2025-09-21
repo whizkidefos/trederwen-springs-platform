@@ -1,0 +1,288 @@
+<!-- Product Form Header -->
+<div class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+    <h2 class="text-xl font-bold text-gray-900">{% if product %}Edit Product{% else %}Add New Product{% endif %}</h2>
+    <button type="button" class="close-modal text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Close</span>
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+
+<!-- Product Form Content -->
+<div class="p-6">
+    <div class="form-errors"></div>
+    
+    <form id="product-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Basic Information -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+                
+                <!-- Name -->
+                <div class="mb-4">
+                    <label for="id_name" class="block text-sm font-medium text-gray-700 mb-1">Product Name *</label>
+                    <input type="text" id="id_name" name="name" value="{{ product.name|default:'' }}" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- SKU -->
+                <div class="mb-4">
+                    <label for="id_sku" class="block text-sm font-medium text-gray-700 mb-1">SKU *</label>
+                    <input type="text" id="id_sku" name="sku" value="{{ product.sku|default:'' }}" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- Category -->
+                <div class="mb-4">
+                    <label for="id_category" class="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+                    <select id="id_category" name="category" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                        <option value="">Select a category</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}" {% if product.category_id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Status -->
+                <div class="mb-4">
+                    <label for="id_is_active" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="id_is_active" name="is_active" {% if product.is_active or product is None %}checked{% endif %} class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 h-5 w-5">
+                        <label for="id_is_active" class="ml-2 text-sm text-gray-700">Active (visible on site)</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pricing and Inventory -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Pricing & Inventory</h3>
+                
+                <!-- Price -->
+                <div class="mb-4">
+                    <label for="id_price" class="block text-sm font-medium text-gray-700 mb-1">Regular Price (£) *</label>
+                    <input type="number" id="id_price" name="price" value="{{ product.price|default:'' }}" min="0" step="0.01" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- Sale Price -->
+                <div class="mb-4">
+                    <label for="id_sale_price" class="block text-sm font-medium text-gray-700 mb-1">Sale Price (£)</label>
+                    <input type="number" id="id_sale_price" name="sale_price" value="{{ product.sale_price|default:'' }}" min="0" step="0.01" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    <p class="mt-1 text-xs text-gray-500">Leave empty if not on sale</p>
+                </div>
+                
+                <!-- Stock Quantity -->
+                <div class="mb-4">
+                    <label for="id_quantity" class="block text-sm font-medium text-gray-700 mb-1">Stock Quantity *</label>
+                    <input type="number" id="id_quantity" name="quantity" value="{{ product.inventory.quantity|default:'0' }}" min="0" step="1" required class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+                
+                <!-- Low Stock Threshold -->
+                <div class="mb-4">
+                    <label for="id_low_stock_threshold" class="block text-sm font-medium text-gray-700 mb-1">Low Stock Threshold</label>
+                    <input type="number" id="id_low_stock_threshold" name="low_stock_threshold" value="{{ product.inventory.low_stock_threshold|default:'5' }}" min="0" step="1" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Description -->
+        <div class="mb-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Product Description</h3>
+            <div class="mb-4">
+                <label for="id_description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea id="id_description" name="description" rows="6" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ product.description|default:'' }}</textarea>
+            </div>
+        </div>
+        
+        <!-- Product Images -->
+        <div class="mb-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Product Images</h3>
+            
+            <!-- Main Image -->
+            <div class="mb-4">
+                <label for="id_image" class="block text-sm font-medium text-gray-700 mb-1">Main Image</label>
+                <div class="mt-1 flex items-center">
+                    {% if product.get_first_image %}
+                    <div class="mr-4">
+                        <img id="image-preview" src="{{ product.get_first_image.image.url }}" alt="{{ product.name }}" class="h-32 w-32 object-cover rounded-lg">
+                    </div>
+                    {% else %}
+                    <img id="image-preview" src="" alt="Preview" class="h-32 w-32 object-cover rounded-lg hidden">
+                    {% endif %}
+                    <div class="flex-1">
+                        <input type="file" id="id_image" name="image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <p class="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Images -->
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Additional Images</label>
+                <div class="mt-1 flex items-center">
+                    <div class="flex-1">
+                        <input type="file" id="id_additional_images" name="additional_images" accept="image/*" multiple class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <p class="mt-1 text-xs text-gray-500">You can select multiple images</p>
+                    </div>
+                </div>
+            </div>
+            
+            {% if product and product.images.count > 0 %}
+            <div class="grid grid-cols-4 gap-2 mt-4">
+                {% for image in product.images.all %}
+                <div class="relative group">
+                    <img src="{{ image.image.url }}" alt="{{ product.name }}" class="w-full h-24 object-cover rounded-lg">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-lg">
+                        <button type="button" class="text-white hover:text-red-300" onclick="deleteImage('{{ image.id }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Product Attributes -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-medium text-gray-900">Product Attributes</h3>
+                <button type="button" id="add-attribute-btn" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                    <i class="fas fa-plus mr-1"></i> Add Attribute
+                </button>
+            </div>
+            
+            <div id="attributes-container">
+                {% if product and product.attributes.exists %}
+                {% for attribute in product.attributes.all %}
+                <div class="attribute-row grid grid-cols-2 gap-4 mb-3">
+                    <div>
+                        <input type="text" name="attribute_names[]" value="{{ attribute.name }}" placeholder="Attribute Name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div class="flex">
+                        <input type="text" name="attribute_values[]" value="{{ attribute.value }}" placeholder="Attribute Value" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                        <button type="button" class="remove-attribute-btn ml-2 text-red-600 hover:text-red-800">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium">
+                {% if product %}Update Product{% else %}Create Product{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add attribute button
+        const addAttributeBtn = document.getElementById('add-attribute-btn');
+        const attributesContainer = document.getElementById('attributes-container');
+        
+        if (addAttributeBtn && attributesContainer) {
+            addAttributeBtn.addEventListener('click', function() {
+                const attributeRow = document.createElement('div');
+                attributeRow.className = 'attribute-row grid grid-cols-2 gap-4 mb-3';
+                attributeRow.innerHTML = `
+                    <div>
+                        <input type="text" name="attribute_names[]" placeholder="Attribute Name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    <div class="flex">
+                        <input type="text" name="attribute_values[]" placeholder="Attribute Value" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                        <button type="button" class="remove-attribute-btn ml-2 text-red-600 hover:text-red-800">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                attributesContainer.appendChild(attributeRow);
+                
+                // Add event listener to the new remove button
+                const removeBtn = attributeRow.querySelector('.remove-attribute-btn');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        attributeRow.remove();
+                    });
+                }
+            });
+        }
+        
+        // Remove attribute buttons
+        document.querySelectorAll('.remove-attribute-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.attribute-row').remove();
+            });
+        });
+        
+        // Image preview
+        const imageInput = document.getElementById('id_image');
+        const imagePreview = document.getElementById('image-preview');
+        
+        if (imageInput && imagePreview) {
+            imageInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                    };
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+    });
+    
+    // Function to delete an image
+    function deleteImage(imageId) {
+        if (confirm('Are you sure you want to delete this image?')) {
+            fetch(`/dashboard/products/images/${imageId}/delete/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove the image from the DOM
+                    const imageElement = document.querySelector(`[data-image-id="${imageId}"]`);
+                    if (imageElement) {
+                        imageElement.remove();
+                    } else {
+                        // Reload the page if we can't find the element
+                        location.reload();
+                    }
+                } else {
+                    alert('Error deleting image. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting image:', error);
+                alert('Error deleting image. Please try again.');
+            });
+        }
+    }
+    
+    // Helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>

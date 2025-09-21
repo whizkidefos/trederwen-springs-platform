@@ -1,13 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.utils import timezone
 from django.db.models import Sum, Count
+from django.urls import reverse_lazy
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.auth.tokens import default_token_generator
+from django.template.loader import render_to_string
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.conf import settings
 
-from .models import User, Address, UserPreference
-from .forms import UserProfileForm, AddressForm
+from .models import User, Address, UserPreference, UserActivity
+from .forms import UserProfileForm, AddressForm, UserRegisterForm, LoginForm
 from orders.models import Order
 from subscriptions.models import Subscription
 
@@ -245,6 +253,195 @@ def profile_preferences(request):
     }
     
     return render(request, 'users/profile_preferences.html', context)
+
+def register(request):
+    """User registration view"""
+    if request.user.is_authenticated:
+        return redirect('core:home')
+        
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Log the registration activity
+            UserActivity.objects.create(
+                user=user,
+                activity_type='register',
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user_agent=request.META.get('HTTP_USER_AGENT', '')
+            )
+            
+            # Log the user in
+            login(request, user)
+            messages.success(request, f'Welcome to Trederwen Springs, {user.first_name}! Your account has been created.')
+            
+            # Redirect to profile or previous page if available
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
+            return redirect('users:profile_dashboard')
+    else:
+        form = UserRegisterForm()
+    
+    context = {
+        'form': form,
+    }
+    
+    return render(request, 'users/register.html', context)
+
+
+def login_view(request):
+    """User login view"""
+    if request.user.is_authenticated:
+        return redirect('core:home')
+        
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, email=email, password=password)
+            
+            if user is not None:
+                login(request, user)
+                
+                # Update last login IP and track activity
+                user.last_login_ip = request.META.get('REMOTE_ADDR')
+                user.update_last_active()
+                
+                # Log the login activity
+                activity_type = 'admin_login' if user.is_admin_user else 'login'
+                UserActivity.objects.create(
+                    user=user,
+                    activity_type=activity_type,
+                    ip_address=request.META.get('REMOTE_ADDR'),
+                    user_agent=request.META.get('HTTP_USER_AGENT', '')
+                )
+                
+                # Redirect to next page if available
+                next_url = request.GET.get('next')
+                if next_url:
+                    return redirect(next_url)
+                    
+                # Redirect admin users to admin dashboard
+                if user.is_admin_user:
+                    return redirect('dashboard:index')
+                    
+                return redirect('users:profile_dashboard')
+            else:
+                messages.error(request, 'Invalid email or password.')
+    else:
+        form = LoginForm()
+    
+    context = {
+        'form': form,
+    }
+    
+    return render(request, 'users/login.html', context)
+
+
+def logout_view(request):
+    """User logout view"""
+    if request.user.is_authenticated:
+        # Log the logout activity
+        UserActivity.objects.create(
+            user=request.user,
+            activity_type='logout',
+            ip_address=request.META.get('REMOTE_ADDR'),
+            user_agent=request.META.get('HTTP_USER_AGENT', '')
+        )
+    
+    logout(request)
+    messages.info(request, 'You have been logged out successfully.')
+    return redirect('core:home')
+
+
+def password_reset_request(request):
+    """Password reset request view"""
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            users = User.objects.filter(email=email)
+            
+            if users.exists():
+                user = users.first()
+                subject = 'Password Reset Request for Trederwen Springs'
+                email_template_name = 'users/password_reset_email.html'
+                
+                context = {
+                    'user': user,
+                    'domain': request.get_host(),
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
+                    'protocol': 'https' if request.is_secure() else 'http',
+                    'site_name': 'Trederwen Springs',
+                }
+                
+                email_content = render_to_string(email_template_name, context)
+                
+                try:
+                    send_mail(
+                        subject=subject,
+                        message='',
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[email],
+                        html_message=email_content,
+                        fail_silently=False
+                    )
+                    
+                    return redirect('users:password_reset_done')
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found.')
+            
+            # Always redirect to done page even if email not found for security
+            return redirect('users:password_reset_done')
+    else:
+        form = PasswordResetForm()
+    
+    context = {
+        'form': form,
+    }
+    
+    return render(request, 'users/password_reset.html', context)
+
+
+def password_reset_done(request):
+    """Password reset done view"""
+    return render(request, 'users/password_reset_done.html')
+
+
+def password_reset_confirm(request, uidb64, token):
+    """Password reset confirmation view"""
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your password has been reset successfully. You can now log in with your new password.')
+                return redirect('users:login')
+        else:
+            form = SetPasswordForm(user)
+        
+        context = {
+            'form': form,
+        }
+        
+        return render(request, 'users/password_reset_confirm.html', context)
+    else:
+        return render(request, 'users/password_reset_invalid.html')
+
+
+def password_reset_complete(request):
+    """Password reset complete view"""
+    return render(request, 'users/password_reset_complete.html')
+
 
 @login_required
 def change_password(request):

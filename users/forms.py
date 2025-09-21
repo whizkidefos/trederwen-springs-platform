@@ -1,5 +1,7 @@
 from django import forms
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 from .models import Address
 
 User = get_user_model()
@@ -38,3 +40,64 @@ class AddressForm(forms.ModelForm):
             'company': forms.TextInput(attrs={'placeholder': 'Optional'}),
             'county': forms.TextInput(attrs={'placeholder': 'Optional'}),
         }
+
+
+class UserRegisterForm(UserCreationForm):
+    """Form for user registration"""
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    phone = forms.CharField(max_length=20, required=False)
+    is_newsletter_subscribed = forms.BooleanField(required=False, label='Subscribe to newsletter')
+    marketing_emails = forms.BooleanField(required=False, label='Receive marketing emails')
+    sms_notifications = forms.BooleanField(required=False, label='Receive SMS notifications')
+    
+    class Meta:
+        model = User
+        fields = [
+            'first_name', 'last_name', 'email', 'phone', 
+            'is_newsletter_subscribed', 'marketing_emails', 'sms_notifications',
+            'password1', 'password2'
+        ]
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email=email).exists():
+            raise ValidationError('This email is already in use.')
+        return email
+    
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = user.email  # Use email as username
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.phone = self.cleaned_data['phone']
+        user.is_newsletter_subscribed = self.cleaned_data['is_newsletter_subscribed']
+        user.marketing_emails = self.cleaned_data['marketing_emails']
+        user.sms_notifications = self.cleaned_data['sms_notifications']
+        
+        if commit:
+            user.save()
+        return user
+
+
+class LoginForm(forms.Form):
+    """Form for user login"""
+    email = forms.EmailField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput)
+    remember_me = forms.BooleanField(required=False, label='Remember me')
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+        password = cleaned_data.get('password')
+        
+        if email and password:
+            user = authenticate(email=email, password=password)
+            if user is None:
+                raise ValidationError('Invalid email or password.')
+            elif not user.is_active:
+                raise ValidationError('This account is inactive.')
+        
+        return cleaned_data

@@ -1,5 +1,5 @@
 {% extends 'dashboard/base_dashboard.html' %}
-{% load static %}
+{% load static dashboard_filters %}
 
 {% block title %}{{ site_settings.site_name }} - Analytics{% endblock %}
 
@@ -103,7 +103,9 @@
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ product.percentage }}%"></div>
+                                {% with width=product.percentage|floatformat:0 %}
+<div class="bg-blue-600 h-2.5 rounded-full w-{{ width }}/100"></div>
+{% endwith %}
                             </div>
                             <span class="ml-2 text-sm text-gray-500">{{ product.percentage|floatformat:1 }}%</span>
                         </div>

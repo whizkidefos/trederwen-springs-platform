@@ -1,3 +1,4 @@
+{% load dashboard_filters %}
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
     <!-- Total Revenue -->
     <div class="bg-white rounded-xl shadow-md overflow-hidden dashboard-card">
@@ -26,7 +27,7 @@
                                 <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                             <span class="sr-only">Decreased by</span>
-                            {{ revenue_change|abs }}%
+                            {% if revenue_change < 0 %}{{ revenue_change|cut:'-' }}{% else %}{{ revenue_change }}{% endif %}%
                         </span>
                         {% endif %}
                     </dd>
@@ -67,7 +68,7 @@
                                 <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                             <span class="sr-only">Decreased by</span>
-                            {{ orders_change|abs }}%
+                            {% if orders_change < 0 %}{{ orders_change|cut:'-' }}{% else %}{{ orders_change }}{% endif %}%
                         </span>
                         {% endif %}
                     </dd>
@@ -108,7 +109,7 @@
                                 <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                             <span class="sr-only">Decreased by</span>
-                            {{ aov_change|abs }}%
+                            {% if aov_change < 0 %}{{ aov_change|cut:'-' }}{% else %}{{ aov_change }}{% endif %}%
                         </span>
                         {% endif %}
                     </dd>
@@ -149,7 +150,7 @@
                                 <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                             <span class="sr-only">Decreased by</span>
-                            {{ customer_change|abs }}%
+                            {% if customer_change < 0 %}{{ customer_change|cut:'-' }}{% else %}{{ customer_change }}{% endif %}%
                         </span>
                         {% endif %}
                     </dd>

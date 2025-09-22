@@ -1,0 +1,313 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Settings | Dashboard{% endblock %}
+
+{% block content %}
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700">
+        Dashboard Settings
+    </h2>
+    
+    <!-- Settings Tabs -->
+    <div x-data="{ activeTab: 'general' }" class="mb-8">
+        <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8">
+                <button @click="activeTab = 'general'" :class="{ 'border-blue-500 text-blue-600': activeTab === 'general', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'general' }" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    General Settings
+                </button>
+                <button @click="activeTab = 'appearance'" :class="{ 'border-blue-500 text-blue-600': activeTab === 'appearance', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'appearance' }" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    Appearance
+                </button>
+                <button @click="activeTab = 'notifications'" :class="{ 'border-blue-500 text-blue-600': activeTab === 'notifications', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'notifications' }" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    Notifications
+                </button>
+                <button @click="activeTab = 'integrations'" :class="{ 'border-blue-500 text-blue-600': activeTab === 'integrations', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'integrations' }" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    Integrations
+                </button>
+            </nav>
+        </div>
+        
+        <!-- General Settings Tab -->
+        <div x-show="activeTab === 'general'" class="mt-6">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">General Settings</h3>
+                </div>
+                <div class="p-6">
+                    <form method="post" action="{% url 'dashboard:settings' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="settings_type" value="general">
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <label for="site_name" class="block text-sm font-medium text-gray-700">Site Name</label>
+                                <input type="text" name="site_name" id="site_name" value="{{ site_settings.site_name }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            
+                            <div>
+                                <label for="site_description" class="block text-sm font-medium text-gray-700">Site Description</label>
+                                <textarea name="site_description" id="site_description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">{{ site_settings.site_description }}</textarea>
+                            </div>
+                            
+                            <div>
+                                <label for="contact_email" class="block text-sm font-medium text-gray-700">Contact Email</label>
+                                <input type="email" name="contact_email" id="contact_email" value="{{ site_settings.contact_email }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            
+                            <div>
+                                <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <input type="text" name="phone_number" id="phone_number" value="{{ site_settings.phone_number }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            
+                            <div>
+                                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                                <textarea name="address" id="address" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">{{ site_settings.address }}</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Appearance Tab -->
+        <div x-show="activeTab === 'appearance'" class="mt-6">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Appearance Settings</h3>
+                </div>
+                <div class="p-6">
+                    <form method="post" action="{% url 'dashboard:settings' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="settings_type" value="appearance">
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Logo</label>
+                                <div class="mt-1 flex items-center">
+                                    {% if site_settings.logo %}
+                                    <div class="mr-4">
+                                        <img src="{{ site_settings.logo.url }}" alt="Site Logo" class="h-12 w-auto">
+                                    </div>
+                                    {% endif %}
+                                    <div class="flex items-center">
+                                        <input type="file" name="logo" id="logo" class="sr-only">
+                                        <label for="logo" class="cursor-pointer py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            {% if site_settings.logo %}Change Logo{% else %}Upload Logo{% endif %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Favicon</label>
+                                <div class="mt-1 flex items-center">
+                                    {% if site_settings.favicon %}
+                                    <div class="mr-4">
+                                        <img src="{{ site_settings.favicon.url }}" alt="Favicon" class="h-8 w-auto">
+                                    </div>
+                                    {% endif %}
+                                    <div class="flex items-center">
+                                        <input type="file" name="favicon" id="favicon" class="sr-only">
+                                        <label for="favicon" class="cursor-pointer py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            {% if site_settings.favicon %}Change Favicon{% else %}Upload Favicon{% endif %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="primary_color" class="block text-sm font-medium text-gray-700">Primary Color</label>
+                                <div class="mt-1 flex items-center">
+                                    <input type="color" name="primary_color" id="primary_color" value="{{ site_settings.primary_color|default:'#3b82f6' }}" class="h-8 w-8 rounded-md border border-gray-300 shadow-sm">
+                                    <input type="text" name="primary_color_hex" value="{{ site_settings.primary_color|default:'#3b82f6' }}" class="ml-2 block w-24 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="secondary_color" class="block text-sm font-medium text-gray-700">Secondary Color</label>
+                                <div class="mt-1 flex items-center">
+                                    <input type="color" name="secondary_color" id="secondary_color" value="{{ site_settings.secondary_color|default:'#10b981' }}" class="h-8 w-8 rounded-md border border-gray-300 shadow-sm">
+                                    <input type="text" name="secondary_color_hex" value="{{ site_settings.secondary_color|default:'#10b981' }}" class="ml-2 block w-24 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Notifications Tab -->
+        <div x-show="activeTab === 'notifications'" class="mt-6">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Notification Settings</h3>
+                </div>
+                <div class="p-6">
+                    <form method="post" action="{% url 'dashboard:settings' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="settings_type" value="notifications">
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900">Email Notifications</h4>
+                                <div class="mt-4 space-y-4">
+                                    <div class="flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <input id="notify_new_order" name="notify_new_order" type="checkbox" {% if notification_settings.notify_new_order %}checked{% endif %} class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="notify_new_order" class="font-medium text-gray-700">New Orders</label>
+                                            <p class="text-gray-500">Receive an email when a new order is placed</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <input id="notify_low_stock" name="notify_low_stock" type="checkbox" {% if notification_settings.notify_low_stock %}checked{% endif %} class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="notify_low_stock" class="font-medium text-gray-700">Low Stock</label>
+                                            <p class="text-gray-500">Receive an email when product stock is low</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <input id="notify_new_customer" name="notify_new_customer" type="checkbox" {% if notification_settings.notify_new_customer %}checked{% endif %} class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="notify_new_customer" class="font-medium text-gray-700">New Customers</label>
+                                            <p class="text-gray-500">Receive an email when a new customer registers</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900">Dashboard Notifications</h4>
+                                <div class="mt-4 space-y-4">
+                                    <div class="flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <input id="dashboard_notify_orders" name="dashboard_notify_orders" type="checkbox" {% if notification_settings.dashboard_notify_orders %}checked{% endif %} class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="dashboard_notify_orders" class="font-medium text-gray-700">Order Notifications</label>
+                                            <p class="text-gray-500">Show notifications for new and updated orders</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <input id="dashboard_notify_messages" name="dashboard_notify_messages" type="checkbox" {% if notification_settings.dashboard_notify_messages %}checked{% endif %} class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="dashboard_notify_messages" class="font-medium text-gray-700">Message Notifications</label>
+                                            <p class="text-gray-500">Show notifications for new messages</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Integrations Tab -->
+        <div x-show="activeTab === 'integrations'" class="mt-6">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Integration Settings</h3>
+                </div>
+                <div class="p-6">
+                    <form method="post" action="{% url 'dashboard:settings' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="settings_type" value="integrations">
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900">Payment Gateways</h4>
+                                <div class="mt-4 space-y-4">
+                                    <div>
+                                        <label for="stripe_public_key" class="block text-sm font-medium text-gray-700">Stripe Public Key</label>
+                                        <input type="text" name="stripe_public_key" id="stripe_public_key" value="{{ integration_settings.stripe_public_key }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="stripe_secret_key" class="block text-sm font-medium text-gray-700">Stripe Secret Key</label>
+                                        <input type="password" name="stripe_secret_key" id="stripe_secret_key" value="{{ integration_settings.stripe_secret_key }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900">Email Service</h4>
+                                <div class="mt-4 space-y-4">
+                                    <div>
+                                        <label for="email_service" class="block text-sm font-medium text-gray-700">Email Service</label>
+                                        <select id="email_service" name="email_service" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                                            <option value="smtp" {% if integration_settings.email_service == 'smtp' %}selected{% endif %}>SMTP</option>
+                                            <option value="mailgun" {% if integration_settings.email_service == 'mailgun' %}selected{% endif %}>Mailgun</option>
+                                            <option value="sendgrid" {% if integration_settings.email_service == 'sendgrid' %}selected{% endif %}>SendGrid</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="email_api_key" class="block text-sm font-medium text-gray-700">API Key</label>
+                                        <input type="password" name="email_api_key" id="email_api_key" value="{{ integration_settings.email_api_key }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900">Social Media</h4>
+                                <div class="mt-4 space-y-4">
+                                    <div>
+                                        <label for="facebook_url" class="block text-sm font-medium text-gray-700">Facebook URL</label>
+                                        <input type="url" name="facebook_url" id="facebook_url" value="{{ integration_settings.facebook_url }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="instagram_url" class="block text-sm font-medium text-gray-700">Instagram URL</label>
+                                        <input type="url" name="instagram_url" id="instagram_url" value="{{ integration_settings.instagram_url }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="twitter_url" class="block text-sm font-medium text-gray-700">Twitter URL</label>
+                                        <input type="url" name="twitter_url" id="twitter_url" value="{{ integration_settings.twitter_url }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

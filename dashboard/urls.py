@@ -29,6 +29,7 @@ urlpatterns = [
     
     # Admin users management (superuser only)
     path('admin-users/', views.admin_users, name='admin_users'),
+    path('admin-users/<str:user_id>/edit/', views.edit_admin_user, name='edit_admin_user'),
     
     # Audit logs (superuser only)
     path('audit-logs/', views.audit_logs, name='audit_logs'),

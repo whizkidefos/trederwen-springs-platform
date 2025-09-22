@@ -21,7 +21,11 @@ def admin_required(view_func):
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('users:login')
-        if not request.user.is_admin_user:
+        
+        # Check if user is admin (either by user_type or superuser status)
+        is_admin = request.user.user_type == 'admin' or request.user.is_superuser
+        
+        if not is_admin:
             messages.error(request, 'You do not have permission to access the admin dashboard.')
             return redirect('core:home')
         return view_func(request, *args, **kwargs)
@@ -628,9 +632,38 @@ def admin_users(request):
         'superusers': admin_users.filter(is_superuser=True).count(),
     }
     
+    # Import the form here to avoid circular imports
+    from .forms import AdminUserForm
+    
+    # Handle form submission
+    if request.method == 'POST':
+        form = AdminUserForm(request.POST)
+        if form.is_valid():
+            admin_user = form.save()
+            
+            # Log the admin user creation
+            log_admin_action(
+                user=request.user,
+                action_type='create',
+                action_model='admin_user',
+                action_object_id=str(admin_user.id),
+                metadata={
+                    'email': admin_user.email,
+                    'name': f"{admin_user.first_name} {admin_user.last_name}",
+                    'is_superuser': admin_user.is_superuser
+                },
+                request=request
+            )
+            
+            messages.success(request, f'Admin user {admin_user.email} has been created successfully.')
+            return redirect('dashboard:admin_users')
+    else:
+        form = AdminUserForm()
+    
     context = {
         'admin_users': admin_users,
         'admin_stats': admin_stats,
+        'form': form,
     }
     
     # Log the admin users view
@@ -643,6 +676,60 @@ def admin_users(request):
     )
     
     return render(request, 'dashboard/admin_users.html', context)
+
+@admin_required
+def edit_admin_user(request, user_id):
+    """Edit admin user view"""
+    # Update last active timestamp
+    request.user.update_last_active()
+    
+    # Only superusers can access this view
+    if not request.user.is_superuser:
+        messages.error(request, 'You do not have permission to access this page.')
+        return redirect('dashboard:index')
+    
+    # Get the admin user
+    try:
+        admin_user = User.objects.get(id=user_id, user_type='admin')
+    except User.DoesNotExist:
+        messages.error(request, 'Admin user not found.')
+        return redirect('dashboard:admin_users')
+    
+    # Import the form here to avoid circular imports
+    from .forms import AdminUserEditForm
+    
+    # Handle form submission
+    if request.method == 'POST':
+        form = AdminUserEditForm(request.POST, instance=admin_user)
+        if form.is_valid():
+            admin_user = form.save()
+            
+            # Log the admin user update
+            log_admin_action(
+                user=request.user,
+                action_type='update',
+                action_model='admin_user',
+                action_object_id=str(admin_user.id),
+                metadata={
+                    'email': admin_user.email,
+                    'name': f"{admin_user.first_name} {admin_user.last_name}",
+                    'is_superuser': admin_user.is_superuser,
+                    'is_active': admin_user.is_active
+                },
+                request=request
+            )
+            
+            messages.success(request, f'Admin user {admin_user.email} has been updated successfully.')
+            return redirect('dashboard:admin_users')
+    else:
+        form = AdminUserEditForm(instance=admin_user)
+    
+    context = {
+        'form': form,
+        'admin_user': admin_user
+    }
+    
+    return render(request, 'dashboard/edit_admin_user.html', context)
 
 @admin_required
 def audit_logs(request):

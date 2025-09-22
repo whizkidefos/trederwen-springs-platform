@@ -10,3 +10,8 @@ def abs_value(value):
         return abs(float(value))
     except (ValueError, TypeError):
         return value
+
+@register.filter
+def add_class(field, css_classes):
+    """Add CSS classes to a form field"""
+    return field.as_widget(attrs={"class": css_classes})

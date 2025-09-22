@@ -1,13 +1,24 @@
 {% extends 'dashboard/base_dashboard.html' %}
-{% load static %}
+{% load static dashboard_filters %}
 
 {% block title %}Customers | Dashboard{% endblock %}
 
+{% block breadcrumbs %}
+<li>
+    <div class="flex items-center">
+        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="ml-1 text-gray-700">Customers</span>
+    </div>
+</li>
+{% endblock %}
+
+{% block page_title %}Customers{% endblock %}
+{% block page_subtitle %}Customer Management{% endblock %}
+
 {% block content %}
-<div class="container px-6 mx-auto grid">
-    <h2 class="my-6 text-2xl font-semibold text-gray-700">
-        Customer Management
-    </h2>
+<div class="mx-auto grid">
     
     <!-- Customer Stats Cards -->
     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">

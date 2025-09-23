@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Springs | {{ site_settings.site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .springs-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .spring-card {
+        transition: all 0.3s ease;
+    }
+    
+    .spring-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .spring-image {
+        transition: all 0.5s ease;
+    }
+    
+    .spring-card:hover .spring-image {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="springs-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                Our <span class="welsh-text-shimmer">Welsh Springs</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto">
+                Discover the pristine natural springs nestled in the heart of the Welsh mountains, providing some of the purest water on Earth.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Springs Introduction -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Nature's Purest Gift</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Our springs are located in protected areas of the Welsh mountains, where the water filters naturally through ancient rock formations, collecting essential minerals while remaining untouched by modern pollution.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Spring 1: Snowdonia Reserve -->
+            <div class="spring-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <img src="{% static 'images/springs/snowdonia.jpg' %}" alt="Snowdonia Spring" class="w-full h-full object-cover spring-image" onerror="this.src='https://images.unsplash.com/photo-1586348943529-beaae6c28db9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Snowdonia Reserve</h3>
+                    <p class="text-gray-600 mb-4">
+                        Nestled in the heart of Snowdonia National Park, this spring produces water with a perfect mineral balance and a crisp, clean taste.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-blue-600">pH: 7.2 | TDS: 85ppm</span>
+                        <a href="/products/category/snowdonia/" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                            Explore Products
+                            <svg class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Spring 2: Brecon Beacons -->
+            <div class="spring-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <img src="{% static 'images/springs/brecon.jpg' %}" alt="Brecon Beacons Spring" class="w-full h-full object-cover spring-image" onerror="this.src='https://images.unsplash.com/photo-1506260408121-e353d10b87c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Brecon Beacons</h3>
+                    <p class="text-gray-600 mb-4">
+                        From the ancient hills of the Brecon Beacons comes this mineral-rich spring water, known for its smooth texture and subtle sweetness.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-blue-600">pH: 7.5 | TDS: 110ppm</span>
+                        <a href="/products/category/brecon/" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                            Explore Products
+                            <svg class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Spring 3: Cambrian Mountains -->
+            <div class="spring-card bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <img src="{% static 'images/springs/cambrian.jpg' %}" alt="Cambrian Mountains Spring" class="w-full h-full object-cover spring-image" onerror="this.src='https://images.unsplash.com/photo-1542224566-6e85f2e6772f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Cambrian Mountains</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sourced from deep within the Cambrian Mountains, this spring water is exceptionally pure with a perfect balance of natural minerals.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-blue-600">pH: 7.3 | TDS: 95ppm</span>
+                        <a href="/products/category/cambrian/" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                            Explore Products
+                            <svg class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Process -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Our Process</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                From source to bottle, we maintain the highest standards to ensure the purity and quality of our Welsh spring water.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Natural Collection</h3>
+                <p class="text-gray-600">
+                    Our water is collected directly from protected natural springs, untouched by human hands.
+                </p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Quality Testing</h3>
+                <p class="text-gray-600">
+                    Rigorous testing ensures our water meets the highest standards of purity and mineral content.
+                </p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="text-center">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Sustainable Packaging</h3>
+                <p class="text-gray-600">
+                    We use eco-friendly packaging that minimizes environmental impact while preserving water quality.
+                </p>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="text-center">
+                <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Delivered to You</h3>
+                <p class="text-gray-600">
+                    From our Welsh mountains to your doorstep, with care and attention at every step.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Water Quality -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:flex lg:items-center lg:space-x-12">
+            <div class="lg:w-1/2 mb-8 lg:mb-0">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Water Quality & Mineral Content</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    Our Welsh spring water contains a perfect balance of naturally occurring minerals that contribute to your health and wellbeing.
+                </p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-blue-600 font-bold">Ca</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Calcium</h4>
+                            <p class="text-sm text-gray-600">Essential for bone health and cellular function</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-green-600 font-bold">Mg</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Magnesium</h4>
+                            <p class="text-sm text-gray-600">Supports muscle and nerve function</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-purple-600 font-bold">K</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Potassium</h4>
+                            <p class="text-sm text-gray-600">Helps maintain proper fluid balance</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-yellow-600 font-bold">Si</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Silica</h4>
+                            <p class="text-sm text-gray-600">Contributes to skin, hair, and nail health</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2">
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Water Analysis Certificate</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
+                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">pH</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">7.2 - 7.5</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">pH units</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">TDS</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">85 - 110</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">ppm</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">Calcium</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">25 - 35</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">mg/L</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">Magnesium</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">5 - 10</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">mg/L</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">Potassium</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">1 - 2</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">mg/L</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">Silica</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">10 - 15</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">mg/L</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Download Full Analysis
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-6">Experience the Purity of Welsh Springs</h2>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Discover our range of premium water products sourced from the pristine Welsh mountains.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="/products/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 shadow-md transition-colors duration-150">
+                Shop Our Products
+            </a>
+            <a href="/subscriptions/" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:bg-opacity-10 transition-colors duration-150">
+                Subscribe & Save
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

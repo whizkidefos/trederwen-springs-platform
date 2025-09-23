@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delivery Information | {{ site_settings.site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .delivery-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .delivery-option {
+        transition: all 0.3s ease;
+    }
+    
+    .delivery-option:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="delivery-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                <span class="welsh-text-shimmer">Delivery</span> Information
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto">
+                Everything you need to know about our delivery options, times, and policies.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Delivery Options -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Delivery Options</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Choose the delivery option that best suits your needs.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Standard Delivery -->
+            <div class="delivery-option bg-gray-50 rounded-xl p-6 shadow-md">
+                <div class="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">Standard Delivery</h3>
+                <div class="text-center mb-4">
+                    <span class="text-2xl font-bold text-blue-600">£3.99</span>
+                </div>
+                <p class="text-gray-600 text-center mb-4">
+                    Delivery within 3-5 working days. Free for orders over £30.
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">Tracked delivery</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">Email notifications</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">Delivery Monday - Friday</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Express Delivery -->
+            <div class="delivery-option bg-gray-50 rounded-xl p-6 shadow-md border-2 border-blue-500">
+                <div class="absolute -top-3 right-0 left-0 mx-auto w-max">
+                    <span class="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</span>
+                </div>
+                <div class="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">Express Delivery</h3>
+                <div class="text-center mb-4">
+                    <span class="text-2xl font-bold text-blue-600">£5.99</span>
+                </div>
+                <p class="text-gray-600 text-center mb-4">
+                    Next working day delivery for orders placed before 2pm.
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">Next day delivery</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">SMS tracking updates</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">Priority handling</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Premium Delivery -->
+            <div class="delivery-option bg-gray-50 rounded-xl p-6 shadow-md">
+                <div class="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">Premium Delivery</h3>
+                <div class="text-center mb-4">
+                    <span class="text-2xl font-bold text-blue-600">£9.99</span>
+                </div>
+                <p class="text-gray-600 text-center mb-4">
+                    Same day delivery for orders placed before 11am (select areas only).
+                </p>
+                <ul class="space-y-2 mb-6">
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">Same day delivery</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">Timed delivery slots</span>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="h-5 w-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-gray-700">Premium packaging</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delivery Coverage -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:flex lg:items-center lg:space-x-12">
+            <div class="lg:w-1/2 mb-8 lg:mb-0">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Delivery Coverage</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    We deliver our premium Welsh spring water throughout the UK, with special coverage in Wales and select international destinations.
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-2">UK Mainland</h3>
+                        <p class="text-gray-600">All delivery options available. Standard delivery takes 2-4 working days.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-2">Wales</h3>
+                        <p class="text-gray-600">Priority service with faster delivery times. Standard delivery takes 1-2 working days.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-2">Scottish Highlands & Islands</h3>
+                        <p class="text-gray-600">Standard and Express delivery available. May take 1-2 additional days.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-2">Northern Ireland</h3>
+                        <p class="text-gray-600">Standard and Express delivery available. May take 1-2 additional days.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-2">International</h3>
+                        <p class="text-gray-600">We ship to select European countries. Please <a href="/contact/" class="text-blue-600 hover:text-blue-800">contact us</a> for more information.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2">
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="p-1">
+                        <img src="{% static 'images/delivery/uk-map.jpg' %}" alt="UK Delivery Map" class="w-full h-auto rounded-lg" onerror="this.src='https://images.unsplash.com/photo-1513026705753-bc3fffca8bf4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Delivery Coverage Map</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+                                <span class="text-sm text-gray-600">Same Day Available</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-blue-500 rounded-full mr-2"></div>
+                                <span class="text-sm text-gray-600">Next Day Available</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-yellow-500 rounded-full mr-2"></div>
+                                <span class="text-sm text-gray-600">2-4 Days</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-gray-300 rounded-full mr-2"></div>
+                                <span class="text-sm text-gray-600">Contact for Details</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delivery FAQ -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Find answers to common questions about our delivery service.
+            </p>
+        </div>
+        
+        <div class="max-w-3xl mx-auto divide-y divide-gray-200">
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">How can I track my delivery?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Once your order has been dispatched, you will receive a tracking number via email. You can use this tracking number on our website under "Track Order" or directly on the courier's website. Express and Premium delivery customers will also receive SMS updates.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">What if I'm not home when my delivery arrives?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>For Standard and Express deliveries, the courier will attempt to leave your package in a safe place or with a neighbor. If this isn't possible, they will leave a card with instructions to rearrange delivery or collect from a local depot. Premium delivery customers can select a specific time slot to ensure they're home.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">Do you deliver on weekends?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Standard delivery is Monday to Friday only. Express delivery includes Saturday delivery for orders placed before 2pm on Friday. Premium delivery includes Saturday and Sunday options in select areas. Please check availability during checkout.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">Can I change my delivery address after ordering?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Yes, you can change your delivery address as long as your order hasn't been dispatched yet. Please contact our customer service team as soon as possible with your order number and new delivery details. Once an order has been dispatched, we cannot change the delivery address.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">How are subscription deliveries handled?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Subscription customers receive free standard delivery on all orders. You can upgrade to Express or Premium delivery for an additional fee. Subscription deliveries are scheduled according to your chosen frequency, and you'll receive a notification email three days before each delivery is processed, giving you time to make any changes if needed.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delivery CTA -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-6">Ready to Experience Welsh Spring Water?</h2>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Order today and enjoy our convenient delivery options straight to your door.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="/products/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 shadow-md transition-colors duration-150">
+                Shop Now
+            </a>
+            <a href="/subscriptions/" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:bg-opacity-10 transition-colors duration-150">
+                Subscribe & Save
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

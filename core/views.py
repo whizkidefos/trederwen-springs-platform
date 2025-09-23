@@ -257,7 +257,79 @@ def returns_policy(request):
         'settings': settings,
     }
     
-    return render(request, 'core/returns_policy.html', context)
+    return render(request, 'core/returns.html', context)
+
+def springs(request):
+    """Springs information page"""
+    settings = SiteSettings.get_settings()
+    
+    context = {
+        'settings': settings,
+    }
+    
+    return render(request, 'core/springs.html', context)
+
+def heritage(request):
+    """Heritage information page"""
+    settings = SiteSettings.get_settings()
+    
+    context = {
+        'settings': settings,
+    }
+    
+    return render(request, 'core/heritage.html', context)
+
+def sustainability(request):
+    """Sustainability information page"""
+    settings = SiteSettings.get_settings()
+    
+    context = {
+        'settings': settings,
+    }
+    
+    return render(request, 'core/sustainability.html', context)
+
+def gifts(request):
+    """Gifts and hampers page"""
+    settings = SiteSettings.get_settings()
+    
+    context = {
+        'settings': settings,
+    }
+    
+    return render(request, 'core/gifts.html', context)
+
+def help_center(request):
+    """Help and support page"""
+    settings = SiteSettings.get_settings()
+    faqs = FAQ.objects.filter(is_active=True)
+    
+    context = {
+        'settings': settings,
+        'faqs': faqs,
+    }
+    
+    return render(request, 'core/help.html', context)
+
+def delivery(request):
+    """Delivery information page"""
+    settings = SiteSettings.get_settings()
+    
+    context = {
+        'settings': settings,
+    }
+    
+    return render(request, 'core/delivery.html', context)
+
+def cookies_policy(request):
+    """Cookies policy page"""
+    settings = SiteSettings.get_settings()
+    
+    context = {
+        'settings': settings,
+    }
+    
+    return render(request, 'core/cookies.html', context)
 
 # AJAX endpoints
 @require_POST

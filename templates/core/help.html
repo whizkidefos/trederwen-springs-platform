@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Help & Support | {{ site_settings.site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .help-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="help-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                Help & <span class="welsh-text-shimmer">Support</span>
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto">
+                We're here to assist you with any questions about our Welsh spring water products and services.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Help Navigation -->
+{% include 'core/components/help_navigation.html' %}
+
+<!-- Frequently Asked Questions -->
+{% include 'core/components/help_faq.html' %}
+
+<!-- Contact Options -->
+{% include 'core/components/help_contact_options.html' %}
+
+<!-- Order Tracking -->
+{% include 'core/components/help_order_tracking.html' %}
+
+<!-- Help Resources -->
+{% include 'core/components/help_resources.html' %}
+
+<!-- Help CTA -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-6">Still Need Assistance?</h2>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Our customer support team is ready to help you with any questions or concerns.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="/contact/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 shadow-md transition-colors duration-150">
+                Contact Support
+            </a>
+            <a href="tel:+44-1234-567890" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:bg-opacity-10 transition-colors duration-150">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                Call Us
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

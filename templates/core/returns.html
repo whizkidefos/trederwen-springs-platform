@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Returns Policy | {{ site_settings.site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .returns-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .step-card {
+        transition: all 0.3s ease;
+    }
+    
+    .step-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="returns-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                <span class="welsh-text-shimmer">Returns</span> Policy
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto">
+                Our hassle-free returns process ensures your complete satisfaction with every purchase.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Returns Policy Overview -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:flex lg:items-center lg:space-x-12">
+            <div class="lg:w-1/2 mb-8 lg:mb-0">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Returns Promise</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    At Trederwen Springs, we stand behind the quality of our premium Welsh spring water products. If you're not completely satisfied with your purchase, we offer a simple and straightforward returns process.
+                </p>
+                <p class="text-lg text-gray-600">
+                    We accept returns within 30 days of delivery for most products, provided they are in their original condition and packaging. For water products specifically, we can only accept returns if the products are unopened and the seals remain intact.
+                </p>
+                
+                <div class="mt-8 bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
+                    <h3 class="font-bold text-gray-900 mb-2">Our Quality Guarantee</h3>
+                    <p class="text-gray-700">
+                        If you receive any damaged or defective products, please contact us within 48 hours of delivery, and we'll arrange a replacement or refund at no additional cost to you.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2">
+                <div class="relative rounded-xl overflow-hidden shadow-lg h-80">
+                    <img src="{% static 'images/returns/satisfaction-guarantee.jpg' %}" alt="Satisfaction Guarantee" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1565377025396-8e7a9b91f08a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <p class="text-white text-lg font-medium italic">
+                            "Your satisfaction is our highest priority."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Returns Process -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Returns Process</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Follow these simple steps to return your products.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="step-card bg-white rounded-xl p-6 shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">1</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4 mt-4">Contact Us</h3>
+                <p class="text-gray-600 mb-4">
+                    Reach out to our customer service team via email, phone, or the contact form on our website. Please include your order number and reason for return.
+                </p>
+                <div class="mt-4">
+                    <a href="/contact/" class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center">
+                        Contact Customer Service
+                        <svg class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step-card bg-white rounded-xl p-6 shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">2</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4 mt-4">Receive Return Authorization</h3>
+                <p class="text-gray-600 mb-4">
+                    Our team will review your request and provide you with a Return Authorization Number (RA#) and return instructions via email within 1-2 business days.
+                </p>
+                <div class="mt-4">
+                    <span class="text-gray-500 text-sm">Average response time: 24 hours</span>
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step-card bg-white rounded-xl p-6 shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">3</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4 mt-4">Return Your Items</h3>
+                <p class="text-gray-600 mb-4">
+                    Package your items securely in their original packaging if possible. Include the RA# on the outside of the package and ship it to our returns address.
+                </p>
+                <div class="mt-4 text-gray-700">
+                    <p class="font-medium">Returns Address:</p>
+                    <p>Trederwen Springs Returns</p>
+                    <p>Unit 7, Mountain Business Park</p>
+                    <p>Snowdonia, Wales, UK</p>
+                    <p>LL55 4TY</p>
+                </div>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="step-card bg-white rounded-xl p-6 shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">4</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4 mt-4">Package Inspection</h3>
+                <p class="text-gray-600 mb-4">
+                    Once we receive your return, our team will inspect the items to ensure they meet our return policy requirements. This typically takes 1-3 business days.
+                </p>
+                <div class="mt-4">
+                    <span class="text-gray-500 text-sm">You'll receive email updates throughout this process</span>
+                </div>
+            </div>
+            
+            <!-- Step 5 -->
+            <div class="step-card bg-white rounded-xl p-6 shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">5</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4 mt-4">Refund Processing</h3>
+                <p class="text-gray-600 mb-4">
+                    Once approved, we'll process your refund to the original payment method. Please allow 5-10 business days for the refund to appear in your account.
+                </p>
+                <div class="mt-4">
+                    <span class="text-blue-600 font-medium">Exchanges are also available upon request</span>
+                </div>
+            </div>
+            
+            <!-- Step 6 -->
+            <div class="step-card bg-white rounded-xl p-6 shadow-md relative">
+                <div class="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">6</div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4 mt-4">Confirmation</h3>
+                <p class="text-gray-600 mb-4">
+                    You'll receive a confirmation email once your refund has been processed. If you have any questions about your return, our customer service team is here to help.
+                </p>
+                <div class="mt-4">
+                    <a href="/help/" class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center">
+                        Visit Help Center
+                        <svg class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Return Policy Details -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Return Policy Details</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Important information about our returns policy.
+            </p>
+        </div>
+        
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-gray-50 rounded-xl p-8 shadow-md">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Eligible Items</h3>
+                        <p class="text-gray-600">
+                            Most products are eligible for return within 30 days of delivery. Water products must be unopened with intact seals. Personalized items and gift cards are not eligible for return unless defective.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Return Shipping Costs</h3>
+                        <p class="text-gray-600">
+                            For standard returns, customers are responsible for return shipping costs. For damaged or defective items, we'll provide a prepaid return label or arrange collection at no cost to you.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Refund Methods</h3>
+                        <p class="text-gray-600">
+                            Refunds will be issued to the original payment method used for purchase. If the original payment method is unavailable, we'll issue a store credit or process the refund via an alternative method agreed upon with the customer.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Subscription Products</h3>
+                        <p class="text-gray-600">
+                            Subscription customers enjoy an extended 45-day return window and free return shipping on all orders. Please contact our customer service team directly to process subscription returns.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Exceptions</h3>
+                        <p class="text-gray-600">
+                            Special promotions, clearance items, or products marked as "final sale" may have different return policies, which will be clearly indicated at the time of purchase.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Returns FAQ -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Find answers to common questions about our returns process.
+            </p>
+        </div>
+        
+        <div class="max-w-3xl mx-auto divide-y divide-gray-200">
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">How long do I have to return my order?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Standard customers have 30 days from the delivery date to initiate a return. Subscription customers enjoy an extended 45-day return window. The date of delivery is considered day 1 of the return period.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">Can I return part of my order?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Yes, you can return individual items from a multi-item order. Please note that any free shipping benefits applied to the original order may be recalculated, and shipping charges may be deducted from your refund if the remaining order value falls below our free shipping threshold.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">How long does it take to process my refund?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Once we receive your return, it typically takes 1-3 business days to inspect and process. After approval, refunds are issued within 1-2 business days. Depending on your payment provider, it may take an additional 5-10 business days for the refund to appear in your account.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">Can I exchange my product instead of getting a refund?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Yes, we're happy to process exchanges. When contacting our customer service team, simply indicate that you'd prefer an exchange and specify the product you'd like instead. If there's a price difference, we'll either charge the additional amount or refund the difference accordingly.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">What if my return is denied?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>If your return is denied, we'll contact you with a detailed explanation. Common reasons include items being used, damaged by the customer, or returned outside the eligible timeframe. You can choose to have the items shipped back to you (shipping fees may apply) or donate them to our partner charities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-6">Need Help With a Return?</h2>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Our customer service team is ready to assist you with any questions about returns or exchanges.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="/contact/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 shadow-md transition-colors duration-150">
+                Contact Support
+            </a>
+            <a href="/help/" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:bg-opacity-10 transition-colors duration-150">
+                Visit Help Center
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

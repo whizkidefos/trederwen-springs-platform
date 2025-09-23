@@ -1,0 +1,159 @@
+<section id="faq" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Find answers to our most commonly asked questions.
+            </p>
+        </div>
+        
+        <div class="max-w-3xl mx-auto">
+            <!-- FAQ Categories -->
+            <div class="mb-10">
+                <div class="flex flex-wrap justify-center gap-2 md:gap-4">
+                    <button class="faq-category-btn active px-4 py-2 rounded-full bg-blue-100 text-blue-800 font-medium text-sm hover:bg-blue-200" data-category="all">
+                        All Questions
+                    </button>
+                    <button class="faq-category-btn px-4 py-2 rounded-full bg-gray-100 text-gray-800 font-medium text-sm hover:bg-gray-200" data-category="orders">
+                        Orders & Shipping
+                    </button>
+                    <button class="faq-category-btn px-4 py-2 rounded-full bg-gray-100 text-gray-800 font-medium text-sm hover:bg-gray-200" data-category="products">
+                        Products
+                    </button>
+                    <button class="faq-category-btn px-4 py-2 rounded-full bg-gray-100 text-gray-800 font-medium text-sm hover:bg-gray-200" data-category="account">
+                        Account & Billing
+                    </button>
+                    <button class="faq-category-btn px-4 py-2 rounded-full bg-gray-100 text-gray-800 font-medium text-sm hover:bg-gray-200" data-category="subscriptions">
+                        Subscriptions
+                    </button>
+                </div>
+            </div>
+            
+            <!-- FAQ Items -->
+            <div class="divide-y divide-gray-200">
+                <!-- Orders & Shipping FAQs -->
+                <div class="py-6 faq-item" data-category="orders">
+                    <div x-data="{ open: false }" class="faq-question">
+                        <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                            <h3 class="text-lg font-medium text-gray-900">How long does shipping take?</h3>
+                            <span class="ml-6 h-7 flex items-center">
+                                <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                            <p>Standard shipping within the UK takes 2-4 business days. Express shipping is available for next-day delivery if ordered before 2 PM. International shipping times vary by destination, typically 5-10 business days for Europe and 7-14 business days for the rest of the world.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="py-6 faq-item" data-category="orders">
+                    <div x-data="{ open: false }" class="faq-question">
+                        <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                            <h3 class="text-lg font-medium text-gray-900">How can I track my order?</h3>
+                            <span class="ml-6 h-7 flex items-center">
+                                <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                            <p>You can track your order by logging into your account and viewing your order history. Alternatively, you can use the tracking number provided in your shipping confirmation email. We also offer real-time tracking updates via text message if you opt-in during checkout.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products FAQs -->
+                <div class="py-6 faq-item" data-category="products">
+                    <div x-data="{ open: false }" class="faq-question">
+                        <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                            <h3 class="text-lg font-medium text-gray-900">What makes Welsh spring water special?</h3>
+                            <span class="ml-6 h-7 flex items-center">
+                                <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                            <p>Welsh spring water is naturally filtered through ancient rock formations in the Welsh mountains, giving it a unique mineral profile and exceptional purity. Our water contains a balanced blend of essential minerals including calcium, magnesium, and silica, with low sodium content. The protected environment of our spring sources ensures that the water remains untouched by modern pollution.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="py-6 faq-item" data-category="products">
+                    <div x-data="{ open: false }" class="faq-question">
+                        <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                            <h3 class="text-lg font-medium text-gray-900">How long does bottled water last?</h3>
+                            <span class="ml-6 h-7 flex items-center">
+                                <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                            <p>Our bottled water has a shelf life of 2 years when stored properly. For best taste, we recommend consuming within 1 year of the bottling date. Store bottles in a cool, dry place away from direct sunlight and strong odors. Once opened, refrigerate and consume within 7 days for optimal freshness.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Account & Billing FAQs -->
+                <div class="py-6 faq-item" data-category="account">
+                    <div x-data="{ open: false }" class="faq-question">
+                        <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                            <h3 class="text-lg font-medium text-gray-900">How do I update my payment information?</h3>
+                            <span class="ml-6 h-7 flex items-center">
+                                <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                            <p>You can update your payment information by logging into your account, navigating to "Account Settings," and selecting "Payment Methods." From there, you can add new payment methods, update existing ones, or change your default payment method. All payment information is securely encrypted and stored in compliance with PCI DSS standards.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Subscriptions FAQs -->
+                <div class="py-6 faq-item" data-category="subscriptions">
+                    <div x-data="{ open: false }" class="faq-question">
+                        <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                            <h3 class="text-lg font-medium text-gray-900">How do I change my subscription frequency?</h3>
+                            <span class="ml-6 h-7 flex items-center">
+                                <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                            <p>To change your subscription frequency, log into your account and go to "My Subscriptions." Select the subscription you wish to modify, then click "Edit Subscription." From there, you can adjust the delivery frequency, quantity, or products included. Changes made at least 48 hours before your next scheduled delivery will apply to that delivery; otherwise, they will take effect on the following delivery.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="py-6 faq-item" data-category="subscriptions">
+                    <div x-data="{ open: false }" class="faq-question">
+                        <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                            <h3 class="text-lg font-medium text-gray-900">Can I pause or cancel my subscription?</h3>
+                            <span class="ml-6 h-7 flex items-center">
+                                <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                            <p>Yes, you can pause your subscription for up to 3 months or cancel it at any time. To do this, log into your account, go to "My Subscriptions," select the subscription, and click either "Pause Subscription" or "Cancel Subscription." If you pause, you'll be asked to select when you'd like deliveries to resume. There are no fees for pausing or canceling your subscription.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-center">
+                <p class="text-gray-600 mb-4">Can't find what you're looking for?</p>
+                <a href="/contact/" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                    Contact Our Support Team
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

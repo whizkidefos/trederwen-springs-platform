@@ -1,0 +1,89 @@
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Everything you need to know about our gift sets and ordering process.
+            </p>
+        </div>
+        
+        <div class="max-w-3xl mx-auto divide-y divide-gray-200">
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">How far in advance should I order gift sets?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>For standard gift sets, we recommend ordering at least 3-5 business days in advance. For custom or personalized gift sets, please allow 7-10 business days. During holiday seasons, we recommend placing orders earlier to ensure timely delivery.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">Can I include a personalized message with my gift?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Yes! All gift sets include the option to add a complimentary personalized message card. You can enter your message during the checkout process. For handwritten calligraphy notes, there is a small additional fee.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">Do you offer international shipping for gift sets?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Yes, we ship our gift sets internationally. Shipping costs and delivery times vary depending on the destination. Please note that some countries may have restrictions on importing food and beverage products, so please check local regulations before ordering.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">Can I create a custom gift set?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Absolutely! We offer custom gift set creation services. You can select specific water varieties, choose complementary Welsh products, and design your own packaging. For custom orders, please contact our gift specialists through our website or call our customer service line.</p>
+                </div>
+            </div>
+            
+            <div class="py-6" x-data="{ open: false }">
+                <button @click="open = !open" class="flex justify-between items-center w-full text-left">
+                    <h3 class="text-lg font-medium text-gray-900">What is your return policy for gift sets?</h3>
+                    <span class="ml-6 h-7 flex items-center">
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{'rotate-180': open, 'rotate-0': !open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+                <div x-show="open" class="mt-2 prose prose-blue max-w-none text-gray-600">
+                    <p>Due to the perishable nature of our products, we cannot accept returns on gift sets once they have been delivered. However, if your gift set arrives damaged or if there are any issues with your order, please contact us within 48 hours of delivery, and we will arrange a replacement or refund.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+            <p class="text-gray-600 mb-4">Still have questions about our gift sets?</p>
+            <a href="/contact/" class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                Contact Our Gift Specialists
+            </a>
+        </div>
+    </div>
+</section>

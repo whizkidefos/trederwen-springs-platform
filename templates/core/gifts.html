@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gift Sets & Hampers | {{ site_settings.site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .gifts-hero {
+        background: linear-gradient(135deg, #1e3a8a 0%, #065f46 50%, #374151 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #1e40af, #059669, #1e40af);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="gifts-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                <span class="welsh-text-shimmer">Gift Sets</span> & Hampers
+            </h1>
+            <p class="text-lg text-blue-100 max-w-3xl mx-auto">
+                Share the pure taste of Welsh spring water with our beautifully curated gift sets and hampers.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Gift Sets Introduction -->
+{% include 'core/components/gifts_introduction.html' %}
+
+<!-- Featured Gift Sets -->
+{% include 'core/components/featured_gift_sets.html' %}
+
+<!-- Corporate Gifts -->
+{% include 'core/components/corporate_gifts.html' %}
+
+<!-- Personalization Options -->
+{% include 'core/components/gift_personalization.html' %}
+
+<!-- Gift Occasions -->
+{% include 'core/components/gift_occasions.html' %}
+
+<!-- Gift FAQ -->
+{% include 'core/components/gift_faq.html' %}
+
+<!-- Gift CTA -->
+<section class="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-6">Give the Gift of Welsh Purity</h2>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Browse our collection of premium gift sets featuring the finest Welsh spring water and accessories.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="/products/category/gift-sets/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 shadow-md transition-colors duration-150">
+                Shop Gift Sets
+            </a>
+            <a href="/contact/" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:bg-opacity-10 transition-colors duration-150">
+                Contact for Corporate Orders
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

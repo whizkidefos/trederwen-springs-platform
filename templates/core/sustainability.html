@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sustainability | {{ site_settings.site_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .sustainability-hero {
+        background: linear-gradient(135deg, #065f46 0%, #1e3a8a 50%, #047857 100%);
+        background-size: 400% 400%;
+        animation: mountainFlow 12s ease infinite;
+    }
+    
+    @keyframes mountainFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .welsh-text-shimmer {
+        background: linear-gradient(90deg, #059669, #1e40af, #059669);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: welshShimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes welshShimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .eco-card {
+        transition: all 0.3s ease;
+    }
+    
+    .eco-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .progress-ring {
+        transform: rotate(-90deg);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="sustainability-hero py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-slate-800 to-transparent" style="clip-path: polygon(0 100%, 10% 80%, 25% 85%, 40% 70%, 55% 75%, 70% 60%, 85% 65%, 100% 50%, 100% 100%);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                Our <span class="welsh-text-shimmer">Sustainability</span> Commitment
+            </h1>
+            <p class="text-lg text-green-100 max-w-3xl mx-auto">
+                Protecting the Welsh mountains and environment that provide our exceptional water is at the heart of everything we do.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Sustainability Introduction -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:flex lg:items-center lg:space-x-12">
+            <div class="lg:w-1/2 mb-8 lg:mb-0">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Guardians of Welsh Nature</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    At Trederwen Springs, we recognize that our business depends on the pristine natural environment of Wales. That's why sustainability isn't just a buzzword for us—it's a core value that guides every decision we make.
+                </p>
+                <p class="text-lg text-gray-600">
+                    From our carbon-neutral operations to our eco-friendly packaging and water conservation efforts, we're committed to preserving the Welsh mountains and springs for future generations to enjoy.
+                </p>
+            </div>
+            
+            <div class="lg:w-1/2">
+                <div class="relative rounded-xl overflow-hidden shadow-lg h-80">
+                    <img src="{% static 'images/sustainability/welsh-nature.jpg' %}" alt="Welsh Mountains" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <p class="text-white text-lg font-medium italic">
+                            "We don't inherit the earth from our ancestors; we borrow it from our children."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sustainability Goals -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Our Sustainability Goals</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                We've set ambitious targets to minimize our environmental impact and maximize our positive contribution.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Carbon Neutrality -->
+            <div class="eco-card bg-gray-50 rounded-xl p-6 shadow-md">
+                <div class="flex items-center justify-center mb-6">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring-circle" stroke="#E5E7EB" stroke-width="8" fill="transparent" r="50" cx="60" cy="60" />
+                        <circle class="progress-ring-circle" stroke="#059669" stroke-width="8" fill="transparent" r="50" cx="60" cy="60" stroke-dasharray="314" stroke-dashoffset="31.4" />
+                        <text x="60" y="65" text-anchor="middle" font-size="20" font-weight="bold" fill="#059669">90%</text>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">Carbon Neutrality</h3>
+                <p class="text-gray-600 text-center">
+                    We've reduced our carbon emissions by 90% and offset the remainder through local reforestation projects.
+                </p>
+                <div class="mt-4 text-center">
+                    <span class="text-sm font-medium text-green-600">Target: 100% by 2025</span>
+                </div>
+            </div>
+            
+            <!-- Sustainable Packaging -->
+            <div class="eco-card bg-gray-50 rounded-xl p-6 shadow-md">
+                <div class="flex items-center justify-center mb-6">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring-circle" stroke="#E5E7EB" stroke-width="8" fill="transparent" r="50" cx="60" cy="60" />
+                        <circle class="progress-ring-circle" stroke="#1E40AF" stroke-width="8" fill="transparent" r="50" cx="60" cy="60" stroke-dasharray="314" stroke-dashoffset="78.5" />
+                        <text x="60" y="65" text-anchor="middle" font-size="20" font-weight="bold" fill="#1E40AF">75%</text>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">Sustainable Packaging</h3>
+                <p class="text-gray-600 text-center">
+                    75% of our packaging is now made from recycled or plant-based materials that are fully recyclable.
+                </p>
+                <div class="mt-4 text-center">
+                    <span class="text-sm font-medium text-blue-600">Target: 100% by 2026</span>
+                </div>
+            </div>
+            
+            <!-- Water Conservation -->
+            <div class="eco-card bg-gray-50 rounded-xl p-6 shadow-md">
+                <div class="flex items-center justify-center mb-6">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring-circle" stroke="#E5E7EB" stroke-width="8" fill="transparent" r="50" cx="60" cy="60" />
+                        <circle class="progress-ring-circle" stroke="#0EA5E9" stroke-width="8" fill="transparent" r="50" cx="60" cy="60" stroke-dasharray="314" stroke-dashoffset="94.2" />
+                        <text x="60" y="65" text-anchor="middle" font-size="20" font-weight="bold" fill="#0EA5E9">70%</text>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">Water Conservation</h3>
+                <p class="text-gray-600 text-center">
+                    We've reduced water usage in our operations by 70% through innovative recycling and conservation systems.
+                </p>
+                <div class="mt-4 text-center">
+                    <span class="text-sm font-medium text-sky-600">Target: 85% by 2027</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Initiatives -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Sustainability Initiatives</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Discover the concrete actions we're taking to protect our environment and communities.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Renewable Energy -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-64 overflow-hidden">
+                    <img src="{% static 'images/sustainability/renewable-energy.jpg' %}" alt="Renewable Energy" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">100% Renewable Energy</h3>
+                    <p class="text-gray-600 mb-4">
+                        Our facilities are powered entirely by renewable energy sources, including our own hydroelectric generators and solar panels installed on all our buildings.
+                    </p>
+                    <div class="flex items-center text-green-600">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="font-medium">Reduced CO2 emissions by 2,500 tons annually</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Eco-Friendly Packaging -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-64 overflow-hidden">
+                    <img src="{% static 'images/sustainability/eco-packaging.jpg' %}" alt="Eco-Friendly Packaging" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1605600659873-d808a13e4d9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Eco-Friendly Packaging</h3>
+                    <p class="text-gray-600 mb-4">
+                        We've pioneered the use of plant-based PET bottles and recycled materials for all our packaging, significantly reducing plastic waste.
+                    </p>
+                    <div class="flex items-center text-green-600">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="font-medium">Eliminated 200 tons of virgin plastic annually</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Watershed Protection -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-64 overflow-hidden">
+                    <img src="{% static 'images/sustainability/watershed.jpg' %}" alt="Watershed Protection" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1501908734255-16579c18c25f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Watershed Protection</h3>
+                    <p class="text-gray-600 mb-4">
+                        We've established protected zones around all our spring sources, working with local communities and conservation groups to maintain the natural ecosystem.
+                    </p>
+                    <div class="flex items-center text-green-600">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="font-medium">Protected over 5,000 acres of Welsh wilderness</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Community Projects -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-md">
+                <div class="h-64 overflow-hidden">
+                    <img src="{% static 'images/sustainability/community.jpg' %}" alt="Community Projects" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Community Sustainability</h3>
+                    <p class="text-gray-600 mb-4">
+                        We support local sustainability initiatives through our community grant program, empowering Welsh communities to develop their own environmental projects.
+                    </p>
+                    <div class="flex items-center text-green-600">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="font-medium">Funded 35 community projects since 2018</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Certifications -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Our Certifications</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Our commitment to sustainability is recognized by leading environmental organizations.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <!-- B Corp -->
+            <div class="text-center">
+                <div class="h-24 flex items-center justify-center mb-4">
+                    <img src="{% static 'images/certifications/bcorp.png' %}" alt="B Corp Certified" class="h-16" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Certified_B_Corporation_Logo.svg/800px-Certified_B_Corporation_Logo.svg.png'">
+                </div>
+                <h3 class="font-bold text-gray-900">B Corporation</h3>
+                <p class="text-sm text-gray-600">Certified since 2018</p>
+            </div>
+            
+            <!-- Carbon Trust -->
+            <div class="text-center">
+                <div class="h-24 flex items-center justify-center mb-4">
+                    <img src="{% static 'images/certifications/carbon-trust.png' %}" alt="Carbon Trust" class="h-16" onerror="this.src='https://upload.wikimedia.org/wikipedia/en/thumb/7/77/Carbon_Trust.svg/800px-Carbon_Trust.svg.png'">
+                </div>
+                <h3 class="font-bold text-gray-900">Carbon Trust Standard</h3>
+                <p class="text-sm text-gray-600">Carbon neutral operations</p>
+            </div>
+            
+            <!-- Rainforest Alliance -->
+            <div class="text-center">
+                <div class="h-24 flex items-center justify-center mb-4">
+                    <img src="{% static 'images/certifications/rainforest-alliance.png' %}" alt="Rainforest Alliance" class="h-16" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Rainforest_Alliance_logo.svg/800px-Rainforest_Alliance_logo.svg.png'">
+                </div>
+                <h3 class="font-bold text-gray-900">Rainforest Alliance</h3>
+                <p class="text-sm text-gray-600">Sustainable sourcing</p>
+            </div>
+            
+            <!-- Plastic Neutral -->
+            <div class="text-center">
+                <div class="h-24 flex items-center justify-center mb-4">
+                    <img src="{% static 'images/certifications/plastic-neutral.png' %}" alt="Plastic Neutral" class="h-16" onerror="this.src='https://images.squarespace-cdn.com/content/v1/5a9f22e1a9e028f4a73dc5b1/1520430053125-QIBCPD7LIB5QBP31CXZX/plastic-neutral-certification.png'">
+                </div>
+                <h3 class="font-bold text-gray-900">Plastic Neutral</h3>
+                <p class="text-sm text-gray-600">Certified since 2020</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sustainability Report -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+            <div class="md:flex">
+                <div class="md:w-1/2 p-8 md:p-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Annual Sustainability Report</h2>
+                    <p class="text-lg text-gray-600 mb-6">
+                        We believe in transparency about our environmental impact and progress toward our sustainability goals. Our detailed annual report provides insights into our journey.
+                    </p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-6 w-6 text-green-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-600">Detailed carbon footprint analysis</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-6 w-6 text-green-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-600">Water usage and conservation metrics</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-6 w-6 text-green-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-600">Progress on packaging sustainability</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-6 w-6 text-green-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-600">Community impact assessment</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        Download 2024 Report
+                        <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="md:w-1/2 bg-green-50">
+                    <div class="h-full flex items-center justify-center p-8">
+                        <img src="{% static 'images/sustainability/report-cover.jpg' %}" alt="Sustainability Report" class="max-h-96 shadow-lg rounded-lg" onerror="this.src='https://images.unsplash.com/photo-1497005367839-6e852de72767?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Get Involved CTA -->
+<section class="py-16 bg-gradient-to-r from-green-600 to-blue-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-6">Join Our Sustainability Journey</h2>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Together, we can make a bigger impact. Learn how you can participate in our environmental initiatives.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="/contact/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-green-700 bg-white hover:bg-gray-50 shadow-md transition-colors duration-150">
+                Partner With Us
+            </a>
+            <a href="/blog/category/sustainability/" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:bg-opacity-10 transition-colors duration-150">
+                Read Our Sustainability Blog
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

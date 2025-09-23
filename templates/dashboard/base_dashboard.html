@@ -19,6 +19,9 @@
     
     <!-- Dashboard CSS -->
     <style>
+        /* Alpine.js cloak to prevent flash of unstyled content */
+        [x-cloak] { display: none !important; }
+        
         /* Dashboard specific styles */
         .sidebar {
             transition: all 0.3s ease;
@@ -288,7 +291,7 @@
     </footer>
 
     <!-- Alpine.js -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
     
     <!-- Dashboard JS -->
     <script>

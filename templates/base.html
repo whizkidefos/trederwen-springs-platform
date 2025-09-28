@@ -284,6 +284,51 @@
             border: 1px solid var(--glass-border);
             box-shadow: 0 8px 32px rgba(30, 64, 175, 0.2);
         }
+        
+        /* Extended max-width for navigation */
+        .max-w-8xl {
+            max-width: 88rem; /* 1408px */
+        }
+        
+        /* Enhanced responsive navigation */
+        @media (max-width: 1024px) {
+            .max-w-8xl {
+                max-width: 100%;
+            }
+        }
+        
+        /* Search modal responsiveness */
+        @media (max-width: 768px) {
+            .search-modal-content {
+                padding-top: 1rem;
+            }
+            
+            .search-modal-input {
+                font-size: 1rem;
+                padding: 1rem 3rem;
+            }
+        }
+        
+        /* Navigation item hover effects */
+        .nav-item-hover {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-item-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .nav-item-hover:hover::before {
+            left: 100%;
+        }
     </style>
     
     {% block extra_css %}{% endblock %}
@@ -309,7 +354,7 @@
              searchOpen: false,
              userMenuOpen: false 
          }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
             <div class="flex justify-between items-center h-20">
                 <!-- Welsh Heritage Logo -->
                 <div class="flex items-center">
@@ -329,7 +374,7 @@
                 </div>
                 
                 <!-- Welsh Heritage Navigation -->
-                <div class="hidden lg:flex items-center space-x-8">
+                <div class="hidden lg:flex items-center space-x-10">
                     <a href="/" class="welsh-menu-item text-white hover:text-blue-300 transition-colors font-medium">
                         Home
                     </a>
@@ -367,22 +412,18 @@
                     </a>
                 </div>
                 
-                <!-- Welsh Mountain Search -->
-                <div class="hidden md:block flex-1 max-w-md mx-8">
-                    <div class="relative">
-                        <input type="text" 
-                               placeholder="Search Welsh springs..." 
-                               class="w-full pl-12 pr-4 py-3 welsh-glass rounded-full text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white focus:bg-opacity-10 transition-all duration-300">
-                        <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
-                            <svg class="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
+                <!-- Welsh Mountain Search Icon -->
+                <div class="flex-1 flex justify-center">
+                    <button @click="searchOpen = true" 
+                            class="p-3 welsh-glass rounded-full hover:bg-white hover:bg-opacity-10 transition-all duration-300 welsh-magnetic group">
+                        <svg class="w-6 h-6 text-white group-hover:text-blue-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
                 </div>
                 
                 <!-- Welsh Heritage Actions -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-6">
                     <!-- Welsh User Menu -->
                     {% if user.is_authenticated %}
                         <div class="relative">
@@ -565,11 +606,188 @@
                 
                 <!-- Mobile Search -->
                 <div class="pt-4 border-t border-white border-opacity-10">
-                    <input type="text" placeholder="Search Welsh springs..." class="w-full p-3 welsh-glass rounded-xl text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <button @click="searchOpen = true; mobileMenuOpen = false" 
+                            class="w-full p-3 welsh-glass rounded-xl text-left text-blue-300 hover:bg-white hover:bg-opacity-10 transition-all duration-300 flex items-center space-x-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <span>Search Welsh springs...</span>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Welsh Heritage Fullscreen Search Modal -->
+    <div x-show="searchOpen" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @keydown.escape.window="searchOpen = false"
+         class="fixed inset-0 z-50 overflow-y-auto"
+         style="display: none;">
+        
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-gradient-to-br from-welsh-slate-900 via-welsh-blue-900 to-welsh-green-900 bg-opacity-95 backdrop-blur-lg"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative min-h-screen flex items-start justify-center p-4 pt-20 search-modal-content">
+            <div class="relative w-full max-w-4xl">
+                <!-- Search Header -->
+                <div class="text-center mb-6 md:mb-8">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white mb-4">
+                        Search <span class="welsh-text">Welsh Springs</span>
+                    </h2>
+                    <p class="text-base md:text-lg text-blue-200">Discover premium spring water from the Welsh valleys</p>
+                </div>
+                
+                <!-- Search Input -->
+                <div class="relative mb-6 md:mb-8" x-data="{ searchQuery: '', searchResults: [], isLoading: false }">
+                    <div class="relative">
+                        <input type="text" 
+                               x-model="searchQuery"
+                               @input.debounce.300ms="performSearch()"
+                               placeholder="Search for Welsh spring water, products, or categories..." 
+                               class="w-full pl-12 md:pl-16 pr-12 md:pr-16 py-4 md:py-6 text-lg md:text-xl welsh-glass-strong rounded-2xl md:rounded-3xl text-white placeholder-blue-300 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition-all duration-300 search-modal-input"
+                               autofocus>
+                        
+                        <!-- Search Icon -->
+                        <div class="absolute left-4 md:left-6 top-1/2 transform -translate-y-1/2">
+                            <svg class="w-6 h-6 md:w-8 md:h-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        
+                        <!-- Close Button -->
+                        <button @click="searchOpen = false" 
+                                class="absolute right-4 md:right-6 top-1/2 transform -translate-y-1/2 p-2 rounded-full hover:bg-white hover:bg-opacity-10 transition-all duration-300">
+                            <svg class="w-5 h-5 md:w-6 md:h-6 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Loading Indicator -->
+                    <div x-show="isLoading" class="mt-8 text-center">
+                        <div class="inline-flex items-center space-x-3">
+                            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-400"></div>
+                            <span class="text-blue-300">Searching Welsh valleys...</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Results -->
+                    <div x-show="searchQuery.length > 0 && !isLoading" class="mt-8">
+                        <!-- Quick Filters -->
+                        <div class="mb-6">
+                            <div class="flex flex-wrap gap-3">
+                                <button class="px-4 py-2 welsh-glass rounded-full text-white hover:bg-white hover:bg-opacity-10 transition-all duration-300 text-sm">
+                                    All Results
+                                </button>
+                                <button class="px-4 py-2 welsh-glass rounded-full text-white hover:bg-white hover:bg-opacity-10 transition-all duration-300 text-sm">
+                                    Products
+                                </button>
+                                <button class="px-4 py-2 welsh-glass rounded-full text-white hover:bg-white hover:bg-opacity-10 transition-all duration-300 text-sm">
+                                    Categories
+                                </button>
+                                <button class="px-4 py-2 welsh-glass rounded-full text-white hover:bg-white hover:bg-opacity-10 transition-all duration-300 text-sm">
+                                    Articles
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Results Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Sample Result Item -->
+                            <div class="welsh-glass-strong rounded-2xl p-6 hover:bg-white hover:bg-opacity-5 transition-all duration-300 group cursor-pointer">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-welsh-blue-500 to-welsh-green-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h3 class="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors">Premium Welsh Spring Water</h3>
+                                        <p class="text-blue-300 text-sm mt-1">Natural spring water from Snowdonia</p>
+                                        <div class="flex items-center mt-2">
+                                            <span class="text-xs text-blue-400 bg-blue-500 bg-opacity-20 px-2 py-1 rounded-full">Product</span>
+                                            <span class="text-xs text-green-400 ml-2">£12.99</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- More sample results would be dynamically generated here -->
+                            <div class="welsh-glass-strong rounded-2xl p-6 hover:bg-white hover:bg-opacity-5 transition-all duration-300 group cursor-pointer">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-welsh-green-500 to-welsh-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h3 class="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors">Welsh Heritage Collection</h3>
+                                        <p class="text-blue-300 text-sm mt-1">Curated selection of premium waters</p>
+                                        <div class="flex items-center mt-2">
+                                            <span class="text-xs text-purple-400 bg-purple-500 bg-opacity-20 px-2 py-1 rounded-full">Category</span>
+                                            <span class="text-xs text-green-400 ml-2">5 products</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- No Results -->
+                        <div x-show="searchQuery.length > 2 && searchResults.length === 0 && !isLoading" class="text-center py-12">
+                            <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-welsh-blue-500 to-welsh-green-500 rounded-full flex items-center justify-center opacity-50">
+                                <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-white mb-2">No springs found</h3>
+                            <p class="text-blue-300 mb-6">We couldn't find any results for your search. Try different keywords or explore our categories.</p>
+                            <a href="/products/" class="heritage-button inline-block text-white px-6 py-3 rounded-full font-bold">
+                                Explore All Springs
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Popular Searches (when no query) -->
+                    <div x-show="searchQuery.length === 0" class="mt-8">
+                        <h3 class="text-xl font-semibold text-white mb-6">Popular Searches</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <button class="p-4 welsh-glass-strong rounded-xl text-left hover:bg-white hover:bg-opacity-5 transition-all duration-300 group">
+                                <div class="text-white font-medium group-hover:text-blue-300 transition-colors">Spring Water</div>
+                                <div class="text-blue-300 text-sm mt-1">Natural & Pure</div>
+                            </button>
+                            <button class="p-4 welsh-glass-strong rounded-xl text-left hover:bg-white hover:bg-opacity-5 transition-all duration-300 group">
+                                <div class="text-white font-medium group-hover:text-blue-300 transition-colors">Subscriptions</div>
+                                <div class="text-blue-300 text-sm mt-1">Regular Delivery</div>
+                            </button>
+                            <button class="p-4 welsh-glass-strong rounded-xl text-left hover:bg-white hover:bg-opacity-5 transition-all duration-300 group">
+                                <div class="text-white font-medium group-hover:text-blue-300 transition-colors">Gift Sets</div>
+                                <div class="text-blue-300 text-sm mt-1">Welsh Hampers</div>
+                            </button>
+                            <button class="p-4 welsh-glass-strong rounded-xl text-left hover:bg-white hover:bg-opacity-5 transition-all duration-300 group">
+                                <div class="text-white font-medium group-hover:text-blue-300 transition-colors">Heritage</div>
+                                <div class="text-blue-300 text-sm mt-1">Our Story</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Search Tips -->
+                <div class="mt-12 text-center">
+                    <p class="text-blue-300 text-sm">
+                        Press <kbd class="px-2 py-1 bg-white bg-opacity-10 rounded text-xs">ESC</kbd> to close • 
+                        Use <kbd class="px-2 py-1 bg-white bg-opacity-10 rounded text-xs">↑</kbd> <kbd class="px-2 py-1 bg-white bg-opacity-10 rounded text-xs">↓</kbd> to navigate
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Welsh Heritage Messages -->
     {% if messages %}
@@ -738,9 +956,9 @@
                     <div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-8">
                         <p class="text-blue-300 text-sm">© {% now "Y" %} {{ site_settings.site_name }}. All Welsh heritage rights reserved.</p>
                         <div class="flex space-x-6 text-sm">
-                            <a href="/privacy/" class="text-blue-300 hover:text-white transition-colors">Privacy</a>
-                            <a href="/terms/" class="text-blue-300 hover:text-white transition-colors">Terms</a>
-                            <a href="/cookies/" class="text-blue-300 hover:text-white transition-colors">Cookies</a>
+                            <a href="{% url 'core:privacy_policy' %}" class="text-blue-300 hover:text-white transition-colors">Privacy</a>
+                            <a href="{% url 'core:terms_of_service' %}" class="text-blue-300 hover:text-white transition-colors">Terms</a>
+                            <a href="{% url 'core:cookies_policy' %}" class="text-blue-300 hover:text-white transition-colors">Cookies</a>
                         </div>
                     </div>
                     
@@ -759,6 +977,97 @@
     <!-- Welsh Heritage Scripts -->
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Welsh Heritage Search Functionality -->
+    <script>
+        // Search functionality
+        function performSearch() {
+            const query = this.searchQuery.trim();
+            if (query.length < 2) {
+                this.searchResults = [];
+                this.isLoading = false;
+                return;
+            }
+            
+            this.isLoading = true;
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                // This would be replaced with actual AJAX call to Django backend
+                fetch(`/search/?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.searchResults = data.results || [];
+                        this.isLoading = false;
+                    })
+                    .catch(error => {
+                        console.error('Search error:', error);
+                        this.searchResults = [];
+                        this.isLoading = false;
+                    });
+            }, 300);
+        }
+        
+        // Welsh Heritage Progress Bar
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('heritage-progress').style.width = scrolled + '%';
+        });
+        
+        // Auto-hide messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('[data-message-type]');
+            messages.forEach(message => {
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateX(100%)';
+                    setTimeout(() => message.remove(), 300);
+                }, 5000);
+            });
+        });
+        
+        // Keyboard navigation for search modal
+        document.addEventListener('keydown', function(e) {
+            // Close search modal on Escape
+            if (e.key === 'Escape') {
+                Alpine.store('searchOpen', false);
+            }
+            
+            // Open search modal on Ctrl+K or Cmd+K
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                Alpine.store('searchOpen', true);
+            }
+        });
+        
+        // Enhanced mobile responsiveness
+        function handleResize() {
+            const nav = document.getElementById('main-nav');
+            if (window.innerWidth >= 1024) {
+                // Reset mobile menu state on desktop
+                Alpine.store('mobileMenuOpen', false);
+            }
+        }
+        
+        window.addEventListener('resize', handleResize);
+        
+        // Smooth scroll for anchor links
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[href^="#"]')) {
+                e.preventDefault();
+                const target = document.querySelector(e.target.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    </script>
+    
     {% block extra_js %}{% endblock %}
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/3010d94d2f.js" crossorigin="anonymous"></script>
